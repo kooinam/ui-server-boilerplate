@@ -1,0 +1,32 @@
+.Component {
+  :global(.ant-modal-content) {
+    padding: 0 8px;
+
+    :global(.ant-modal-header) {
+      border-bottom: 0px;
+
+      :global(.ant-modal-title) {
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    .SignUpForm {
+      margin-bottom: 16px;
+    }
+
+    .LoginLink {
+      margin: 8px 26px;
+      font-weight: bold;
+      text-align: center;
+
+      :global(.btn-primary) {
+        margin-top: 8px;
+      }
+    }
+
+    .SSOLinks {
+      margin: 8px 26px;
+    }
+  }
+}

@@ -1,0 +1,306 @@
+$layout-bg-color: white;
+$layout-color: black;
+$navigator-bg-color: #404040;
+$navigator-color: white;
+$navigator-active-color: #84d169;
+$component-bg-color: #394054;
+$component-color: black;
+$primary-bg-color: white;
+$primary-color: black;
+$primary-border-color: #4696cc;
+$primary-tint-color: #4696cc;
+$active-tint-color: #0165a9 ;
+$link-color: #4696cc;
+
+:global(.ql-editor) {
+  line-height: 24px;
+  font-size: 13px;
+
+  h3 {
+    strong {
+      padding: 4px 0;
+      border-bottom: 2px solid $primary-tint-color;
+    }
+  }
+}
+
+:global(.btn-primary) {
+  border-radius: 1px;
+  padding: 10px 8px;
+  height: 35px;
+  color: $primary-color;
+  background-color: $primary-bg-color;
+  border: 2px solid $primary-border-color;
+  font-weight: bold;
+}
+
+:global(.btn-primary) {
+  &:hover, &:active, &:focus {
+    color: $primary-tint-color;
+    background-color: $primary-bg-color;
+    border: 2px solid $primary-border-color;
+  }
+}
+
+:global(.btn-secondary) {
+  border-radius: 1px;
+  color: white;
+  background-color: $primary-tint-color;
+  border: 2px solid $primary-tint-color;
+}
+
+:global(.btn-secondary) {
+  &:hover, &:active, &:focus {
+    background-color: $active-tint-color;
+    border: 2px solid $active-tint-color;
+  }
+}
+
+:global(.btn-tertiary) {
+  border-radius: 1px;
+  color: $primary-tint-color;
+  background-color: white;
+  border: 1px solid $primary-tint-color;
+
+  &:hover, &:active, &:focus {
+    color: $active-tint-color;
+    border: 1px solid $active-tint-color;
+  }
+}
+
+:global(.btn-block) {
+  width: 100%;
+}
+
+:global(.text-center) {
+  text-align: center;
+}
+
+:global(.pull-right) {
+  text-align: right;
+  float: right;
+}
+
+:global(.actions-listing) {
+  display: inline-block;
+}
+
+:global(.actions-listing) button {
+  margin-left: 4px;
+}
+
+:global(.ql-container) :global(.ql-editor) {
+  min-height: 80px;
+}
+
+:global(.ant-form-item) {
+  margin-bottom: 0;
+}
+
+:global(.ant-input), :global(.ant-btn-bordered), :global(.ant-select-selection), :global(.ant-select-dropdown), :global(.ant-dropdown-menu) {
+  border-radius: 1px !important;
+}
+
+:global(.ant-tabs-nav) :global(.ant-tabs-tab-active), :global(.ant-tabs-tab:hover) {
+  color: $primary-tint-color !important;
+}
+
+:global(.ant-tabs-ink-bar) {
+  background-color: $primary-tint-color !important;
+}
+
+:global(.ant-clickable-table) td {
+  cursor: pointer;
+}
+
+:global(.ant-card-lg) {
+  min-width: 600px;
+}
+
+:global(.ant-card) :global(.ant-card-content) {
+  margin: 16px 0;
+}
+
+:global(.ant-details-container) :global(.ant-details) {
+  border-bottom: 1px solid #ccc;
+  padding: 12px 0 4px 0;
+}
+
+:global(.ant-details-container) :global(.ant-details) :global(.ant-details-title) {
+  font-weight: bold;
+}
+
+:global(.ant-details-container) :global(.ant-details) :global(.ant-details-value) {
+  white-space:pre-wrap;
+  word-wrap: break-word;
+}
+
+:global(.ant-filters) :global(.ant-filter), :global(.ant-sorting) div[class^="ant-col-"] {
+  padding: 0 24px 16px 0;
+}
+
+:global(.ant-filters) :global(.ant-filter) label, :global(.ant-sorting) label {
+  font-weight: bold;
+}
+
+:global(.ant-hr) {
+  margin: 4px 0;
+  border-top: 1px solid #eee;
+  border-left: 1px solid #eee;
+}
+
+:global(.ant-sorting) :global(.ant-select),
+:global(.ant-filter), :global(.ant-select) {
+  display: block;
+}
+
+:global(.ant-td-center) {
+  text-align: center;
+}
+
+:global(.ant-text-danger) {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+:global(.ant-draggable) {
+  cursor: move;
+}
+
+:global(.ant-success-icon) {
+  background-color: #5cb85c;
+  font-weight: bold;
+  color: white;
+  padding: 2px;
+  border-radius: 20px;
+}
+
+:global(.ant-danger-icon) {
+  background-color: #d9534f;
+  font-weight: bold;
+  color: white;
+  padding: 2px;
+  border-radius: 20px;
+}
+
+:global(.ant-pagination) :global(.page-inner) {
+  display: block;
+  width: 100%;
+  margin: 0px;
+}
+
+:global(.ant-custom-pagination) :global(.ant-pagination-jump-prev):after, :global(.ant-custom-pagination) :global(.ant-pagination-jump-next):after {
+  content: "";
+  display: block;
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+:global(.ant-pagination) :global(.ant-pagination-jump-prev) :global(.page-inner), :global(.ant-pagination) :global(.ant-pagination-jump-next) :global(.page-inner) {
+  text-decoration: none;
+}
+
+:global(.ant-pagination) :global(.ant-pagination-jump-prev) :global(.page-inner):after, :global(.ant-pagination) :global(.ant-pagination-jump-next) :global(.page-inner):after {
+  content: "\2022\2022\2022";
+  display: block;
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+:global(.ant-help) {
+  font-style: italic;
+}
+
+:global(.ant-loader-card), :global(.ant-loader-card):focus, :global(.ant-loader-card):hover {
+  border: 0;
+  box-shadow: none !important;
+}
+
+:global(.ant-loader-card) > :global(.ant-card-body) {
+  padding: 0;
+}
+
+:global(.ant-error) {
+  padding: 16px 0;
+}
+
+:global(.slick-list), :global(.slick-track) {
+  max-height: 100%;
+}
+
+:global(.ant-tag) {
+  font-size: 11px;
+  border-radius: 2px;
+  padding: 0 6px;
+  line-height: 18px;
+  height: 18px;
+}
+
+:global(.ant-form-horizontal) :global(.ant-form-item-control-wrapper) {
+  min-height: 50px;
+}
+
+:global(.ant-btn-no-border) {
+  border: 0;
+}
+
+:global(.ant-btn):after {
+  opacity: 0;
+}
+
+:global(.body) :global(.ant-input):focus,
+:global(.body) :global(.ant-input):hover
+:global(.body) :global(.ant-input-number):focus,
+:global(.body) :global(.ant-input-number):hover,
+:global(.body) :global(.ant-select-selection):focus,
+:global(.body) :global(.ant-select-selection):hover {
+  box-shadow: none;
+}
+
+:global(.body) :global(.ant-input):focus,
+:global(.body) :global(.ant-input):hover,
+:global(.body) :global(.ant-select-selection):hover,
+:global(.body) :global(.ant-select-selection):focus {
+  border-color: $active-tint-color;
+}
+
+:global(.body) a:hover {
+  color: $active-tint-color;
+}
+
+button:focus {
+  outline:0;
+}
+
+:global(.ant-pagination-item-active), :global(.ant-pagination-item-active):hover {
+  background-color: $primary-tint-color;
+  border-color: $primary-tint-color;
+}
+
+:global(.ant-pagination-item):hover, :global(.ant-pagination-item-link):hover {
+  border-color: $primary-tint-color !important;
+  color: $primary-tint-color !important;
+}
+
+:global(.ant-spin-dot) i {
+  background-color: $primary-tint-color;
+}
+
+:global(.ant-spacer) {
+  margin: 16px 0;
+}
+
+:global(.ant-select-dropdown-menu-item:hover),
+:global(.ant-select-dropdown-menu-item-active) {
+  background-color: #e6ffd4;
+}
+
+:global(.ant-table) tr:hover td {
+  background-color: transparent;
+}
+
+:global(.ant-table) tr:hover td:hover {
+  background-color: #e6ffd4;
+}

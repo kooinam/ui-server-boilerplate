@@ -1,0 +1,13 @@
+@import 'shared';
+
+.Component {
+  padding: 0 26px;
+
+  label {
+    color: $component-color
+  }
+
+  .SubmitButton {
+    margin-top: 14px;
+  }
+}

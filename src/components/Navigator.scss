@@ -1,0 +1,178 @@
+@import 'shared';
+
+.Component {
+  background-color: $navigator-bg-color !important;
+  color: $navigator-color;
+  box-shadow: 0 1px 2px 0 #000;
+  border-bottom: 1px solid #343434;
+  height: 60px;
+
+  .Logo {
+    height: 45px;
+    margin: 8px 0;
+    float: left;
+  }
+
+  .Nav {
+    line-height: 32px;
+    padding: 16px 0;
+
+    .NavItem {
+      display: inline-block;
+      margin: 0 16px 0 0;
+      font-size: 14px;
+      font-weight: bold;
+
+      a {
+        color: white;
+
+        &::after {
+          content: '';
+          background-color: $primary-tint-color;
+          position: absolute;
+          height: 2px;
+          bottom: 3px;
+          left: 0;
+          right: 0;
+          transition: width 0.2s ease;
+          margin: 0 auto;
+        }
+
+        &:hover {
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .Actions {
+    line-height: 32px;
+    padding: 16px 0;
+
+    .ActionItem {
+      display: inline-block;
+
+      a {
+        position: relative;
+        color: $navigator-color;
+        font-weight: bold;
+        display: inline-block;
+
+        &::after {
+          content: '';
+          background-color: $primary-tint-color;
+          position: absolute;
+          height: 2px;
+          bottom: 3px;
+          left: 0;
+          right: 0;
+          transition: width 0.2s ease;
+          margin: 0 auto;
+          width: 0;
+        }
+
+        &:hover {
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+
+      .AuthItem {
+        margin: 0 0 0 16px;
+      }
+
+      .CountryItem {
+        margin: 0 16px 0 0;
+      }
+
+      .CartItem {
+        margin: 0 16px 0 0;
+      }
+    }
+
+    .SearchActionItem {
+      width: calc(100% - 60px);
+
+      .SearchInlineItem {
+        display: block;
+        margin: 0;
+
+        :global(.ant-select-selection) {
+          height: 32px;
+        }
+      }
+    }
+  }
+
+  .SearchItem {
+    width: 300px;
+
+    @media (max-width: 500px) {
+      width: 200px;
+    }
+
+    :global(.ant-select-selection) {
+      height: 32px;
+    }
+  }
+
+  .Popover {
+    float: right;
+
+    i {
+      margin: 24px 0;
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  }
+}
+
+.PopoverMenu {
+  @media (min-width: 992px) {
+    display: none;
+  }
+
+  width: 100%;
+
+  :global(.ant-popover-arrow) {
+    display: none;
+  }
+
+  :global(.ant-popover-inner) {
+    background-color: $navigator-bg-color !important;
+    border-radius: 0;
+
+    :global(.ant-menu-inline) {
+      background-color: $navigator-bg-color !important;
+      border-right: 0;
+    }
+
+    .Menu {
+      max-height: 200px;
+      overflow: scroll;
+
+      .NavItem {
+        font-weight: bold;
+        color: $navigator-color;
+
+        &:hover {
+          color: $navigator-active-color;
+        }
+
+        a:hover {
+          color: $navigator-active-color;
+        }
+
+        :global(.ant-menu-submenu-title) {
+          &:hover {
+            color: $navigator-active-color;
+          }
+        }
+      }
+    }
+  }
+}

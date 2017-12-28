@@ -1,0 +1,45 @@
+@import 'shared';
+
+.Component {
+  :global(.ant-modal-content) {
+    padding: 0 8px;
+
+    :global(.ant-modal-header) {
+      border-bottom: 0px;
+
+      :global(.ant-modal-title) {
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    .SignInForm {
+      margin-bottom: 16px;
+    }
+
+    .ForgetPassword {
+      text-align: center;
+      display: block;
+      margin-top: 12px;
+      color: $primary-tint-color;
+
+      &:hover {
+        color: $active-tint-color;
+      }
+    }
+
+    .SignUpLink {
+      margin: 8px 26px;
+      font-weight: bold;
+      text-align: center;
+
+      :global(.btn-primary) {
+        margin-top: 8px;
+      }
+    }
+
+    .SSOLinks {
+      margin: 8px 26px;
+    }
+  }
+}
