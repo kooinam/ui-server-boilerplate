@@ -37,11 +37,11 @@ class User extends BaseModel {
   }
 
   authenticate = () => {
-    User.setToken(this.organization_profile.spree_api_key);
+    User.setToken(this.authentication_token);
   }
 
   isAdmin = () => {
-    return this.organization_profile.role_index == 0;
+    return this.is_admin;
   }
 }
 

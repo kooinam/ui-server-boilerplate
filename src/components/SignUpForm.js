@@ -19,7 +19,7 @@ class SignUpForm extends React.Component {
       actioner: new Actioner({
         component: this,
         key: 'actioner',
-        axiosGetter: () => getAxios('commerce'),
+        axiosGetter: () => getAxios('insights'),
         method: 'post',
         itemName: 'user',
         ItemKlass: User,

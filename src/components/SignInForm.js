@@ -57,7 +57,7 @@ class SignInForm extends React.Component {
       actioner: new Actioner({
         component: this,
         key: 'actioner',
-        axiosGetter: () => getAxios('commerce'),
+        axiosGetter: () => getAxios('insights'),
         method: 'post',
         itemName: 'user',
         ItemKlass: User,
@@ -92,7 +92,7 @@ class SignInForm extends React.Component {
         user: attributes,
       };
 
-      this.state.actioner.do('/users/log_in.json', params);
+      this.state.actioner.do('/sessions.json', params);
       return true;
     });
   }

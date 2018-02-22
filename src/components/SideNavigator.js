@@ -60,132 +60,17 @@ class AdminSideNavigator extends Component {
           <Menu.Item
             key="orders"
           >
-            <Link to="/admin/orders">
+            <Link to="/orders">
               Orders
             </Link>
           </Menu.Item>
-          <Menu.Item
-            key="warranties"
-          >
-            <Link to="/admin/warranties">
-              Warranties
-            </Link>
-          </Menu.Item>
-          <Menu.Item
-            key="return_requests"
-          >
-            <Link to="/admin/return_requests">
-              Return Requests
-            </Link>
-          </Menu.Item>
         </Menu.SubMenu>
-        <Menu.SubMenu key="products" title={<span><Icon type="database" />Products</span>}>
-          <Menu.Item key="products">
-            <Link to="/admin/products">
-              Products
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="taxonomies">
-            <Link to="/admin/taxonomies">
-              Taxonomies
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="option_types">
-            <Link to="/admin/option_types">
-              Option Types
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="properties">
-            <Link to="/admin/properties">
-              Properties
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="brands">
-            <Link to="/admin/brands">
-              Brands
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="warranty_types">
-            <Link to="/admin/warranty_types">
-              Warranty Types
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="product_display_lists">
-            <Link to="/admin/display_lists">
-              Display Lists
-            </Link>
-          </Menu.Item>
-        </Menu.SubMenu>
-        <Menu.SubMenu key="users" title={<span><Icon type="user" />Users</span>}>
+        <Menu.SubMenu key="logs" title={<span><Icon type="hdd" />Logs</span>}>
           <Menu.Item
-            key="users"
+            key="logs"
           >
-            <Link to="/admin/users">
-              Users
-            </Link>
-          </Menu.Item>
-          <Menu.Item
-            key="newsletters"
-          >
-            <Link to="/admin/newsletters">
-              Newsletters
-            </Link>
-          </Menu.Item>
-        </Menu.SubMenu>
-        <Menu.Item
-          key="promotions"
-        >
-          <Link to="/admin/promotions">
-            <Icon type="gift" />
-            Promotions
-          </Link>
-        </Menu.Item>
-        <Menu.SubMenu key="settings" title={<span><Icon type="setting" />Settings</span>}>
-          <Menu.Item key="settings">
-            <Link to="/admin/settings">
-              Site Settings
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="stock_locations">
-            <Link to="/admin/stock_locations">
-              Stock Locations
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="zones">
-            <Link to="/admin/zones">
-              Zones
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="shipping_methods">
-            <Link to="/admin/shipping_methods">
-              Shipping Methods
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="payment_methods">
-            <Link to="/admin/payment_methods">
-              Payment Methods
-            </Link>
-          </Menu.Item>
-        </Menu.SubMenu>
-        <Menu.SubMenu key="miscellaneous" title={<span><Icon type="ellipsis" />Miscellaneous</span>}>
-          <Menu.Item key="sliders">
-            <Link to="/admin/sliders">
-              Sliders
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="blog_categories">
-            <Link to="/admin/blog_categories">
-              Blog Categories
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="blogs">
-            <Link to="/admin/blogs">
-              Blogs
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="static_pages">
-            <Link to="/admin/static_pages">
-              Static Pages
+            <Link to="/logs">
+              Logs
             </Link>
           </Menu.Item>
         </Menu.SubMenu>

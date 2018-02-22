@@ -29,7 +29,7 @@ class AuthNavigator extends Component {
       logOutActioner: new Actioner({
         component: this,
         key: 'logOutActioner',
-        axiosGetter: () => getAxios('commerce'),
+        axiosGetter: () => getAxios('insights'),
         method: 'delete',
         ItemKlass: User,
         itemName: 'user',
@@ -50,8 +50,8 @@ class AuthNavigator extends Component {
       authenticateActioner: new Actioner({
         component: this,
         key: 'authenticateActioner',
-        axiosGetter: () => getAxios('commerce'),
-        method: 'get',
+        axiosGetter: () => getAxios('insights'),
+        method: 'post',
         itemName: 'user',
         ItemKlass: User,
         successCallback: (user) => {
@@ -75,7 +75,7 @@ class AuthNavigator extends Component {
   componentDidMount = () => {
     const token = User.getToken();
     if (token && token.length > 0) {
-      this.state.authenticateActioner.do('/users/authenticate.json');
+      this.state.authenticateActioner.do('/sessions/authenticate.json');
     } else {
       this.props.dispatch(authenticated(undefined));
     }

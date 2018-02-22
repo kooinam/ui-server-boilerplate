@@ -15,6 +15,7 @@ import '../theme/normalize.css';
 import '../theme/shared.scss';
 import config from '../config';
 import styles from './AppPage.scss';
+import { authenticated } from '../actions/auth';
 import Navigator from '../components/Navigator';
 import SideNavigator from '../components/SideNavigator';
 import SignInForm from '../components/SignInForm';
@@ -89,34 +90,22 @@ class AppPage extends Component {
 
     if (this.props.authState) {
       if (this.props.currentUser) {
-        if (this.props.currentUser.isAdmin()) {
-          content = (
+        content = (
+          <Layout>
+            <Layout.Sider className={styles.Sider}>
+              <SideNavigator matchedRoutes={matchedRoutes} />
+            </Layout.Sider>
             <Layout>
-              <Layout.Sider className={styles.Sider}>
-                <SideNavigator matchedRoutes={matchedRoutes} />
-              </Layout.Sider>
-              <Layout>
-                <Layout.Content className={styles.Content}>
-                  <BreadcrumbsNavigator
-                    matchedBreadcrumbs={matchedBreadcrumbs}
-                    className={styles.Breadcrumbs}
-                  />
-                  <BaseRouteComponent {...this.props} matchedRoutes={matchedRoutes} />
-                </Layout.Content>
-              </Layout>
+              <Layout.Content className={styles.Content}>
+                <BreadcrumbsNavigator
+                  matchedBreadcrumbs={matchedBreadcrumbs}
+                  className={styles.Breadcrumbs}
+                />
+                <BaseRouteComponent {...this.props} matchedRoutes={matchedRoutes} />
+              </Layout.Content>
             </Layout>
-          );
-        } else {
-          content = (
-            <Layout.Content className={styles.Content}>
-              <Card>
-                <div className="text-center ant-text-danger">
-                  You are not authorized
-                </div>
-              </Card>
-            </Layout.Content>
-          );
-        }
+          </Layout>
+        );
       } else {
         content = (
           <Layout.Content className={styles.Content}>
