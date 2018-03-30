@@ -1,50 +1,15 @@
 @import 'shared';
 
 .Component {
-  background-color: $navigator-bg-color !important;
-  color: $navigator-color;
-  box-shadow: 0 1px 2px 0 #000;
-  border-bottom: 1px solid #343434;
+  background-color: $primary-bg-color;
+  color: $primary-color;
+  border-bottom: 1px solid $primary-tint-color;
   height: 60px;
 
   .Logo {
     height: 45px;
     margin: 8px 0;
     float: left;
-  }
-
-  .Nav {
-    line-height: 32px;
-    padding: 16px 0;
-
-    .NavItem {
-      display: inline-block;
-      margin: 0 16px 0 0;
-      font-size: 14px;
-      font-weight: bold;
-
-      a {
-        color: white;
-
-        &::after {
-          content: '';
-          background-color: $primary-tint-color;
-          position: absolute;
-          height: 2px;
-          bottom: 3px;
-          left: 0;
-          right: 0;
-          transition: width 0.2s ease;
-          margin: 0 auto;
-        }
-
-        &:hover {
-          &::after {
-            width: 100%;
-          }
-        }
-      }
-    }
   }
 
   .Actions {
@@ -56,13 +21,13 @@
 
       a {
         position: relative;
-        color: $navigator-color;
+        color: $primary-color;
         font-weight: bold;
         display: inline-block;
 
         &::after {
           content: '';
-          background-color: $primary-tint-color;
+          background-color: $secondary-color;
           position: absolute;
           height: 2px;
           bottom: 3px;
@@ -80,16 +45,13 @@
         }
       }
 
+      .StashLink {
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
       .AuthItem {
-        margin: 0 0 0 16px;
-      }
-
-      .CountryItem {
-        margin: 0 16px 0 0;
-      }
-
-      .CartItem {
-        margin: 0 16px 0 0;
+        margin: 0 0 0 20px;
       }
     }
 
@@ -123,7 +85,7 @@
     float: right;
 
     i {
-      margin: 24px 0;
+      margin: 20px 0;
       float: right;
       font-size: 24px;
       cursor: pointer;
@@ -143,36 +105,17 @@
   }
 
   :global(.ant-popover-inner) {
-    background-color: $navigator-bg-color !important;
+    background-color: $primary-bg-color;
     border-radius: 0;
 
     :global(.ant-menu-inline) {
-      background-color: $navigator-bg-color !important;
+      background-color: $primary-bg-color;
       border-right: 0;
     }
 
     .Menu {
       max-height: 200px;
       overflow: scroll;
-
-      .NavItem {
-        font-weight: bold;
-        color: $navigator-color;
-
-        &:hover {
-          color: $navigator-active-color;
-        }
-
-        a:hover {
-          color: $navigator-active-color;
-        }
-
-        :global(.ant-menu-submenu-title) {
-          &:hover {
-            color: $navigator-active-color;
-          }
-        }
-      }
     }
   }
 }

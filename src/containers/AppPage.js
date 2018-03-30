@@ -5,11 +5,12 @@ import Helmet from 'react-helmet';
 import { LocaleProvider, Layout, Card, message } from 'antd';
 import type { Connector } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar';
-import { setupAxios, addAxiosPreferences, BreadcrumbsNavigator, matchRoutes, matchBreadcrumbs, BaseRouteComponent, LightboxContainer } from 'awry-utilities';
+import { setupAxios, addAxiosPreferences, BreadcrumbsNavigator, matchRoutes, matchBreadcrumbs, BaseRouteComponent, LightboxContainer, matchRouteProperty } from 'awry-utilities';
 import enUS from 'antd/lib/locale-provider/en_US';
 import 'react-quill/dist/quill.core.css';
 import 'react-quill/dist/quill.snow.css';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { Redirect } from 'react-router-dom';
 
 import '../theme/normalize.css';
 import '../theme/shared.scss';
@@ -18,7 +19,6 @@ import styles from './AppPage.scss';
 import { authenticated } from '../actions/auth';
 import Navigator from '../components/Navigator';
 import SideNavigator from '../components/SideNavigator';
-import SignInForm from '../components/SignInForm';
 import User from '../models/User';
 
 type Props = any;
@@ -34,11 +34,11 @@ class AppPage extends Component {
     setupAxios(this);
 
     /* eslint-disable no-undef */
-    const possumInsightsApiServerUrl = __POSSUM_INSIGHTS_API_SERVER_URL__;
+    const apiServerURL = __API_SERVER_URL__;
     /* eslint-enable no-undef */
 
-    addAxiosPreferences('insights', {
-      baseURL: `${possumInsightsApiServerUrl}`,
+    addAxiosPreferences('toro-client', {
+      baseURL: `${apiServerURL}`,
       headersSetter: () => {
         const token = User.getToken();
 
@@ -51,6 +51,14 @@ class AppPage extends Component {
     message.config({
       top: 48,
     });
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if (this.props.router.location !== prevProps.router.location && this.props.router.location && this.props.router.location.redirectMessage) {
+      setTimeout(() => {
+        message.warning(this.props.router.location.redirectMessage);
+      }, 100);
+    }
   }
 
   props: Props;
@@ -75,45 +83,46 @@ class AppPage extends Component {
     const matchedBreadcrumbs = matchBreadcrumbs(matchedRoutes, this.props.breadcrumbIdentifiers);
 
     const appConfig = config.app;
-    appConfig.titleTemplate = 'POSSUM';
     if (matchedBreadcrumbs.length > 0) {
       appConfig.title = matchedBreadcrumbs[matchedBreadcrumbs.length - 1].breadcrumbName;
     }
-    if (appConfig.title && appConfig.title.replace(/ /g, '').length > 0) {
-      appConfig.titleTemplate = '%s - POSSUM';
-    }
     appConfig.title = appConfig.title || '';
 
-    let content = (
-      <Layout.Content />
-    );
+    const requireUser = matchRouteProperty(matchedRoutes, 'requireUser');
+    if (typeof (window) !== 'undefined') {
+      // Redirect if page requires user login
+      if (requireUser && this.props.authState === 'UNAUTHENTICATED') {
+        return (
+          <Redirect
+            push
+            to={{
+              pathname: '/',
+              redirectMessage: 'You need to be logged in to view that page.',
+            }}
+          />
+        );
+      }
+    }
 
-    if (this.props.authState) {
-      if (this.props.currentUser) {
-        content = (
-          <Layout>
-            <Layout.Sider className={styles.Sider}>
-              <SideNavigator matchedRoutes={matchedRoutes} />
-            </Layout.Sider>
-            <Layout>
-              <Layout.Content className={styles.Content}>
+    const hideBreadcrumbs = matchRouteProperty(matchedRoutes, 'hideBreadcrumbs');
+
+    const content = (
+      <Layout>
+        <Layout>
+          <Layout.Content className={styles.Content}>
+            {
+              !hideBreadcrumbs && (
                 <BreadcrumbsNavigator
                   matchedBreadcrumbs={matchedBreadcrumbs}
                   className={styles.Breadcrumbs}
                 />
-                <BaseRouteComponent {...this.props} matchedRoutes={matchedRoutes} />
-              </Layout.Content>
-            </Layout>
-          </Layout>
-        );
-      } else {
-        content = (
-          <Layout.Content className={styles.Content}>
-            <SignInForm className={styles.SignInForm} />
+              )
+            }
+            <BaseRouteComponent {...this.props} matchedRoutes={matchedRoutes} />
           </Layout.Content>
-        );
-      }
-    }
+        </Layout>
+      </Layout>
+    );
 
     return (
       <LocaleProvider locale={enUS}>

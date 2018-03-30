@@ -1,16 +1,12 @@
-$layout-bg-color: white;
-$layout-color: black;
-$navigator-bg-color: #404040;
-$navigator-color: white;
-$navigator-active-color: #84d169;
-$component-bg-color: #394054;
-$component-color: black;
 $primary-bg-color: white;
-$primary-color: black;
-$primary-border-color: #4696cc;
-$primary-tint-color: #4696cc;
-$active-tint-color: #0165a9 ;
-$link-color: #4696cc;
+$primary-color: #666;
+$primary-tint-color: #e8e8e8;
+$primary-shade-color: #444;
+$secondary-bg-color: white;
+$secondary-color: #0084ff;
+$secondary-tint-color: #2eb6ff;
+$secondary-shade-color: #005bd1;
+$info-color: rgba(0, 0, 0, 0.45);
 
 :global(.ql-editor) {
   line-height: 24px;
@@ -19,57 +15,128 @@ $link-color: #4696cc;
   h3 {
     strong {
       padding: 4px 0;
-      border-bottom: 2px solid $primary-tint-color;
+      border-bottom: 2px solid $primary-color;
     }
   }
 }
 
 :global(.btn-primary) {
+  height: 32px;
   border-radius: 1px;
-  padding: 10px 8px;
-  height: 35px;
-  color: $primary-color;
-  background-color: $primary-bg-color;
-  border: 2px solid $primary-border-color;
+  background-color: $secondary-color;
+  color: $secondary-bg-color;
+  border: 1px solid $secondary-color;
   font-weight: bold;
 }
 
 :global(.btn-primary) {
   &:hover, &:active, &:focus {
-    color: $primary-tint-color;
-    background-color: $primary-bg-color;
-    border: 2px solid $primary-border-color;
+    background-color: $secondary-shade-color;
+    color: $secondary-bg-color;
+    border: 1px solid $secondary-shade-color;
   }
 }
 
 :global(.btn-secondary) {
+  height: 32px;
   border-radius: 1px;
-  color: white;
-  background-color: $primary-tint-color;
-  border: 2px solid $primary-tint-color;
+  background-color: $secondary-bg-color;
+  color: $secondary-color;
+  border: 2px solid $secondary-color;
+  font-weight: bold;
 }
 
 :global(.btn-secondary) {
   &:hover, &:active, &:focus {
-    background-color: $active-tint-color;
-    border: 2px solid $active-tint-color;
+    background-color: $secondary-bg-color;
+    color: $secondary-shade-color;
+    border: 2px solid $secondary-shade-color;
   }
 }
 
 :global(.btn-tertiary) {
+  height: 32px;
   border-radius: 1px;
-  color: $primary-tint-color;
-  background-color: white;
+  background-color: $secondary-bg-color;
+  color: $primary-color;
   border: 1px solid $primary-tint-color;
+}
 
+:global(.btn-tertiary) {
   &:hover, &:active, &:focus {
-    color: $active-tint-color;
-    border: 1px solid $active-tint-color;
+    background-color: $secondary-bg-color;
+    color: $secondary-color;
+    border: 1px solid $secondary-color;
+  }
+}
+
+:global(.btn-quaternary) {
+  height: 32px;
+  border-radius: 1px;
+  background-color: $secondary-bg-color;
+  color: $secondary-color;
+  border: 1px solid $secondary-color;
+}
+
+:global(.btn-quaternary) {
+  &:hover, &:active, &:focus {
+    background-color: $primary-bg-color;
+    color: $secondary-color;
+    border: 1px solid $secondary-color;
+  }
+}
+
+:global(.btn-sm) {
+  height: 28px;
+}
+
+:global(.btn-rounded) {
+  border-radius: 3px;
+}
+
+:global(.btn-sm) {
+  &:hover, &:active, &:focus {
+    background-color: $secondary-bg-color;
+    color: $secondary-color;
+    border: 1px solid $secondary-color;
+  }
+}
+
+:global(.link-primary) {
+  font-weight: bold;
+  color: $primary-color;
+}
+
+:global(.link-primary) {
+  &:hover, &:active, &:focus {
+    color: $secondary-color;
+  }
+}
+
+:global(.link-secondary) {
+  color: $secondary-color;
+}
+
+:global(.link-secondary) {
+  &:hover, &:active, &:focus {
+    color: $secondary-tint-color;
+  }
+}
+
+:global(.link-tertiary) {
+  color: $info-color;
+}
+
+:global(.link-tertiary) {
+  &:hover, &:active, &:focus {
+    color: $secondary-tint-color;
   }
 }
 
 :global(.btn-block) {
+  height: 35px;
   width: 100%;
+  padding: 10px 8px;
 }
 
 :global(.text-center) {
@@ -98,7 +165,7 @@ $link-color: #4696cc;
 }
 
 :global(.ant-input), :global(.ant-btn-bordered), :global(.ant-select-selection), :global(.ant-select-dropdown), :global(.ant-dropdown-menu) {
-  border-radius: 1px !important;
+  border-radius: 1px;
 }
 
 :global(.ant-tabs-nav) :global(.ant-tabs-tab-active), :global(.ant-tabs-tab:hover) {
@@ -222,10 +289,6 @@ $link-color: #4696cc;
   padding: 0;
 }
 
-:global(.ant-error) {
-  padding: 16px 0;
-}
-
 :global(.slick-list), :global(.slick-track) {
   max-height: 100%;
 }
@@ -263,15 +326,11 @@ $link-color: #4696cc;
 :global(.body) :global(.ant-input):hover,
 :global(.body) :global(.ant-select-selection):hover,
 :global(.body) :global(.ant-select-selection):focus {
-  border-color: $active-tint-color;
-}
-
-:global(.body) a:hover {
-  color: $active-tint-color;
+  border-color: $primary-tint-color;
 }
 
 button:focus {
-  outline:0;
+  outline: 0;
 }
 
 :global(.ant-pagination-item-active), :global(.ant-pagination-item-active):hover {
@@ -285,22 +344,72 @@ button:focus {
 }
 
 :global(.ant-spin-dot) i {
-  background-color: $primary-tint-color;
+  background-color: $secondary-tint-color;
 }
 
 :global(.ant-spacer) {
   margin: 16px 0;
 }
 
-:global(.ant-select-dropdown-menu-item:hover),
-:global(.ant-select-dropdown-menu-item-active) {
-  background-color: #e6ffd4;
-}
+// :global(.ant-select-dropdown-menu-item:hover),
+// :global(.ant-select-dropdown-menu-item-active) {
+//   background-color: $secondary-tint-color;
+// }
 
 :global(.ant-table) tr:hover td {
   background-color: transparent;
 }
 
-:global(.ant-table) tr:hover td:hover {
-  background-color: #e6ffd4;
+// :global(.ant-table) tr:hover td:hover {
+//   background-color: $secondary-tint-color;
+// }
+
+:global(a.link) {
+  font-weight: bold;
+  color: $primary-color;
+
+  &:hover {
+    color: $secondary-color;
+  }
 }
+
+:global(.ant-breadcrumb-link a), :global(.ant-menu-item a), :global(.ant-menu-submenu-title) {
+  &:hover, &:active, &:focus {
+    color: $secondary-color;
+  }
+}
+
+:global(.hr) {
+  border: 1px solid $primary-tint-color;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+:global(.hr-sm) {
+  border: 1px solid $primary-tint-color;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+:global(.hr-lg) {
+  border: 1px solid $primary-tint-color;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+:global(.ant-form-item-label) {
+  label {
+    font-weight: bold;
+  }
+}
+
+:global(.help-text) {
+  color: $info-color;
+  font-size: 14px;
+  font-style: italic;
+
+  a {
+    text-decoration: underline;
+  }
+}
+

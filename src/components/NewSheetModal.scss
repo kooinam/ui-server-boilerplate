@@ -1,0 +1,43 @@
+.Component {
+  display: block;
+
+  :global(.ant-modal-header) {
+    :global(.ant-modal-title) {
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  .InputWrapper {
+    @media(min-width: 768px) {
+      padding: 0 32px 0 0;
+    }
+
+    .Uploader {
+      display: block;
+
+      :global(.ant-upload) {
+        width: 200px;
+        height: 250px;
+
+        @media(min-width: 768px) {
+          float: right;
+        }
+
+        .UploaderText {
+          font-weight: bold;
+          line-height: 1;
+          padding: 4px 12px;
+        }
+      }
+
+      :global(.ant-upload-list) {
+        width: 100%;
+
+        @media(min-width: 768px) {
+          float: right
+        }
+      }
+    }
+  }
+}

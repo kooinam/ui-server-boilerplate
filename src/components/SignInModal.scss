@@ -13,33 +13,24 @@
       }
     }
 
-    .SignInForm {
-      margin-bottom: 16px;
-    }
-
     .ForgetPassword {
       text-align: center;
       display: block;
       margin-top: 12px;
-      color: $primary-tint-color;
-
-      &:hover {
-        color: $active-tint-color;
-      }
     }
 
     .SignUpLink {
-      margin: 8px 26px;
       font-weight: bold;
       text-align: center;
+      padding: 0 26px 8px 26px;
 
-      :global(.btn-primary) {
+      :global(.btn-secondary) {
         margin-top: 8px;
       }
     }
 
     .SSOLinks {
-      margin: 8px 26px;
+      margin: 16px 26px;
     }
   }
 }

@@ -1,0 +1,50 @@
+@import 'shared.scss';
+
+.Component {
+  display: block;
+  padding: 8px 0;
+
+  .Sheets {
+    .SheetCard {
+      max-width: 300px;
+      margin: 12px 20px;
+
+      :global(.ant-card-body) {
+        padding: 0;
+
+        .SheetLink {
+          display: block;
+          min-height: 240px;
+          position: relative;
+
+          .SheetCover {
+            img {
+              width: 100%;
+            }
+          }
+
+          .SheetDetails {
+            padding: 2px 8px;
+
+            .SheetTitle {
+              font-weight: bold;
+              font-size: 16px;
+            }
+
+            .SheetMiscs {
+              .SheetMisc {
+                margin: 0 8px 8px 0;
+                font-size: 12px;
+                color: $secondary-tint-color;
+
+                i {
+                  margin: 0 4px 0 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

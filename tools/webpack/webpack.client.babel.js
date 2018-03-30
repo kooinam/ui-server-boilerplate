@@ -1,3 +1,4 @@
+
 'use strict'; // eslint-disable-line
 
 import { config } from 'dotenv';
@@ -50,7 +51,7 @@ const getPlugins = () => {
       __CLIENT__: true,
       __SERVER__: false,
       __DEV__: isDev,
-      __POSSUM_INSIGHTS_API_SERVER_URL__: `'${process.env.POSSUM_INSIGHTS_API_SERVER_URL}'`,
+      __API_SERVER_URL__: `'${process.env.API_SERVER_URL}'`,
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     webpackIsomorphicToolsPlugin,
@@ -178,6 +179,10 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg|woff2?|ttf|eot|otf)$/,
         loader: 'url-loader',
         options: { limit: 10000 },
+      },
+      {
+        test: /masonry|imagesloaded|fizzy\-ui\-utils|desandro\-|outlayer|get\-size|doc\-ready|eventie|eventemitter/,
+        loader: 'imports?define=>false&this=>window',
       },
     ],
   },

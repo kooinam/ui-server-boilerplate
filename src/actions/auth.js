@@ -25,3 +25,19 @@ export const authenticated = user =>
       });
     }
   };
+
+export const showSignInModal = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'SHOW_SIGN_IN_MODAL',
+    });
+  };
+};
+
+export const hideSignInModal = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'HIDE_SIGN_IN_MODAL',
+    });
+  };
+};

@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import styles from './AuthNavigator.scss';
 import SignInModal from './SignInModal';
 import SignUpModal from './SignUpModal';
-import { authenticated } from '../actions/auth';
+import { authenticated, showSignInModal, hideSignInModal } from '../actions/auth';
 import User from '../models/User';
 
 class AuthNavigator extends Component {
@@ -29,7 +29,7 @@ class AuthNavigator extends Component {
       logOutActioner: new Actioner({
         component: this,
         key: 'logOutActioner',
-        axiosGetter: () => getAxios('insights'),
+        axiosGetter: () => getAxios('toro-client'),
         method: 'delete',
         ItemKlass: User,
         itemName: 'user',
@@ -50,7 +50,7 @@ class AuthNavigator extends Component {
       authenticateActioner: new Actioner({
         component: this,
         key: 'authenticateActioner',
-        axiosGetter: () => getAxios('insights'),
+        axiosGetter: () => getAxios('toro-client'),
         method: 'post',
         itemName: 'user',
         ItemKlass: User,
@@ -65,11 +65,6 @@ class AuthNavigator extends Component {
       }),
       popoverVisible: false,
     };
-
-    this.handleClickSignUp = this.handleClickSignUp.bind(this);
-    this.handleClickSignIn = this.handleClickSignIn.bind(this);
-    this.handleClickLogOut = this.handleClickLogOut.bind(this);
-    this.hidePopover = this.hidePopover.bind(this);
   }
 
   componentDidMount = () => {
@@ -81,8 +76,19 @@ class AuthNavigator extends Component {
     }
   }
 
+  componentWillReceiveProps = (props) => {
+    if (props.signInModalVisible && this.state.signInModalParams.visible === false) {
+      this.state.signInModalParams.show();
+    }
+
+    if (props.signInModalVisible === false && this.state.signInModalParams.visible) {
+      this.state.signInModalParams.dismiss();
+    }
+  }
+
   handleClickSignUp = () => {
-    this.state.signInModalParams.dismiss();
+    this.hideSignInModal();
+
     setTimeout(() => {
       this.state.signUpModalParams.show();
     }, 300);
@@ -90,8 +96,10 @@ class AuthNavigator extends Component {
 
   handleClickSignIn = () => {
     this.state.signUpModalParams.dismiss();
+
     setTimeout(() => {
-      this.state.signInModalParams.show();
+      this.showSignInModal();
+      // this.state.signInModalParams.show();
     }, 300);
   }
 
@@ -105,6 +113,14 @@ class AuthNavigator extends Component {
     this.setState({
       popoverVisible: false,
     });
+  }
+
+  showSignInModal = () => {
+    this.props.dispatch(showSignInModal());
+  }
+
+  hideSignInModal = () => {
+    this.props.dispatch(hideSignInModal());
   }
 
   render() {
@@ -137,6 +153,7 @@ class AuthNavigator extends Component {
             </Menu.Item>
           </Menu>
         );
+
         return (
           <Popover
             overlayClassName={styles.Popover}
@@ -161,11 +178,12 @@ class AuthNavigator extends Component {
       }
 
       return [(
-        <a key={1} className={`${styles.Component} ${this.props.className}`} onClick={this.state.signInModalParams.show} role="button" tabIndex={0}>
+        <a key={1} className={`${styles.Component} ${this.props.className}`} onClick={this.showSignInModal} role="button" tabIndex={0}>
           <SignInModal
             key={this.state.signInModalParams.uuid}
             modalParams={this.state.signInModalParams}
             onClickSignUp={this.handleClickSignUp}
+            hideModal={this.hideSignInModal}
           />
           <SignUpModal
             key={this.state.signUpModalParams.uuid}
@@ -240,8 +258,9 @@ const connector = connect(
     return {
       currentUser: state.AuthReducer.currentUser,
       authState: state.AuthReducer.state,
+      signInModalVisible: state.AuthReducer.signInModalVisible,
     };
-  }
+  },
 );
 
 export default connector(AuthNavigator);

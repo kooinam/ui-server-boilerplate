@@ -19,7 +19,7 @@ class SignUpForm extends React.Component {
       actioner: new Actioner({
         component: this,
         key: 'actioner',
-        axiosGetter: () => getAxios('insights'),
+        axiosGetter: () => getAxios('toro-client'),
         method: 'post',
         itemName: 'user',
         ItemKlass: User,
@@ -37,8 +37,6 @@ class SignUpForm extends React.Component {
         /* eslint-enable no-unused-vars */
       }),
     };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit = (e) => {

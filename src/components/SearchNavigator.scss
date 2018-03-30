@@ -1,0 +1,33 @@
+@import 'shared.scss';
+
+.Component {
+  padding: 16px 0;
+  width: 100%;
+
+  .Input {
+    &:hover, &:focus, &:active {
+      :global(.ant-input) {
+        border: 1px solid $primary-tint-color;
+      }
+    }
+
+    i {
+      padding-left: 4px;
+      font-size: 18px;
+      color: $primary-color;
+    }
+
+    :global(.ant-input) {
+      padding-left: 36px;
+      font-size: 14px;
+      border-radius: 3px;
+
+      &:hover, &:focus, &:active {
+        border: 1px solid $primary-tint-color;
+      }
+    }
+
+    height: 32px;
+    color: $primary-color;
+  }
+}

@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 
 import styles from './Navigator.scss';
 import AuthNavigator from './AuthNavigator';
-
-type Props = any;
+import SearchNavigator from './SearchNavigator';
+import NewSheetNavigator from './NewSheetNavigator';
 
 class Navigator extends Component {
   constructor(props) {
@@ -19,9 +19,9 @@ class Navigator extends Component {
     };
   }
 
-  props: Props;
-
   render() {
+    const { currentUser } = this.props;
+
     const menu = (
       <Menu
         className={styles.Menu}
@@ -44,22 +44,45 @@ class Navigator extends Component {
               });
             }
           }
-          className={styles.NavItem}
+          className="link"
         />
+        {
+          currentUser && (
+            <Menu.Item>
+              <Link to="/me/stashes" className="link">
+                My Stashes
+              </Link>
+            </Menu.Item>
+          )
+        }
       </Menu>
     );
 
     return (
       <Layout.Header className={styles.Component}>
         <Row>
-          <Col md={3} xs={4}>
+          <Col sm={3} xs={6}>
             <a href="/">
               <img className={styles.Logo} src={require('../assets/logo.png')} alt="Logo" />
             </a>
           </Col>
-          <Col md={15} xs={0} />
-          <Col md={6} xs={0} className="pull-right">
+          <Col sm={10} xs={14}>
+            <SearchNavigator />
+          </Col>
+          <Col sm={3} xs={0}>
+            <NewSheetNavigator />
+          </Col>
+          <Col sm={8} xs={0} className="pull-right">
             <ul className={styles.Actions}>
+              {
+                currentUser && (
+                  <li className={styles.ActionItem}>
+                    <Link to="/me/stashes" className={`link ${styles.StashLink} `}>
+                      My Stashes
+                    </Link>
+                  </li>
+                )
+              }
               <li className={styles.ActionItem}>
                 <AuthNavigator
                   className={styles.AuthItem}
@@ -67,7 +90,7 @@ class Navigator extends Component {
               </li>
             </ul>
           </Col>
-          <Col md={0} xs={4} className={styles.Popover}>
+          <Col sm={0} xs={4} className={styles.Popover}>
             <Popover
               placement="bottom"
               trigger="click"

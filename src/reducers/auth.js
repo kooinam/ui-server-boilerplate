@@ -1,6 +1,7 @@
 import User from '../models/User';
 
 export default (state = {
+  signInModalVisible: false,
   state: null,
   currentUser: null,
 }, action) => {
@@ -20,6 +21,14 @@ export default (state = {
       return Object.assign({}, state, {
         state: 'UNAUTHENTICATED',
         currentUser: null,
+      });
+    case 'SHOW_SIGN_IN_MODAL':
+      return Object.assign({}, state, {
+        signInModalVisible: true,
+      });
+    case 'HIDE_SIGN_IN_MODAL':
+      return Object.assign({}, state, {
+        signInModalVisible: false,
       });
     default:
       return state;

@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 
-import styles from './HomePage.scss';
+import styles from './SearchPage.scss';
 
-class HomePage extends Component {
+class SearchPage extends Component {
   constructor(props) {
     super(props);
 
@@ -16,7 +16,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className={styles.Container}>
-        HOME
+        SEARCHING...
       </div>
     );
   }
@@ -28,4 +28,4 @@ const connector: Connector<{}, Props> = connect(
 );
 /* eslint-enable no-unused-vars */
 
-export default connector(HomePage);
+export default connector(SearchPage);

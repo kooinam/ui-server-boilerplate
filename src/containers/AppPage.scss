@@ -6,18 +6,14 @@ body {
 
 .Container {
   min-height: 100vh;
-  background-color: $layout-bg-color !important;
-  color: $layout-color;
+  background-color: $primary-bg-color;
+  color: $primary-color;
 
   .LoadingBar {
     z-index: 9999;
-    background-color: $primary-tint-color;
-    height: 3px;
+    background-color: $secondary-color;
+    height: 2px;
     position: fixed;
-  }
-
-  .Sider {
-    background-color: white;
   }
 
   .Breadcrumbs {
@@ -25,6 +21,7 @@ body {
   }
 
   .Content {
+    background-color: $primary-bg-color;
     overflow: scroll;
     padding: 30px 50px;
 
@@ -35,8 +32,8 @@ body {
   }
 
   .Footer {
-    background-color: $navigator-bg-color;
-    color: $navigator-color;
+    background-color: $primary-bg-color;
+    color: $primary-color;
     box-shadow: 0 -1px 2px 0 #000;
     margin-top: 2px;
   }

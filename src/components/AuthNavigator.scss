@@ -1,7 +1,8 @@
+@import 'shared.scss';
+
 .Component {
   display: block;
-  font-weight: normal !important;
-  display: inline-block !important;
+  display: inline-block;
   font-size: 13px;
 
   .User {
@@ -9,15 +10,16 @@
   }
 
   i {
-    font-weight: bold !important;
+    font-weight: bold;
   }
 }
 
 .InlineComponent {
-  font-weight: bold !important;
+  color: $primary-color;
+  font-weight: bold;
 
   i {
-    font-weight: bold !important;
+    font-weight: bold;
     font-size: 20px;
   }
 }
@@ -35,7 +37,7 @@
         height: 36px;
 
         a {
-          font-weight: bold !important;
+          font-weight: bold;
         }
       }
     }

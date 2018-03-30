@@ -8,18 +8,12 @@ import type { Connector } from 'react-redux';
 import SignUpForm from './SignUpForm'
 import styles from './SignUpModal.scss';
 
-type Props = {
-  modalParams: Object,
-};
-
 class SignUpModal extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {};
   }
-
-  props: Props;
 
   render() {
     return (
@@ -37,10 +31,10 @@ class SignUpModal extends React.Component {
             onAuthenticated={this.props.modalParams.dismiss}
           />
         </div>
-        <hr />
+        <hr className="hr-lg" />
         <div className={styles.LoginLink}>
           ALREADY HAVE AN ACCOUNT?
-          <Button type="primary" className={`btn-primary btn-block`} onClick={this.props.onClickSignIn}>
+          <Button type="primary" className={`btn-secondary btn-block`} onClick={this.props.onClickSignIn}>
             LOGIN
           </Button>
         </div>

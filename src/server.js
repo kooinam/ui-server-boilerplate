@@ -129,7 +129,7 @@ const parseReq = (req, res, routes, Html, Container) => {
     });
   }
 
-  redisClient.get(`${process.env.POSSUM_INSIGHTS_API_SERVER_URL}-insights-cache`, (err, obj) => {
+  redisClient.get(`${process.env.API_SERVER_URL}-cache`, (err, obj) => {
     if (err) {
       redisClient.quit();
       res.status(404).send('Not Found :(');
@@ -187,10 +187,10 @@ app.get(/^\/[^.]*$/, (req, res) => {
       const cookies = req.cookies || {};
       const token = cookies.token || '';
 
-      const possumInsightsApiServerUrl = process.env.POSSUM_INSIGHTS_API_SERVER_URL;
+      const apiServerURL = process.env.API_SERVER_URL;
 
-      addAxiosPreferences('insights', {
-        baseURL: `${possumInsightsApiServerUrl}`,
+      addAxiosPreferences('toro-client', {
+        baseURL: `${apiServerURL}`,
         headersSetter: () => {
           return {
             'X-Authentication-Token': token,

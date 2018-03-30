@@ -10,18 +10,12 @@ import type { Reducer } from '../../types';
 import SignInForm from './SignInForm';
 import styles from './SignInModal.scss';
 
-type Props = {
-  modalParams: Object,
-};
-
 class SignInModal extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {};
   }
-
-  props: Props;
 
   render() {
     return (
@@ -32,24 +26,24 @@ class SignInModal extends React.Component {
         title="LOGIN"
         visible={this.props.modalParams.visible}
         footer={null}
-        onCancel={this.props.modalParams.dismiss}
+        onCancel={this.props.hideModal}
       >
         <div className={styles.SignInForm}>
           <SignInForm
-            onAuthenticated={this.props.modalParams.dismiss}
+            onAuthenticated={this.props.hideModal}
           />
           <Link
             to="/forget_password"
             target="_blank"
-            className={styles.ForgetPassword}
+            className={`link ${styles.ForgetPassword}`}
           >
             Forget Password?
           </Link>
         </div>
-        <hr />
+        <hr className="hr-lg" />
         <div className={styles.SignUpLink}>
           DON'T HAVE AN ACCOUNT?
-          <Button type="primary" className={`btn-primary btn-block`} onClick={this.props.onClickSignUp}>
+          <Button type="primary" className={`btn-secondary btn-block`} onClick={this.props.onClickSignUp}>
             CREATE ACCOUNT
           </Button>
         </div>

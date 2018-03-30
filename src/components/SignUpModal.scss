@@ -11,22 +11,18 @@
       }
     }
 
-    .SignUpForm {
-      margin-bottom: 16px;
-    }
-
     .LoginLink {
-      margin: 8px 26px;
       font-weight: bold;
       text-align: center;
+      padding: 0 26px 8px 26px;
 
-      :global(.btn-primary) {
+      :global(.btn-secondary) {
         margin-top: 8px;
       }
     }
 
     .SSOLinks {
-      margin: 8px 26px;
+      margin: 16px 26px;
     }
   }
 }

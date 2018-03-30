@@ -1,0 +1,62 @@
+@import 'shared';
+
+.Container {
+  display: block;
+
+  .StashCard {
+    max-width: 300px;
+    margin: 12px 20px;
+    box-shadow: 1px 1px 20px 1px #ddd;
+    border: 1px solid #ddd;
+
+    :global(.ant-card-body) {
+      padding: 0;
+
+      .StashLink {
+        display: block;
+        min-height: 240px;
+        position: relative;
+
+        .AddStash {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-weight: bold;
+          font-size: 20px;
+
+          i {
+            font-size: 60px;
+          }
+        }
+
+        .StashCoverPhoto {
+          img {
+            width: 100%;
+          }
+        }
+
+        .StashDetails {
+          padding: 2px 8px;
+
+          .StashTitle {
+            font-weight: bold;
+            font-size: 16px;
+          }
+
+          .StashMiscs {
+            .StashMisc {
+              margin: 0 12px 8px 0;
+              font-size: 12px;
+              color: $secondary-tint-color;
+
+              i {
+                margin: 0 2px 0 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

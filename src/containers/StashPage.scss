@@ -1,0 +1,88 @@
+@import 'shared';
+
+.Container {
+  display: block;
+
+  .Header {
+    position: relative;;
+
+    &.HeaderOne {
+      height: 60px;
+    }
+
+    .Cover {
+      display: inline-block;
+      margin-right: 8px;
+      padding: 10px;
+      border: 1px solid $primary-tint-color;
+      border-radius: 100px;
+      height: 60px;
+      width: 60px;
+
+      img {
+        height: 40px;
+        width: 40px;
+        object-fit: cover;
+      }
+    }
+
+    .Title {
+      display: inline-block;
+      font-weight: bold;
+      font-size: 36px;
+    }
+
+    .TitleSm {
+      display: inline-block;
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    .Actions {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+
+      button {
+        margin: 0 0 0 8px;
+      }
+    }
+
+    .ViewAllOne {
+      float: right;
+    }
+  }
+
+  .Overview {
+    .Miscs {
+      .Misc {
+        margin: 0 12px 8px 0;
+        font-size: 14px;
+        color: $secondary-tint-color;
+
+        i {
+          margin: 0 2px 0 0;
+        }
+      }
+    }
+
+    .Description {
+      margin: 16px 0 0 0;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+  }
+
+  .Sheets {
+    margin: 16px 0;
+
+    .ViewAllTwo {
+      font-size: 13px;
+
+      a {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+    }
+  }
+}
