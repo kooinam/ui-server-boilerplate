@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
-import { getAxios, ItemLoader, LoaderContent, setupBreadcrumbIdentifiers, matchRouteParams, ModalParams, renderActions, Actioner, matchRouteProperty } from 'awry-utilities';
+import { getAxios, ModalParams, renderActions, Actioner } from 'awry-utilities';
 import { Icon, Button, Popconfirm } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -16,26 +16,10 @@ class StashPage extends Component {
   constructor(props) {
     super(props);
 
-    const { matchedRoutes } = this.props;
-    const stashId = matchRouteParams(matchedRoutes, 'stashId');
-
     this.state = {
       editStashModalParams: new ModalParams({
         component: this,
         key: 'editStashModalParams',
-      }),
-      itemLoader: new ItemLoader({
-        component: this,
-        key: 'itemLoader',
-        axiosGetter: () => getAxios('toro-client'),
-        itemName: 'stash',
-        ItemKlass: Stash,
-        url: `/stashes/${stashId}.json`,
-        callback: (item) => {
-          this.props.dispatch(setupBreadcrumbIdentifiers({
-            stashName: item.name,
-          }));
-        },
       }),
       joinStashActioner: new Actioner({
         component: this,
@@ -48,7 +32,7 @@ class StashPage extends Component {
           return `Successfully joined Stash`;
         },
         successCallback: (stash) => {
-          this.loadItem();
+          this.props.loadItem();
         },
         errorMessageGetter: (error) => {
           return `Failed to joined Stash`;
@@ -65,34 +49,25 @@ class StashPage extends Component {
           return `Leave Stash successfully`;
         },
         successCallback: (stash) => {
-          this.loadItem();
+          this.props.loadItem();
         },
         errorMessageGetter: (error) => {
           return `Failed to leave Stash`;
         },
       }),
-      urlPrefix: `${(matchRouteProperty(this.props.matchedRoutes, 'urlPrefix') || '')}/stashes/${stashId}`,
     };
   }
 
-  componentWillMount = () => {
-    this.loadItem();
-  }
-
-  loadItem = () => {
-    this.state.itemLoader.loadItem();
-  }
-
   joinStash = () => {
-    const { itemLoader, editStashModalParams } = this.state;
-    const stash = itemLoader.item;
+    const { editStashModalParams } = this.state;
+    const { stash } = this.props;
 
     this.state.leaveStashActioner.do(`/stashes/${stash.id}/stash_users.json`);
   }
 
   leaveStash = () => {
-    const { itemLoader, editStashModalParams } = this.state;
-    const stash = itemLoader.item;
+    const { editStashModalParams } = this.state;
+    const { stash } = this.props;
 
     this.state.leaveStashActioner.do(`/stashes/${stash.id}/stash_users/${this.props.currentUser.id}.json`);
   }
@@ -102,7 +77,7 @@ class StashPage extends Component {
 
     const actions = [{
       component: (
-        <Button key="join" icon="login" className="btn-primary" onClick={this.state.joinStash} loading={joinStashActioner.isLoading}>
+        <Button key="join" icon="login" className="btn-primary" onClick={this.joinStash} loading={joinStashActioner.isLoading}>
           Join Stash
         </Button>
       ),
@@ -136,11 +111,12 @@ class StashPage extends Component {
 
   renderSheets = (stash) => {
     return (
-      <SheetsSection stash={stash} urlPrefix={this.state.urlPrefix} />
+      <SheetsSection stash={stash} urlPrefix={this.props.urlPrefix} />
     );
   }
 
   renderItem = (stash) => {
+    const { baseStyles } = this.props;
     const description = (stash.hasDescription()) ? (
       <div>
         {stash.description}
@@ -170,14 +146,14 @@ class StashPage extends Component {
     return (
       <div>
         <div className={styles.Overview}>
-          <div className={`${styles.Header} ${styles.HeaderOne}`}>
-            <div className={styles.Actions}>
+          <div className={`${baseStyles.Header} ${baseStyles.HeaderOne}`}>
+            <div className={baseStyles.Actions}>
               {this.renderActions(stash)}
             </div>
-            <div className={styles.Cover}>
+            <div className={baseStyles.Cover}>
               <img src={stash.cover_image_attachment.thumb_url} />
             </div>
-            <div className={styles.Title}>
+            <div className={baseStyles.Title}>
               {stash.name}
             </div>
           </div>
@@ -188,7 +164,7 @@ class StashPage extends Component {
               {stash.users_count}
             </span>
             <span className={styles.Misc}>
-              <Icon type="file-text" />
+              <Icon type="copy" />
               {stash.sheets_count}
             </span>
             {
@@ -204,23 +180,23 @@ class StashPage extends Component {
           </div>
         </div>
         <div className={styles.Sheets}>
-          <div className={`${styles.Header} ${styles.HeaderTwo}`}>
-            <div className={styles.Actions}>
+          <div className={`${baseStyles.Header} ${baseStyles.HeaderTwo}`}>
+            <div className={baseStyles.Actions}>
             </div>
-            <div className={styles.TitleSm}>
+            <div className={baseStyles.TitleSm}>
               Sheets
             </div>
-            <Link to={`${this.state.urlPrefix}/sheets`} className={styles.ViewAllOne}>
-              <Button className="btn-quaternary btn-rounded" icon="bars">
+            <Link to={`${this.props.urlPrefix}/sheets`} className={baseStyles.ViewAllOne}>
+              <Button className="btn-tertiary btn-rounded" icon="bars">
                 View all
               </Button>
             </Link>
           </div>
           <hr className="hr-sm" />
           {this.renderSheets(stash)}
-          <div className={styles.ViewAllTwo}>
+          <div className={baseStyles.ViewAllTwo}>
             >&nbsp;
-            <Link to={`${this.state.urlPrefix}/sheets`} className="link-secondary">
+            <Link to={`${this.props.urlPrefix}/sheets`} className="link-secondary">
               View all&nbsp;
               {stash.sheets_count}
               &nbsp;sheets
@@ -232,8 +208,8 @@ class StashPage extends Component {
   }
 
   render() {
-    const { itemLoader, editStashModalParams } = this.state;
-    const stash = itemLoader.item;
+    const { editStashModalParams } = this.state;
+    const { stash } = this.props;
 
     return (
       <div className={styles.Container}>
@@ -241,16 +217,9 @@ class StashPage extends Component {
           key={editStashModalParams.uuid}
           modalParams={editStashModalParams}
           stash={stash}
-          loadItem={this.loadItem}
+          loadItem={this.props.loadItem}
         />
-        <LoaderContent
-          firstLoading={itemLoader.isFirstLoading()}
-          loading={itemLoader.isLoading}
-          isError={itemLoader.isError}
-          onRetry={this.loadItem}
-        >
-          {this.renderItem(stash)}
-        </LoaderContent>
+        {this.renderItem(stash)}
       </div>
     );
   }

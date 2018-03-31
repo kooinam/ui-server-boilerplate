@@ -60,7 +60,7 @@ class SheetsSection extends Component {
           </span>
           &nbsp;
           {
-            stash.canAdmin() && (
+            stash.canPost() && (
               <span>
                 Try&nbsp;
                 <a
@@ -94,7 +94,7 @@ class SheetsSection extends Component {
 
                 const description = (item.hasDescription()) ? (
                   <div>
-                    {stash.description}
+                    {item.description}
                   </div>
                 ) : (
                   <div className="help-text">
@@ -107,20 +107,27 @@ class SheetsSection extends Component {
                     <Card
                       className={styles.SheetCard}
                     >
-                      <Link className={`link-primary ${styles.SheetLink}`} to={`${this.props.urlPrefix}/sheets/${item.id}`}>
-                        <div className={styles.SheetCover}>
-                          {sheetCover}
-                        </div>
+                      <div className={styles.SheetLink}>
+                        <Link className="link-primary" to={`${this.props.urlPrefix}/sheets/${item.id}`}>
+                          <div className={styles.SheetCover}>
+                            {sheetCover}
+                          </div>
+                        </Link>
                         <div className={styles.SheetDetails}>
+                          <Link to={`${this.props.urlPrefix}/sheets/${item.id}`}>
+                            <div className={styles.SheetDescription}>
+                              {description}
+                            </div>
+                          </Link>
                           <div className={styles.SheetMiscs}>
                             <span className={styles.SheetMisc}>
+                              <Icon type="file-text" />
+                              {item.attachments_count}
                             </span>
                           </div>
-                          <div className={styles.SheetDescription}>
-                            {description}
-                          </div>
+                          <div className="clearfix" />
                         </div>
-                      </Link>
+                      </div>
                     </Card>
                   </Col>
                 );

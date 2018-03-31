@@ -4,8 +4,10 @@ import { BaseRouteComponent, TabContainer } from 'awry-utilities';
 
 import HomePage from './containers/HomePage';
 import StashesPage from './containers/StashesPage';
+import BaseStashPage from './containers/BaseStashPage';
 import StashPage from './containers/StashPage';
 import SheetsPage from './containers/SheetsPage';
+import SheetPage from './containers/SheetPage';
 import SearchPage from './containers/SearchPage';
 import NotFoundPage from './containers/NotFoundPage';
 
@@ -37,7 +39,7 @@ export default [
         routeProps: {
           breadcrumbName: '%{stashName}',
         },
-        component: BaseRouteComponent,
+        component: BaseStashPage,
         routes: [{
           path: '',
           exact: true,
@@ -47,13 +49,31 @@ export default [
           routeProps: {
             breadcrumbName: 'Sheets',
           },
-          component: BaseRouteComponent,
+          component: SheetsPage,
           routes: [{
-            path: '',
+            path: ':sheetId',
             exact: true,
-            component: SheetsPage,
+            component: SheetPage,
+          }, {
+            path: '*',
+            component: NotFoundPage,
+            routeProps: {
+              breadcrumbName: 'Page Not Found',
+            },
           }],
+        }, {
+          path: '*',
+          component: NotFoundPage,
+          routeProps: {
+            breadcrumbName: 'Page Not Found',
+          },
         }],
+      }, {
+        path: '*',
+        component: NotFoundPage,
+        routeProps: {
+          breadcrumbName: 'Page Not Found',
+        },
       }],
     }, {
       path: 'search/:term',
@@ -65,7 +85,13 @@ export default [
         path: '',
         exact: true,
         component: SearchPage,
-      }]
+      }, {
+        path: '*',
+        component: NotFoundPage,
+        routeProps: {
+          breadcrumbName: 'Page Not Found',
+        },
+      }],
     }, {
       path: '*',
       component: NotFoundPage,

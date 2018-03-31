@@ -83,7 +83,7 @@ class CommonStashFormInputs extends React.Component {
               </Upload.Dragger>
             </Form.Item>
           </Col>
-          <Col sm={12}>
+          <Col sm={24}>
             <Form.Item {...getFieldError(actioner.error, 'name')} label="Name" hasFeedback>
               {form.getFieldDecorator('name', {
                 initialValue: stash.name,

@@ -31,6 +31,26 @@ const authMethodsInput = (form, actioner) => {
   return input;
 };
 
+const signUpInput = (form, actioner) => {
+  let input = (
+    <Row>
+      <Col md={24}>
+        <Form.Item {...getFieldError(actioner.error, 'username')} label="Username" hasFeedback>
+          {form.getFieldDecorator('username', {
+            rules: [
+              { required: true, message: 'Username is required' },
+            ],
+          })(
+            <Input type="text" placeholder="Username" />,
+          )}
+        </Form.Item>
+      </Col>
+    </Row>
+  )
+
+  return input;
+};
+
 const passwordInput = (form, actioner) => {
   return (
     <Row>
@@ -123,6 +143,8 @@ const connector = connect(
 
 export {
   authMethodsInput,
+  signUpInput,
   passwordInput,
 };
+
 export default connector(Form.create()(SignInForm));

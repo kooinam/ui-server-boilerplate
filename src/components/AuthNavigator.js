@@ -135,7 +135,7 @@ class AuthNavigator extends Component {
         const menu = (
           <Menu selectedKeys={[]} className={styles.Menu}>
             <Menu.Item disabled>
-              {currentUser.email}
+              {currentUser.username}
             </Menu.Item>
             {
               (!hideAccount) ? (

@@ -26,6 +26,7 @@
 
 .Popover {
   :global(.ant-popover-inner-content) {
+    width: 120px;
     padding: 0;
 
     .Menu {

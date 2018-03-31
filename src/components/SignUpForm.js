@@ -8,7 +8,7 @@ import { Actioner, getAxios, getFieldError } from 'awry-utilities';
 
 import styles from './SignUpForm.scss';
 import { authenticated } from '../actions/auth';
-import { authMethodsInput, passwordInput } from './SignInForm';
+import { authMethodsInput, passwordInput, signUpInput } from './SignInForm';
 import User from '../models/User';
 
 class SignUpForm extends React.Component {
@@ -64,6 +64,7 @@ class SignUpForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit} className={styles.Component}>
         {authMethodsInput(form, actioner)}
+        {signUpInput(form, actioner)}
         {passwordInput(form, actioner)}
         <Row>
           <Col md={24}>

@@ -9,6 +9,8 @@ import { setupAxios, addAxiosPreferences, BreadcrumbsNavigator, matchRoutes, mat
 import enUS from 'antd/lib/locale-provider/en_US';
 import 'react-quill/dist/quill.core.css';
 import 'react-quill/dist/quill.snow.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { Redirect } from 'react-router-dom';
 

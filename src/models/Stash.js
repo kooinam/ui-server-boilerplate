@@ -19,11 +19,14 @@ class Stash extends BaseModel {
     this.sheets = this.sheets.map((sheet) => {
       return new Sheet(sheet);
     });
-
     this.cover_image_attachment = new Attachment(this.cover_image_attachment);
   }
 
   canAdmin = () => {
+    return (this.role === 'admin' || this.role === 'owner');
+  }
+
+  canPost = () => {
     return (this.role === 'admin' || this.role === 'owner');
   }
 

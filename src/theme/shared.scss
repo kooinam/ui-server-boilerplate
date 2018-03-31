@@ -6,7 +6,9 @@ $secondary-bg-color: white;
 $secondary-color: #0084ff;
 $secondary-tint-color: #2eb6ff;
 $secondary-shade-color: #005bd1;
-$info-color: rgba(0, 0, 0, 0.45);
+$tertiary-bg-color: #f4f4f4;
+$info-color: #aaa;
+$success-color: #57a83b;
 
 :global(.ql-editor) {
   line-height: 24px;

@@ -1,0 +1,53 @@
+@import 'shared.scss';
+
+.Container {
+  display: block;
+
+  .Header {
+    position: relative;;
+
+    &.HeaderOne {
+      height: 60px;
+    }
+
+    .Cover {
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: bottom;
+
+      img {
+        border: 1px solid $primary-tint-color;
+        border-radius: 100px;
+        height: 60px;
+        width: 60px;
+        object-fit: cover;
+      }
+    }
+
+    .Title {
+      display: inline-block;
+      font-weight: bold;
+      font-size: 36px;
+    }
+
+    .TitleSm {
+      display: inline-block;
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    .Actions {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+
+      button {
+        margin: 0 0 0 8px;
+      }
+    }
+
+    .ViewAllOne {
+      float: right;
+    }
+  }
+}

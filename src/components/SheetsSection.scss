@@ -8,14 +8,18 @@
     .SheetCard {
       max-width: 300px;
       margin: 12px 20px;
+      box-shadow: 1px 1px 20px 1px #ddd;
+      border: 1px solid #ddd;
+
+      &:hover {
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+      }
 
       :global(.ant-card-body) {
         padding: 0;
 
         .SheetLink {
           display: block;
-          min-height: 240px;
-          position: relative;
 
           .SheetCover {
             img {
@@ -24,21 +28,23 @@
           }
 
           .SheetDetails {
-            padding: 2px 8px;
+            padding: 8px;
 
-            .SheetTitle {
-              font-weight: bold;
-              font-size: 16px;
+            .SheetDescription {
+              color: $primary-color;
+              font-size: 14px;
             }
 
             .SheetMiscs {
+              float: right;
+
               .SheetMisc {
-                margin: 0 8px 8px 0;
+                margin: 0 0 8px 8px;
                 font-size: 12px;
                 color: $secondary-tint-color;
 
                 i {
-                  margin: 0 4px 0 0;
+                  margin: 0 2px 0 0;
                 }
               }
             }

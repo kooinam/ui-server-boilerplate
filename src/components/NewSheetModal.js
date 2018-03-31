@@ -66,8 +66,12 @@ class NewSheetModal extends React.Component {
 
       const attributes = form.getFieldsValue();
       const params = {
+        sheet: attributes,
         attachment_ids: attachmentIds,
       };
+      if (params.sheet.stash_id) {
+        params.sheet.stash_id = params.sheet.stash_id.key;
+      }
 
       this.state.actioner.do('/sheets.json', params);
 
@@ -176,7 +180,7 @@ class NewSheetModal extends React.Component {
                   <FilterSelect
                     tableParams={stashesTableParams}
                     filterFields={['name_cont']}
-                    initialValue={null}
+                    initialValue={this.props.stash}
                     keyField='id'
                     labelField='name'
                     name={'Stash'}
@@ -184,6 +188,7 @@ class NewSheetModal extends React.Component {
                     formKey="stash_id"
                     error={actioner.error}
                     errorKeys={['stash_id']}
+                    disabled={(this.props.stash) ? true : false}
                   />
                 </Col>
                 <Col sm={24}>
