@@ -49,6 +49,7 @@ class StashesSection extends Component {
         pagination: {
           per_page: 12,
         },
+        scope: this.props.scope,
       }),
       modalParams: new ModalParams({
         component: this,

@@ -129,7 +129,7 @@
     }
   },
   "dependencies": {
-    "awry-utilities": "1.0.101",
+    "awry-utilities": "1.0.108",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
     "body-parser": "^1.18.2",

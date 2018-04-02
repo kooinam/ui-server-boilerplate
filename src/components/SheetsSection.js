@@ -27,6 +27,7 @@ class SheetsSection extends Component {
         pagination: {
           per_page: 8,
         },
+        scope: this.props.scope,
       }),
       newSheetModalParams: new ModalParams({
         component: this,

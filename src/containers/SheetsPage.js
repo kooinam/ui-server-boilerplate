@@ -38,7 +38,7 @@ class SheetsPage extends Component {
   }
 
   render() {
-    const { stash, baseStyles, urlPrefix, matchedRoutes } = this.props;
+    const { stash, baseStyles, urlPrefix, matchedRoutes, scope } = this.props;
     const { newSheetModalParams } = this.state;
     const sheetId = matchRouteParams(matchedRoutes, 'sheetId');
 
@@ -65,8 +65,15 @@ class SheetsPage extends Component {
           </div>
         </div>
         <hr className="hr" />
-        <SheetsSection stash={stash} urlPrefix={this.props.urlPrefix} />
-        <BaseRouteComponent {...this.props} matchedRoutes={this.props.matchedRoutes} stash={stash} urlPrefix={urlPrefix} key={sheetId} />
+        <SheetsSection stash={stash} urlPrefix={this.props.urlPrefix} scope={this.props.scope} />
+        <BaseRouteComponent
+          {...this.props}
+          matchedRoutes={this.props.matchedRoutes}
+          stash={stash}
+          urlPrefix={urlPrefix}
+          key={sheetId}
+          scope={scope}
+        />
       </div>
     );
   }

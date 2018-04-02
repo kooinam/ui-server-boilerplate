@@ -72,7 +72,7 @@ export default [
       path: 'stashes',
       routeProps: {
         urlPrefix: '',
-        apiScope: '',
+        scope: 'public',
       },
       component: BaseRouteComponent,
       routes: stashesRoutes
@@ -80,7 +80,7 @@ export default [
       path: 'me/stashes',
       routeProps: {
         urlPrefix: '/me',
-        apiScope: '/me',
+        scope: 'mine',
         breadcrumbName: 'My Stashes',
         requireUser: true,
       },

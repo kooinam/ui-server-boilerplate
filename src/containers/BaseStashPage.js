@@ -14,6 +14,7 @@ class BaseStashPage extends Component {
 
     const { matchedRoutes } = this.props;
     const stashId = matchRouteParams(matchedRoutes, 'stashId');
+    const scope = matchRouteProperty(this.props.matchedRoutes, 'scope');
 
     this.state = {
       itemLoader: new ItemLoader({
@@ -28,8 +29,10 @@ class BaseStashPage extends Component {
             stashName: item.name,
           }));
         },
+        scope,
       }),
       urlPrefix: `${(matchRouteProperty(this.props.matchedRoutes, 'urlPrefix') || '')}/stashes/${stashId}`,
+      scope: scope,
     };
   }
 

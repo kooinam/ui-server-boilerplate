@@ -14,16 +14,18 @@ class StashesPage extends Component {
 
     this.state = {
       urlPrefix: (matchRouteProperty(this.props.matchedRoutes, 'urlPrefix') || ''),
+      scope: matchRouteProperty(this.props.matchedRoutes, 'scope'),
     };
   }
 
   render() {
-    const { urlPrefix } = this.state;
+    const { urlPrefix, scope} = this.state;
 
     return (
       <div className={styles.Container}>
         <StashesSection
           urlPrefix={urlPrefix}
+          scope={scope}
         />
       </div>
     );

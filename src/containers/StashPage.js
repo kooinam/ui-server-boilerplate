@@ -111,7 +111,7 @@ class StashPage extends Component {
 
   renderSheets = (stash) => {
     return (
-      <SheetsSection stash={stash} urlPrefix={this.props.urlPrefix} />
+      <SheetsSection stash={stash} urlPrefix={this.props.urlPrefix} scope={this.props.scope} />
     );
   }
 

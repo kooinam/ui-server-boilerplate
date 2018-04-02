@@ -38,6 +38,10 @@ class Stash extends BaseModel {
     return (this.role === 'member' || this.role === 'admin' || this.role === 'owner');
   }
 
+  canViewContent = () => {
+    return (this.is_private === false) || (this.is_private && (this.role === 'member' || this.role === 'admin' || this.role === 'owner'));
+  }
+
   hasDescription = () => {
     return this.description && this.description.length > 0;
   }
