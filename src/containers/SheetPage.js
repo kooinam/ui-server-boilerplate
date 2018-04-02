@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import { matchRouteParams, ItemLoader, getAxios, LoaderContent, formatDate, formatTime, renderActions, Actioner } from 'awry-utilities';
-import { Modal, Row, Col, Carousel, Dropdown, Menu, Button, Icon } from 'antd';
+import { Modal, Row, Col, Carousel, Dropdown, Menu, Button, Icon, Popconfirm } from 'antd';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
@@ -171,9 +171,16 @@ class SheetPage extends Component {
     const actions = [{
       component: (
         <Menu.Item key="delete_sheet">
-          <a onClick={this.deleteSheet}>
-            <Icon type="close" />
-          </a>
+          <Popconfirm
+            title="Are you sure？"
+            okText="Confirm"
+            cancelText="Cancel"
+            onConfirm={this.deleteSheet}
+          >
+            <a>
+              <Icon type="close" />
+            </a>
+          </Popconfirm>
         </Menu.Item>
       ),
       canAccess: sheet.canDelete(),

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 
 import styles from './HomePage.scss';
+import SheetsSection from '../components/SheetsSection';
 
 class HomePage extends Component {
   constructor(props) {

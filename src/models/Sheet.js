@@ -27,6 +27,11 @@ class Sheet extends BaseModel {
     return this.description && this.description.length > 0;
   }
 
+  canEdit = () => {
+    return true;
+    return (this.role === 'admin' || this.role === 'owner');
+  }
+
   canDelete = () => {
     return true;
     return (this.role === 'admin' || this.role === 'owner');
