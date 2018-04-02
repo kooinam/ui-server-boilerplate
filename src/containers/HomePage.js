@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 
 import styles from './HomePage.scss';
-import SheetsSection from '../components/SheetsSection';
+import StashesSection from '../components/StashesSection';
 
 class HomePage extends Component {
   constructor(props) {
@@ -17,7 +17,9 @@ class HomePage extends Component {
   render() {
     return (
       <div className={styles.Container}>
-        HOME
+        <StashesSection
+          urlPrefix=""
+        />
       </div>
     );
   }

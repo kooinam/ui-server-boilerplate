@@ -353,18 +353,10 @@ button:focus {
   margin: 16px 0;
 }
 
-// :global(.ant-select-dropdown-menu-item:hover),
-// :global(.ant-select-dropdown-menu-item-active) {
-//   background-color: $secondary-tint-color;
-// }
 
 :global(.ant-table) tr:hover td {
   background-color: transparent;
 }
-
-// :global(.ant-table) tr:hover td:hover {
-//   background-color: $secondary-tint-color;
-// }
 
 :global(a.link) {
   font-weight: bold;

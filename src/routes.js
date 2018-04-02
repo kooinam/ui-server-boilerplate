@@ -11,6 +11,52 @@ import SheetPage from './containers/SheetPage';
 import SearchPage from './containers/SearchPage';
 import NotFoundPage from './containers/NotFoundPage';
 
+const stashesRoutes = [{
+  path: '',
+  exact: true,
+  component: StashesPage, // Add your route here
+}, {
+  path: ':stashId',
+  routeProps: {
+    breadcrumbName: '%{stashName}',
+  },
+  component: BaseStashPage,
+  routes: [{
+    path: '',
+    exact: true,
+    component: StashPage,
+  }, {
+    path: 'sheets',
+    routeProps: {
+      breadcrumbName: 'Sheets',
+    },
+    component: SheetsPage,
+    routes: [{
+      path: ':sheetId',
+      exact: true,
+      component: SheetPage,
+    }, {
+      path: '*',
+      component: NotFoundPage,
+      routeProps: {
+        breadcrumbName: 'Page Not Found',
+      },
+    }],
+  }, {
+    path: '*',
+    component: NotFoundPage,
+    routeProps: {
+      breadcrumbName: 'Page Not Found',
+    },
+  }],
+}, {
+  path: '*',
+  component: NotFoundPage,
+  routeProps: {
+    breadcrumbName: 'Page Not Found',
+  },
+}];
+
 export default [
   {
     path: '/',
@@ -23,58 +69,23 @@ export default [
       exact: true,
       component: HomePage, // Add your route here
     }, {
+      path: 'stashes',
+      routeProps: {
+        urlPrefix: '',
+        apiScope: '',
+      },
+      component: BaseRouteComponent,
+      routes: stashesRoutes
+    }, {
       path: 'me/stashes',
       routeProps: {
         urlPrefix: '/me',
+        apiScope: '/me',
         breadcrumbName: 'My Stashes',
         requireUser: true,
       },
       component: BaseRouteComponent,
-      routes: [{
-        path: '',
-        exact: true,
-        component: StashesPage, // Add your route here
-      }, {
-        path: ':stashId',
-        routeProps: {
-          breadcrumbName: '%{stashName}',
-        },
-        component: BaseStashPage,
-        routes: [{
-          path: '',
-          exact: true,
-          component: StashPage,
-        }, {
-          path: 'sheets',
-          routeProps: {
-            breadcrumbName: 'Sheets',
-          },
-          component: SheetsPage,
-          routes: [{
-            path: ':sheetId',
-            exact: true,
-            component: SheetPage,
-          }, {
-            path: '*',
-            component: NotFoundPage,
-            routeProps: {
-              breadcrumbName: 'Page Not Found',
-            },
-          }],
-        }, {
-          path: '*',
-          component: NotFoundPage,
-          routeProps: {
-            breadcrumbName: 'Page Not Found',
-          },
-        }],
-      }, {
-        path: '*',
-        component: NotFoundPage,
-        routeProps: {
-          breadcrumbName: 'Page Not Found',
-        },
-      }],
+      routes: stashesRoutes,
     }, {
       path: 'search/:term',
       routeProps: {
