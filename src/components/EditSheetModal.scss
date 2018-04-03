@@ -1,0 +1,10 @@
+.Component {
+  display: block;
+
+  :global(.ant-modal-header) {
+    :global(.ant-modal-title) {
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+}

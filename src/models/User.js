@@ -1,10 +1,16 @@
 import { BaseModel } from 'awry-utilities';
 
+import Attachment from './Attachment';
+
 class User extends BaseModel {
   constructor(attributes) {
-    const newAttributes = Object.assign({}, attributes);
+    const newAttributes = Object.assign({
+      avatar_image_attachment: {},
+    }, attributes);
 
     super(newAttributes);
+
+    this.avatar_image_attachment = new Attachment(this.avatar_image_attachment);
   }
 
   static setTokenPrefix = (tokenPrefix) => {
@@ -42,6 +48,30 @@ class User extends BaseModel {
 
   isAdmin = () => {
     return this.is_admin;
+  }
+
+  canMakeAdmin = () => {
+    return (this.role === 'member');
+  }
+
+  canMakeMember = () => {
+    return (this.role === 'admin');
+  }
+
+  canKickedByOwner = () => {
+    return (this.role === 'member' || this.role === 'admin');
+  }
+
+  canKickedByAdmin = () => {
+    return (this.role === 'member');
+  }
+
+  canAccept = () => {
+    return (this.role === 'requesting');
+  }
+
+  canReject = () => {
+    return (this.role === 'requesting');
   }
 }
 

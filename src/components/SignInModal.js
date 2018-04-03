@@ -30,7 +30,14 @@ class SignInModal extends React.Component {
       >
         <div className={styles.SignInForm}>
           <SignInForm
-            onAuthenticated={this.props.hideModal}
+            onAuthenticated={
+              () => {
+                this.props.hideModal();
+                if (this.props.onAuthenticated) {
+                  this.props.onAuthenticated();
+                }
+              }
+            }
           />
           <Link
             to="/forget_password"

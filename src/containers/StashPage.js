@@ -4,13 +4,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import { getAxios, ModalParams, renderActions, Actioner } from 'awry-utilities';
-import { Icon, Button, Popconfirm } from 'antd';
+import { Icon, Button, Popconfirm, Dropdown, Menu, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
+import pluralize from 'pluralize';
 
 import styles from './StashPage.scss';
 import Stash from '../models/Stash';
 import EditStashModal from '../components/EditStashModal';
+import ManageStashUsersModal from '../components/ManageStashUsersModal';
 import SheetsSection from '../components/SheetsSection';
+import StashUsersSection from '../components/StashUsersSection';
+import { showSignInModal } from '../actions/auth';
 
 class StashPage extends Component {
   constructor(props) {
@@ -21,6 +25,10 @@ class StashPage extends Component {
         component: this,
         key: 'editStashModalParams',
       }),
+      manageStashUsersModalParams: new ModalParams({
+        component: this,
+        key: 'manageStashUsersModalParams',
+      }),
       joinStashActioner: new Actioner({
         component: this,
         key: 'joinStashActioner',
@@ -29,53 +37,119 @@ class StashPage extends Component {
         itemName: 'result',
         ItemKlass: Object,
         successMessageGetter: (result) => {
-          return `Successfully joined Stash`;
+          return 'Joined Stash successfully';
         },
         successCallback: (stash) => {
           this.props.loadItem();
         },
         errorMessageGetter: (error) => {
-          return `Failed to joined Stash`;
+          return 'Failed to join Stash';
         },
       }),
       leaveStashActioner: new Actioner({
         component: this,
         key: 'leaveStashActioner',
         axiosGetter: () => getAxios('toro-client'),
-        method: 'delete',
+        method: 'patch',
         itemName: 'result',
         ItemKlass: Object,
         successMessageGetter: (result) => {
-          return `Leave Stash successfully`;
+          return 'Left Stash successfully';
         },
         successCallback: (stash) => {
           this.props.loadItem();
         },
         errorMessageGetter: (error) => {
-          return `Failed to leave Stash`;
+          return 'Failed to leave Stash';
+        },
+      }),
+      cancelJoinStashActioner: new Actioner({
+        component: this,
+        key: 'cancelJoinStashActioner',
+        axiosGetter: () => getAxios('toro-client'),
+        method: 'patch',
+        itemName: 'result',
+        ItemKlass: Object,
+        successMessageGetter: (result) => {
+          return 'Cancelled joining Stash successfully';
+        },
+        successCallback: (stash) => {
+          this.props.loadItem();
+        },
+        errorMessageGetter: (error) => {
+          return 'Failed to cancel joining Stash';
         },
       }),
     };
   }
 
   joinStash = () => {
-    const { editStashModalParams } = this.state;
-    const { stash } = this.props;
+    const { stash, currentUser } = this.props;
 
-    this.state.leaveStashActioner.do(`/stashes/${stash.id}/stash_users.json`);
+    if (!currentUser) {
+      this.props.dispatch(showSignInModal());
+    } else {
+      this.state.joinStashActioner.do(`/stashes/${stash.id}/users.json`);
+    }
   }
 
   leaveStash = () => {
-    const { editStashModalParams } = this.state;
     const { stash } = this.props;
 
-    this.state.leaveStashActioner.do(`/stashes/${stash.id}/stash_users/${this.props.currentUser.id}.json`);
+    this.state.leaveStashActioner.do(`/stashes/${stash.id}/users/${this.props.currentUser.id}/leave.json`);
+  }
+
+  cancelJoinStash = () => {
+    const { stash } = this.props;
+
+    this.state.cancelJoinStashActioner.do(`/stashes/${stash.id}/users/${this.props.currentUser.id}/cancel.json`);
   }
 
   renderActions = (stash) => {
-    const { editStashModalParams, leaveStashActioner, joinStashActioner } = this.state;
+    const { editStashModalParams, leaveStashActioner, joinStashActioner, cancelJoinStashActioner } = this.state;
+    const manageActions = renderActions([{
+      component: (
+        <Menu.Item key="edit">
+          <a className={styles.ActionItem} onClick={this.state.editStashModalParams.show}>
+            <Icon type="edit" />
+            &nbsp;&nbsp;Edit
+          </a>
+        </Menu.Item>
+      ),
+      canAccess: stash.canLeave(),
+    }, {
+      component: (
+        <Menu.Item key="leave">
+          <Popconfirm
+            title="Are you sure？"
+            okText="Confirm"
+            cancelText="Cancel"
+            onConfirm={this.leaveStash}
+          >
+            <a className={styles.ActionItem}>
+              <Icon type="logout" />
+              &nbsp;&nbsp;Leave
+            </a>
+          </Popconfirm>
+        </Menu.Item>
+      ),
+      canAccess: stash.canLeave(),
+    }]);
+
+    const menu = (
+      <Menu>
+        {manageActions}
+      </Menu>
+    );
 
     const actions = [{
+      component: (
+        <Button key="joining" className="btn-secondary" icon="close" onClick={this.cancelJoinStash} loading={cancelJoinStashActioner.isLoading}>
+          Requesting
+        </Button>
+      ),
+      canAccess: stash.canCancelJoin(),
+    }, {
       component: (
         <Button key="join" icon="login" className="btn-primary" onClick={this.joinStash} loading={joinStashActioner.isLoading}>
           Join Stash
@@ -84,26 +158,13 @@ class StashPage extends Component {
       canAccess: stash.canJoin(),
     }, {
       component: (
-        <Button key="manage" icon="setting" className="btn-primary" onClick={editStashModalParams.show}>
-          Manage
-        </Button>
+        <Dropdown overlay={menu} key="actions">
+          <a className={styles.DropdownLink}>
+            <Icon type="ellipsis" />
+          </a>
+        </Dropdown>
       ),
-      canAccess: stash.canAdmin(),
-    }, {
-      component: (
-        <Popconfirm
-          key="leave"
-          title="Are you sure？"
-          okText="Confirm"
-          cancelText="Cancel"
-          onConfirm={this.leaveStash}
-        >
-          <Button icon="logout" className="btn-tertiary" loading={leaveStashActioner.isLoading}>
-            Leave Stash
-          </Button>
-        </Popconfirm>
-      ),
-      canAccess: stash.canLeave(),
+      canAccess: manageActions.length > 0,
     }];
 
     return renderActions(actions);
@@ -111,7 +172,13 @@ class StashPage extends Component {
 
   renderSheets = (stash) => {
     return (
-      <SheetsSection stash={stash} urlPrefix={this.props.urlPrefix} scope={this.props.scope} />
+      <SheetsSection stash={stash} urlPrefix={this.props.urlPrefix} />
+    );
+  }
+
+  renderUsers = (stash) => {
+    return (
+      <StashUsersSection stash={stash} urlPrefix={this.props.urlPrefix} isList={true} />
     );
   }
 
@@ -159,6 +226,13 @@ class StashPage extends Component {
           </div>
           <hr className="hr" />
           <div className={styles.Miscs}>
+            {
+              stash.is_private && (
+                <Tooltip title="Only member can view content">
+                  <Icon type="lock" className={styles.SmallMisc} />
+                </Tooltip>
+              )
+            }
             <span className={styles.Misc}>
               <Icon type="user" />
               {stash.users_count}
@@ -167,16 +241,31 @@ class StashPage extends Component {
               <Icon type="copy" />
               {stash.sheets_count}
             </span>
-            {
-              stash.is_private && (
-                <span className={styles.Misc}>
-                  <Icon type="lock" />
-                </span>
-              )
-            }
           </div>
           <div className={styles.Description}>
             {description}
+          </div>
+        </div>
+        <div className={styles.Users}>
+          {this.renderUsers(stash)}
+          <div className={baseStyles.ViewAllTwo}>
+            >&nbsp;
+            <Link to={`${this.props.urlPrefix}/users`} className="link-secondary">
+              View all&nbsp;
+              {stash.users_count}
+              &nbsp;
+              {pluralize('member', stash.users_count)}
+              {
+                (stash.join_requests_count && stash.join_requests_count > 0) ? (
+                  <span>
+                    &nbsp;(
+                    {stash.join_requests_count} join requests)
+                  </span>
+                ) : (
+                  <span />
+                )
+              }
+            </Link>
           </div>
         </div>
         <div className={styles.Sheets}>
@@ -199,7 +288,7 @@ class StashPage extends Component {
             <Link to={`${this.props.urlPrefix}/sheets`} className="link-secondary">
               View all&nbsp;
               {stash.sheets_count}
-              &nbsp;sheets
+              &nbsp;{pluralize('sheet', stash.sheets_count)}
             </Link>
           </div>
         </div>
@@ -208,7 +297,7 @@ class StashPage extends Component {
   }
 
   render() {
-    const { editStashModalParams } = this.state;
+    const { editStashModalParams, manageStashUsersModalParams } = this.state;
     const { stash } = this.props;
 
     return (
@@ -216,6 +305,12 @@ class StashPage extends Component {
         <EditStashModal
           key={editStashModalParams.uuid}
           modalParams={editStashModalParams}
+          stash={stash}
+          loadItem={this.props.loadItem}
+        />
+        <ManageStashUsersModal
+          key={manageStashUsersModalParams.uuid}
+          modalParams={manageStashUsersModalParams}
           stash={stash}
           loadItem={this.props.loadItem}
         />

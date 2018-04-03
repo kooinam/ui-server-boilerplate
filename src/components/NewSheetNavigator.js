@@ -28,7 +28,9 @@ class NewSheetNavigator extends Component {
     const { currentUser } = this.props;
 
     if (!currentUser) {
-      this.props.dispatch(showSignInModal());
+      this.props.dispatch(showSignInModal(() => {
+        this.state.modalParams.show();
+      }));
     } else {
       this.state.modalParams.show();
     }

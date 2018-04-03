@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import { TableParams, getAxios, LoaderContent, ModalParams } from 'awry-utilities';
 import Masonry from 'react-masonry-component';
-import { Icon, Card, Row, Col } from 'antd';
+import { Icon, Card, Row, Col, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 
 import styles from './StashesSection.scss';
@@ -58,7 +58,7 @@ class StashesSection extends Component {
     };
   }
 
-  componentWillMount = () => {
+  componentWillMount() {
     this.loadItems();
   }
 
@@ -72,80 +72,94 @@ class StashesSection extends Component {
       transitionDuration: 0.5,
     };
 
-    const masonry = (
-      <Row>
-        <Masonry
-          options={masonryOptions} // default {}
-          disableImagesLoaded={false} // default false
-          updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
-        >
-          <Col sm={12} xs={24} md={8} lg={6}>
-            <Card
-              className={styles.StashCard}
-            >
-              <Link
-                className={`link-primary ${styles.StashLink} ${styles.AddStashLink}`}
-                to="#"
-                onClick={modalParams.show}
-              >
-                <div className={styles.AddStash}>
-                  <Icon
-                    type="plus"
-                  />
-                  <div>
-                    Stash
-                  </div>
-                </div>
-              </Link>
-            </Card>
-          </Col>
-          {
-            tableParams.items.map((item) => {
-              return (
-                <Col sm={12} xs={24} lg={6} md={8} key={item.id}>
+    let masonry = null;
+
+    if (tableParams.items.length === 0 && this.props.scope !== 'mine') {
+      masonry = (
+        <div className="help-text">
+          No stash found...
+        </div>
+      );
+    } else {
+      masonry = (
+        <Row>
+          <Masonry
+            options={masonryOptions} // default {}
+            disableImagesLoaded={false} // default false
+            updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+          >
+            {
+              this.props.scope === 'mine' && (
+                <Col sm={12} xs={24} md={8} lg={6}>
                   <Card
                     className={styles.StashCard}
                   >
-                    <div className={styles.StashLink}>
-                      <Link className="link-primary" to={`${this.props.urlPrefix}/stashes/${item.id}`}>
-                        <div className={styles.StashCover}>
-                          <img src={item.cover_image_attachment.standard_url} />
+                    <Link
+                      className={`link-primary ${styles.StashLink} ${styles.AddStashLink}`}
+                      to="#"
+                      onClick={modalParams.show}
+                    >
+                      <div className={styles.AddStash}>
+                        <Icon
+                          type="plus"
+                        />
+                        <div>
+                          Stash
                         </div>
-                      </Link>
-                      <div className={styles.StashDetails}>
-                        <Link className="link-primary" to={`${this.props.urlPrefix}/stashes/${item.id}`}>
-                          <div className={styles.StashTitle}>
-                            {item.name}
-                          </div>
-                        </Link>
-                        <div className={styles.StashMiscs}>
-                          <span className={styles.StashMisc}>
-                            <Icon type="user" />
-                            {item.users_count}
-                          </span>
-                          <span className={styles.StashMisc}>
-                            <Icon type="copy" />
-                            {item.sheets_count}
-                          </span>
-                          {
-                            item.is_private && (
-                              <span className={styles.StashMisc}>
-                                <Icon type="lock" />
-                              </span>
-                            )
-                          }
-                        </div>
-                        <div className="clearfix" />
                       </div>
-                    </div>
+                    </Link>
                   </Card>
                 </Col>
-              );
-            })
-          }
-        </Masonry>
-      </Row>
-    );
+              )
+            }
+            {
+              tableParams.items.map((item) => {
+                return (
+                  <Col sm={12} xs={24} lg={6} md={8} key={item.id}>
+                    <Card
+                      className={styles.StashCard}
+                    >
+                      <div className={styles.StashLink}>
+                        <Link className="link-primary" to={`${this.props.urlPrefix}/stashes/${item.id}`}>
+                          <div className={styles.StashCover}>
+                            <img src={item.cover_image_attachment.standard_url} />
+                          </div>
+                        </Link>
+                        <div className={styles.StashDetails}>
+                          <Link className="link-primary" to={`${this.props.urlPrefix}/stashes/${item.id}`}>
+                            <div className={styles.StashTitle}>
+                              {item.name}
+                            </div>
+                          </Link>
+                          <div className={styles.StashMiscs}>
+                            {
+                              item.is_private && (
+                                <Tooltip title="Only member can view content">
+                                  <Icon type="lock" className={styles.StashSmallMisc} />
+                                </Tooltip>
+                              )
+                            }
+                            <span className={styles.StashMisc}>
+                              <Icon type="user" />
+                              {item.users_count}
+                            </span>
+                            <span className={styles.StashMisc}>
+                              <Icon type="copy" />
+                              {item.sheets_count}
+                            </span>
+                          </div>
+                          <div className="clearfix" />
+                        </div>
+                      </div>
+                    </Card>
+                  </Col>
+                );
+              })
+            }
+          </Masonry>
+        </Row>
+      );
+    }
 
     return (
       <div>
@@ -168,7 +182,9 @@ class StashesSection extends Component {
         <LoaderContent
           firstLoading={tableParams.isFirstLoading()}
           loading={tableParams.isLoading}
-          isError={tableParams.isError}
+          errors={{
+            errorStatus: tableParams.errorStatus,
+          }}
           onRetry={this.loadItems}
         >
           {this.renderItems()}

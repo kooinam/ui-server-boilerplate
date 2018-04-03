@@ -5,6 +5,12 @@
 
   .Overview {
     .Miscs {
+      .SmallMisc {
+        margin: 0 8px 8px 0;
+        font-size: 14px;
+        color: $secondary-tint-color;
+      }
+
       .Misc {
         margin: 0 12px 8px 0;
         font-size: 14px;
@@ -35,4 +41,19 @@
       }
     }
   }
+
+  .DropdownLink {
+    font-weight: bold;
+    font-size: 26px;
+    float: right;
+    color: $primary-color;
+
+    i {
+      vertical-align: bottom;
+    }
+  }
+}
+
+.ActionItem {
+  min-width: 120px;
 }

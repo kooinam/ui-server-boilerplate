@@ -28,6 +28,11 @@
       display: inline-block;
       font-weight: bold;
       font-size: 36px;
+
+      .SheetsCount, .UsersCount {
+        padding: 0 0 0 12px;
+        font-size: 20px;
+      }
     }
 
     .TitleSm {

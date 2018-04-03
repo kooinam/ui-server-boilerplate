@@ -11,6 +11,18 @@
 
   i {
     font-weight: bold;
+    font-size: 26px;
+    color: $primary-color;
+    vertical-align: bottom;
+  }
+
+  img {
+    border: 1px solid $primary-tint-color;
+    border-radius: 100px;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    vertical-align: bottom;
   }
 }
 
@@ -22,11 +34,21 @@
     font-weight: bold;
     font-size: 20px;
   }
+
+  img {
+    border: 1px solid $primary-tint-color;
+    border-radius: 100px;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    vertical-align: bottom;
+    margin-right: 8px;
+  }
 }
 
 .Popover {
   :global(.ant-popover-inner-content) {
-    width: 120px;
+    min-width: 120px;
     padding: 0;
 
     .Menu {

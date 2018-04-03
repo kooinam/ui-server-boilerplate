@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
-import { matchRouteParams, ItemLoader, getAxios, LoaderContent, formatDate, formatTime, renderActions, Actioner } from 'awry-utilities';
+import { matchRouteParams, ItemLoader, getAxios, LoaderContent, formatDate, formatTime, renderActions, Actioner, ModalParams } from 'awry-utilities';
 import { Modal, Row, Col, Carousel, Dropdown, Menu, Button, Icon, Popconfirm } from 'antd';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router-dom';
@@ -11,7 +11,9 @@ import dateFormat from 'dateformat';
 
 import styles from './SheetPage.scss';
 import SheetsSection from '../components/SheetsSection';
+import EditSheetModal from '../components/EditSheetModal';
 import Sheet from '../models/Sheet';
+import { deleteSheet } from '../actions/sheet';
 
 class SheetPage extends Component {
   constructor(props) {
@@ -44,18 +46,45 @@ class SheetPage extends Component {
         successMessageGetter: (result) => {
           return `Sheet deleted successfully`;
         },
-        successCallback: (stash) => {
+        successCallback: () => {
           this.props.dispatch(push(`${this.props.urlPrefix}/sheets`));
+          this.props.dispatch(deleteSheet(this.state.itemLoader.item));
         },
         errorMessageGetter: (error) => {
           return `Failed to delete Sheet`;
+        },
+      }),
+      editSheetModalParams: new ModalParams({
+        component: this,
+        key: 'editSheetModalParams',
+      }),
+      nextItemLoader: new ItemLoader({
+        component: this,
+        key: 'nextItemLoader',
+        axiosGetter: () => getAxios('toro-client'),
+        itemName: 'sheet',
+        ItemKlass: Sheet,
+        url: `/stashes/${this.props.stash.id}/sheets/${sheetId}/next.json`,
+        callback: (sheet) => {
+          this.props.dispatch(push(`${this.props.urlPrefix}/sheets/${sheet.id}`));
+        },
+      }),
+      previousItemLoader: new ItemLoader({
+        component: this,
+        key: 'previousItemLoader',
+        axiosGetter: () => getAxios('toro-client'),
+        itemName: 'sheet',
+        ItemKlass: Sheet,
+        url: `/stashes/${this.props.stash.id}/sheets/${sheetId}/previous.json`,
+        callback: (sheet) => {
+          this.props.dispatch(push(`${this.props.urlPrefix}/sheets/${sheet.id}`));
         },
       }),
       attachmentIndex: 0,
     };
   }
 
-  componentWillMount = () => {
+  componentWillMount() {
     this.loadItem();
   }
 
@@ -64,11 +93,16 @@ class SheetPage extends Component {
     this.state.itemLoader.loadItem();
   }
 
-  deleteSheet = () => {
-    const { stash } = this.props;
-    const { itemLoader } = this.state;
+  goLeft = () => {
+    if (!this.state.previousItemLoader.isLoading) {
+      this.state.previousItemLoader.loadItem();
+    }
+  }
 
-    this.state.deleteSheetActioner.do(`/stashes/${stash.id}/sheets/${itemLoader.item.id}.json`);
+  goRight = () => {
+    if (!this.state.nextItemLoader.isLoading) {
+      this.state.nextItemLoader.loadItem();
+    }
   }
 
   goTo = (slide) => {
@@ -77,6 +111,13 @@ class SheetPage extends Component {
 
   handleCancel = () => {
     this.props.dispatch(push(`${this.props.urlPrefix}/sheets`));
+  }
+
+  handleDeleteSheet = () => {
+    const { stash } = this.props;
+    const { itemLoader } = this.state;
+
+    this.state.deleteSheetActioner.do(`/stashes/${stash.id}/sheets/${itemLoader.item.id}.json`);
   }
 
   renderAttachment = (attachment) => {
@@ -96,6 +137,10 @@ class SheetPage extends Component {
 
   renderAttachments = (sheet) => {
     const { attachments } = sheet;
+
+    if (attachments.length === 0) {
+      return null;
+    }
 
     return (
       <div>
@@ -166,38 +211,55 @@ class SheetPage extends Component {
   }
 
   renderActions = (sheet) => {
-    const { deleteSheetActioner } = this.state;
+    const { deleteSheetActioner, editSheetModalParams } = this.state;
 
-    const actions = [{
+    const actions = renderActions([{
+      component: (
+        <Menu.Item key="edit_sheet">
+          <a
+            onClick={editSheetModalParams.show}
+            className={styles.ActionItem}
+          >
+            <Icon type="edit" />
+            &nbsp;Edit
+          </a>
+        </Menu.Item>
+      ),
+      canAccess: sheet.canDelete(),
+    }, {
       component: (
         <Menu.Item key="delete_sheet">
           <Popconfirm
             title="Are you sure？"
             okText="Confirm"
             cancelText="Cancel"
-            onConfirm={this.deleteSheet}
+            onConfirm={this.handleDeleteSheet}
           >
-            <a>
+            <a className={styles.ActionItem}>
               <Icon type="close" />
+              &nbsp;Delete
             </a>
           </Popconfirm>
         </Menu.Item>
       ),
       canAccess: sheet.canDelete(),
-    }];
+    }]);
+
+    if (actions.length === 0) {
+      return null;
+    }
 
     const menu = (
       <Menu>
-        {renderActions(actions)}
+        {actions}
       </Menu>
     );
 
     return (
       <Dropdown overlay={menu}>
-        <Button className={styles.DropdownLink}>
-          Actions&nbsp;
-          <Icon type="down" />
-        </Button>
+        <a className={styles.DropdownLink}>
+          <Icon type="ellipsis" />
+        </a>
       </Dropdown>
     );
   }
@@ -205,8 +267,18 @@ class SheetPage extends Component {
 
   render() {
     const { stash, baseStyles } = this.props;
-    const { itemLoader } = this.state;
+    const { itemLoader, editSheetModalParams } = this.state;
     const item = itemLoader.item;
+
+    const title = (item.hasTitle()) ? (
+      <div>
+        {item.title}
+      </div>
+    ) : (
+      <div className="help-text">
+        No title found...
+      </div>
+    );
 
     const description = (item.hasDescription()) ? (
       <div>
@@ -219,37 +291,64 @@ class SheetPage extends Component {
     );
 
     return (
-      <Modal
+      <div
         className={styles.Container}
-        visible={true}
-        footer={null}
-        onCancel={this.handleCancel}
-        width={920}
-        closable={false}
       >
-        <LoaderContent
-          firstLoading={itemLoader.isFirstLoading()}
-          loading={itemLoader.isLoading}
-          isError={itemLoader.isError}
-          onRetry={this.loadItem}
+        <a className={styles.CloseButton} onClick={this.handleCancel}>
+          <Icon type="close" />
+        </a>
+        <a className={styles.LeftButton} onClick={this.goLeft}>
+          <Icon type="left" />
+        </a>
+        <a className={styles.RightButton} onClick={this.goRight}>
+          <Icon type="right" />
+        </a>
+        <Modal
+          className={styles.Modal}
+          visible={true}
+          footer={null}
+          onCancel={this.handleCancel}
+          width={920}
+          closable={false}
         >
-          <Row>
-            <Col sm={12} className={styles.LeftSection}>
-              {this.renderAttachments(item)}
-              {this.renderAuthor(item)}
-            </Col>
-            <Col sm={12} className={styles.RightSection}>
-              <div className={styles.Actions}>
-                {this.renderActions(item)}
-              </div>
-              <div className="clearfix" />
-              <div className={styles.Description}>
-                {description}
-              </div>
-            </Col>
-          </Row>
-        </LoaderContent>
-      </Modal>
+          <EditSheetModal
+            key={editSheetModalParams.uuid}
+            modalParams={editSheetModalParams}
+            sheet={item}
+            stash={stash}
+            loadItem={this.loadItem}
+          />
+          <LoaderContent
+            firstLoading={itemLoader.isFirstLoading()}
+            loading={itemLoader.isLoading}
+            errors={{
+              errorStatus: itemLoader.errorStatus,
+            }}
+            onRetry={this.loadItem}
+          >
+            <Row>
+              <Col sm={24}>
+                <div className={styles.Actions}>
+                  {this.renderActions(item)}
+                </div>
+                <div className="clearfix" />
+              </Col>
+              <Col sm={12} className={styles.LeftSection}>
+                {this.renderAttachments(item)}
+                {this.renderAuthor(item)}
+              </Col>
+              <Col sm={12} className={styles.RightSection}>
+                <div className={styles.Title}>
+                  {title}
+                </div>
+                <div className={styles.Description}>
+                  {description}
+                </div>
+              </Col>
+            </Row>
+          </LoaderContent>
+        </Modal>
+      </div>
     );
   }
 }

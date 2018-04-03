@@ -25,10 +25,12 @@ export default (state = {
     case 'SHOW_SIGN_IN_MODAL':
       return Object.assign({}, state, {
         signInModalVisible: true,
+        onAuthenticated: action.payload.onAuthenticated,
       });
     case 'HIDE_SIGN_IN_MODAL':
       return Object.assign({}, state, {
         signInModalVisible: false,
+        onAuthenticated: action.payload.onAuthenticated,
       });
     default:
       return state;

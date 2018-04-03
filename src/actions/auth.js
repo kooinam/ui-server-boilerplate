@@ -26,18 +26,24 @@ export const authenticated = user =>
     }
   };
 
-export const showSignInModal = () => {
+export const showSignInModal = (onAuthenticated) => {
   return (dispatch) => {
     dispatch({
       type: 'SHOW_SIGN_IN_MODAL',
+      payload: {
+        onAuthenticated,
+      },
     });
   };
 };
 
-export const hideSignInModal = () => {
+export const hideSignInModal = (onAuthenticated) => {
   return (dispatch) => {
     dispatch({
       type: 'HIDE_SIGN_IN_MODAL',
+      payload: {
+        onAuthenticated,
+      },
     });
   };
 };

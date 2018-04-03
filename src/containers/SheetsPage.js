@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import { BaseRouteComponent, matchRouteParams, renderActions, ModalParams } from 'awry-utilities';
 import { Button } from 'antd';
+import pluralize from 'pluralize';
 
 import styles from './SheetsPage.scss';
 import SheetsSection from '../components/SheetsSection';
@@ -61,14 +62,20 @@ class SheetsPage extends Component {
             <div className={baseStyles.Title}>
               {stash.name}
               's Sheets
+              <span className={baseStyles.SheetsCount}>
+                (
+                {stash.sheets_count}
+                &nbsp;
+                {pluralize('sheet', stash.sheets_count)}
+                )
+              </span>
             </div>
           </div>
         </div>
         <hr className="hr" />
-        <SheetsSection stash={stash} urlPrefix={this.props.urlPrefix} scope={this.props.scope} />
+        <SheetsSection stash={stash} urlPrefix={this.props.urlPrefix} />
         <BaseRouteComponent
           {...this.props}
-          matchedRoutes={this.props.matchedRoutes}
           stash={stash}
           urlPrefix={urlPrefix}
           key={sheetId}

@@ -1,0 +1,23 @@
+@import 'shared.scss';
+
+.Component {
+  display: block;
+  padding: 8px 0;
+
+  .Users {
+    .UserLink {
+      margin: 0 4px 0 0;
+
+      .UserAvatar {
+        img {
+          border: 1px solid $primary-tint-color;
+          border-radius: 100px;
+          height: 40px;
+          width: 40px;
+          object-fit: cover;
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

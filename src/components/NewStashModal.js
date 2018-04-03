@@ -11,7 +11,7 @@ import type { Reducer } from '../../types';
 import styles from './NewStashModal.scss';
 import Stash from '../models/Stash';
 
-class CommonStashFormInputs extends React.Component {
+class StashInputs extends React.Component {
   constructor(props) {
     super(props);
 
@@ -104,15 +104,15 @@ class CommonStashFormInputs extends React.Component {
         </Row>
         <Row gutter={12}>
           <Col sm={12}>
-            <Form.Item { ...getFieldError(actioner.error, 'is_search') } label="Anyone can search">
-              {form.getFieldDecorator('is_search', {
+            <Form.Item { ...getFieldError(actioner.error, 'is_searchable') } label="Visible to public">
+              {form.getFieldDecorator('is_searchable', {
               })(
-                <Checkbox defaultChecked={stash.is_search} />
+                <Checkbox defaultChecked={stash.is_searchable} />
               )}
             </Form.Item>
           </Col>
           <Col sm={12}>
-            <Form.Item { ...getFieldError(actioner.error, 'is_private') } label="Anyone can view content">
+            <Form.Item { ...getFieldError(actioner.error, 'is_private') } label="Only member can view content">
               {form.getFieldDecorator('is_private', {
               })(
                 <Checkbox defaultChecked={stash.is_private} />
@@ -142,7 +142,7 @@ class CommonStashFormInputs extends React.Component {
 }
 
 export {
-  CommonStashFormInputs,
+  StashInputs,
 };
 
 class NewStashModal extends React.Component {
@@ -228,7 +228,7 @@ class NewStashModal extends React.Component {
         onCancel={modalParams.dismiss}
       >
         <Form>
-          <CommonStashFormInputs {...{ component: this, actioner, stash, form }} />
+          <StashInputs {...{ component: this, actioner, stash, form }} />
         </Form>
       </Modal>
     );
@@ -237,7 +237,7 @@ class NewStashModal extends React.Component {
 
 /* eslint-disable no-unused-vars */
 const connector: Connector<{}, Props> = connect(
-  (reducer: Reducer) => ({ }),
+  (reducer: Reducer) => ({}),
 );
 /* eslint-enable no-unused-vars */
 

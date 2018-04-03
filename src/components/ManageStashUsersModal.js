@@ -2,17 +2,17 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Modal, Button, Form } from 'antd';
+import { Modal, Button, Form, Row, Col, Upload, Icon, Input } from 'antd';
 import type { Connector } from 'react-redux';
-import { getAxios, Actioner } from 'awry-utilities';
+import { getAxios, getBaseUrl, getHeadersSetter, getFieldError, Actioner, FilterSelect, TableParams } from 'awry-utilities';
 import { push } from 'react-router-redux';
 
 import type { Reducer } from '../../types';
-import styles from './EditStashModal.scss';
+import styles from './ManageStashUsersModal.scss';
+import Sheet from '../models/Sheet';
 import Stash from '../models/Stash';
-import { StashInputs } from './NewStashModal';
 
-class EditStashModal extends React.Component {
+class ManageStashUsersModal extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,28 +21,28 @@ class EditStashModal extends React.Component {
         component: this,
         key: 'actioner',
         axiosGetter: () => getAxios('toro-client'),
-        method: 'patch',
-        itemName: 'stash',
-        ItemKlass: Stash,
-        successMessageGetter: (stash) => {
-          return `Stash ${stash.name} updated successfully`;
+        method: 'post',
+        itemName: 'sheet',
+        ItemKlass: Sheet,
+        successMessageGetter: (sheet) => {
+          return 'Sheet created successfully';
         },
-        successCallback: (stash) => {
+        successCallback: (sheet) => {
           this.props.modalParams.dismiss();
-          this.props.loadItem();
         },
         errorMessageGetter: (error) => {
-          return `Failed to update Stash`;
+          return `Failed to create Sheet`;
         },
       }),
-      attachmentId: null,
+      attachmentIds: [],
       isUploading: false,
+      uploading: [],
     };
   }
 
   handleSubmit = () => {
     const { form } = this.props;
-    const { attachmentId } = this.state;
+    const { attachmentIds } = this.state;
 
     form.validateFields((errors) => {
       if (errors) {
@@ -51,18 +51,21 @@ class EditStashModal extends React.Component {
 
       const attributes = form.getFieldsValue();
       const params = {
-        stash: attributes,
-        attachment_id: attachmentId,
+        sheet: attributes,
+        attachment_ids: attachmentIds,
       };
+      if (params.sheet.stash_id) {
+        params.sheet.stash_id = params.sheet.stash_id.key;
+      }
 
-      this.state.actioner.do(`/stashes/${this.props.stash.id}.json`, params);
+      this.state.actioner.do('/sheets.json', params);
 
       return true;
     });
   }
 
   render() {
-    const { modalParams, stash, form } = this.props;
+    const { modalParams, stash, sheet, form } = this.props;
     const { actioner, isUploading } = this.state;
 
     const footer = [(
@@ -88,14 +91,14 @@ class EditStashModal extends React.Component {
     return (
       <Modal
         className={styles.Component}
+        width={800}
         maskClosable={false}
-        title={`Edit Stash ${stash.name}`}
+        title="Create Sheet"
         visible={modalParams.visible}
         footer={footer}
         onCancel={modalParams.dismiss}
       >
         <Form>
-          <StashInputs {...{ component: this, actioner, stash, form }} />
         </Form>
       </Modal>
     );
@@ -108,4 +111,4 @@ const connector: Connector<{}, Props> = connect(
 );
 /* eslint-enable no-unused-vars */
 
-export default connector(Form.create()(EditStashModal));
+export default connector(Form.create()(ManageStashUsersModal));

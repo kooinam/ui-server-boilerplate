@@ -1,0 +1,26 @@
+@import 'shared.scss';
+
+.Container {
+  display: block;
+
+  .LeftSection {
+    margin: 8px 0 0 0;
+    border-right: 1px solid $primary-tint-color;
+    min-height: 100px;
+
+    :global(.ant-card-body) {
+      padding: 12px 24px;
+
+      .Link {
+        margin: 4px 0 0 0;
+        font-size: 14px;
+        color: $info-color;
+        display: block;
+
+        &:hover, &.Active {
+          color: $secondary-color;
+        }
+      }
+    }
+  }
+}

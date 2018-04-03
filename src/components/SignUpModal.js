@@ -28,7 +28,14 @@ class SignUpModal extends React.Component {
       >
         <div className={styles.SignUpForm}>
           <SignUpForm
-            onAuthenticated={this.props.modalParams.dismiss}
+            onAuthenticated={
+              () => {
+                this.props.modalParams.dismiss();
+                if (this.props.onAuthenticated) {
+                  this.props.onAuthenticated();
+                }
+              }
+            }
           />
         </div>
         <hr className="hr-lg" />

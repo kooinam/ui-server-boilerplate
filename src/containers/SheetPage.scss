@@ -3,6 +3,63 @@
 .Container {
   display: block;
 
+  .CloseButton {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    z-index: 10000;
+    font-weight: bold;
+    font-size: 28px;
+    color: white;
+
+    &:hover {
+      color: $primary-tint-color;
+    }
+  }
+
+  .LeftButton {
+    position: fixed;
+    top: 45%;
+    left: 32px;
+    z-index: 10000;
+    font-weight: bold;
+    font-size: 28px;
+    color: white;
+
+    &:hover {
+      color: $primary-tint-color;
+    }
+  }
+
+  .RightButton {
+    position: fixed;
+    top: 45%;
+    right: 32px;
+    z-index: 10000;
+    font-weight: bold;
+    font-size: 28px;
+    color: white;
+
+    &:hover {
+      color: $primary-tint-color;
+    }
+  }
+}
+
+.Modal {
+  .Actions {
+    .DropdownLink {
+      font-weight: bold;
+      font-size: 26px;
+      float: right;
+      color: $primary-color;
+
+      a {
+        min-width: 120px;
+      }
+    }
+  }
+
   .LeftSection {
     padding: 6px;
 
@@ -68,10 +125,12 @@
         }
 
         img {
-          width: calc(100% - 4px);
+          max-width: calc(100% - 4px);
+          max-height: calc(100% - 4px);
           position: absolute;
           top: 50%;
-          transform: translateY(-50%);
+          left: 50%;
+          transform: translate(-50%, -50%);
         }
       }
     }
@@ -89,16 +148,24 @@
   .RightSection {
     padding: 6px;
 
-    .Actions {
-      .DropdownLink {
-        font-color: 12px;
-        float: right;
-        color: $primary-color;
-      }
+    .Title {
+      width: 100%;
+      white-space: pre-line;
+      word-wrap: break-word;
+      font-size: 15px;
+      font-weight: bold;
     }
 
     .Description {
-      font-size: 14px;
+      width: 100%;
+      white-space: pre-line;
+      word-wrap: break-word;
+      color: $info-color;
+      font-size: 13px;
     }
   }
+}
+
+.ActionItem {
+  min-width: 120px;
 }

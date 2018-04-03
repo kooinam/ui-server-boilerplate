@@ -87,7 +87,7 @@ class AuthNavigator extends Component {
   }
 
   handleClickSignUp = () => {
-    this.hideSignInModal();
+    this.hideSignInModal(this.props.onAuthenticated);
 
     setTimeout(() => {
       this.state.signUpModalParams.show();
@@ -119,8 +119,8 @@ class AuthNavigator extends Component {
     this.props.dispatch(showSignInModal());
   }
 
-  hideSignInModal = () => {
-    this.props.dispatch(hideSignInModal());
+  hideSignInModal = (onAuthenticated) => {
+    this.props.dispatch(hideSignInModal(onAuthenticated));
   }
 
   render() {
@@ -140,7 +140,7 @@ class AuthNavigator extends Component {
             {
               (!hideAccount) ? (
                 <Menu.Item>
-                  <Link to="/account" onClick={this.hidePopover}>
+                  <Link to="/me" onClick={this.hidePopover}>
                     Account
                   </Link>
                 </Menu.Item>
@@ -169,31 +169,33 @@ class AuthNavigator extends Component {
             }
           >
             <a className={`${styles.Component} ${this.props.className}`}>
-              <Icon type="user" className={styles.User} />
+              <img src={currentUser.avatar_image_attachment.thumb_url} />
               &nbsp;
-              <Icon type="down" />
+              <Icon type="ellipsis" />
             </a>
           </Popover>
         );
       }
 
       return [(
-        <a key={1} className={`${styles.Component} ${this.props.className}`} onClick={this.showSignInModal} role="button" tabIndex={0}>
+        <a key={1} className={`underline-link ${styles.Component} ${this.props.className}`} onClick={this.showSignInModal} role="button" tabIndex={0}>
           <SignInModal
             key={this.state.signInModalParams.uuid}
             modalParams={this.state.signInModalParams}
             onClickSignUp={this.handleClickSignUp}
             hideModal={this.hideSignInModal}
+            onAuthenticated={this.props.onAuthenticated}
           />
           <SignUpModal
             key={this.state.signUpModalParams.uuid}
             modalParams={this.state.signUpModalParams}
             onClickSignIn={this.handleClickSignIn}
+            onAuthenticated={this.props.onAuthenticated}
           />
           LOG IN
         </a>
       ), (
-        <a key={2} className={`${styles.Component} ${this.props.className}`} onClick={this.state.signUpModalParams.show} role="button" tabIndex={0}>
+        <a key={2} className={`underline-link ${styles.Component} ${this.props.className}`} onClick={this.state.signUpModalParams.show} role="button" tabIndex={0}>
           CREATE ACCOUNT
         </a>
       )];
@@ -207,7 +209,7 @@ class AuthNavigator extends Component {
           onSelect={this.props.onSelect}
           className={`${styles.InlineComponent} ${this.props.className}`}
         >
-          <Menu.SubMenu title={<span><Icon type="user" className={styles.User} />{currentUser.email}</span>}>
+          <Menu.SubMenu title={<span><img src={currentUser.avatar_image_attachment.thumb_url} />{currentUser.username}</span>}>
             {
               (!hideAccount) ? (
                 <Menu.Item>
@@ -259,6 +261,7 @@ const connector = connect(
       currentUser: state.AuthReducer.currentUser,
       authState: state.AuthReducer.state,
       signInModalVisible: state.AuthReducer.signInModalVisible,
+      onAuthenticated: state.AuthReducer.onAuthenticated,
     };
   },
 );

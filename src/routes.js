@@ -8,8 +8,20 @@ import BaseStashPage from './containers/BaseStashPage';
 import StashPage from './containers/StashPage';
 import SheetsPage from './containers/SheetsPage';
 import SheetPage from './containers/SheetPage';
+import BaseStashUsersPage from './containers/BaseStashUsersPage';
+import StashUsersPage from './containers/StashUsersPage';
+import StashRequestingsPage from './containers/StashRequestingsPage';
 import SearchPage from './containers/SearchPage';
+import AccountPage from './containers/AccountPage';
 import NotFoundPage from './containers/NotFoundPage';
+
+const notFoundRoute = {
+  path: '*',
+  component: NotFoundPage,
+  routeProps: {
+    breadcrumbName: 'Page Not Found',
+  },
+};
 
 const stashesRoutes = [{
   path: '',
@@ -35,27 +47,30 @@ const stashesRoutes = [{
       path: ':sheetId',
       exact: true,
       component: SheetPage,
-    }, {
-      path: '*',
-      component: NotFoundPage,
-      routeProps: {
-        breadcrumbName: 'Page Not Found',
-      },
-    }],
+    }, notFoundRoute],
   }, {
-    path: '*',
-    component: NotFoundPage,
+    path: 'users',
     routeProps: {
-      breadcrumbName: 'Page Not Found',
+      breadcrumbName: 'Members',
     },
-  }],
-}, {
-  path: '*',
-  component: NotFoundPage,
-  routeProps: {
-    breadcrumbName: 'Page Not Found',
-  },
-}];
+    component: BaseStashUsersPage,
+    routes: [{
+      path: '',
+      exact: true,
+      routeProps: {
+        tabKey: 'members',
+      },
+      component: StashUsersPage,
+    }, {
+      path: 'requesting',
+      exact: true,
+      routeProps: {
+        tabKey: 'requesting',
+      },
+      component: StashRequestingsPage,
+    }, notFoundRoute],
+  }, notFoundRoute],
+}, notFoundRoute];
 
 export default [
   {
@@ -75,17 +90,31 @@ export default [
         scope: 'public',
       },
       component: BaseRouteComponent,
-      routes: stashesRoutes
+      routes: stashesRoutes,
     }, {
-      path: 'me/stashes',
+      path: 'me',
       routeProps: {
-        urlPrefix: '/me',
-        scope: 'mine',
-        breadcrumbName: 'My Stashes',
         requireUser: true,
       },
       component: BaseRouteComponent,
-      routes: stashesRoutes,
+      routes: [{
+        path: '',
+        exact: true,
+        routeProps: {
+          breadcrumbName: 'Account',
+        },
+        component: AccountPage,
+      }, {
+        path: 'stashes',
+        exact: true,
+        routeProps: {
+          urlPrefix: '',
+          scope: 'mine',
+          breadcrumbName: 'My Stashes',
+          tabKey: 'my_stashes',
+        },
+        component: StashesPage,
+      }, notFoundRoute],
     }, {
       path: 'search/:term',
       routeProps: {
@@ -96,20 +125,8 @@ export default [
         path: '',
         exact: true,
         component: SearchPage,
-      }, {
-        path: '*',
-        component: NotFoundPage,
-        routeProps: {
-          breadcrumbName: 'Page Not Found',
-        },
-      }],
-    }, {
-      path: '*',
-      component: NotFoundPage,
-      routeProps: {
-        breadcrumbName: 'Page Not Found',
-      },
-    }],
+      }, notFoundRoute],
+    }, notFoundRoute],
   },
 ];
 

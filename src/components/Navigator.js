@@ -76,8 +76,8 @@ class Navigator extends Component {
             <ul className={styles.Actions}>
               {
                 currentUser && (
-                  <li className={styles.ActionItem}>
-                    <Link to="/me/stashes" className={`link ${styles.StashLink} `}>
+                  <li className={`${styles.ActionItem}`}>
+                    <Link to="/me/stashes" className={`link ${styles.StashLink} underline-link`}>
                       My Stashes
                     </Link>
                   </li>
@@ -86,6 +86,7 @@ class Navigator extends Component {
               <li className={styles.ActionItem}>
                 <AuthNavigator
                   className={styles.AuthItem}
+                  underlineActionItemClass={styles.UnderlineActionItem}
                 />
               </li>
             </ul>

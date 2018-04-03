@@ -7,6 +7,8 @@ import { LoaderContent, TableParams, getAxios, ModalParams } from 'awry-utilitie
 import Masonry from 'react-masonry-component';
 import { Icon, Card, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
+import TextTruncate from 'react-text-truncate';
+import _ from 'lodash';
 
 import styles from './SheetsSection.scss';
 import Sheet from '../models/Sheet';
@@ -27,7 +29,6 @@ class SheetsSection extends Component {
         pagination: {
           per_page: 8,
         },
-        scope: this.props.scope,
       }),
       newSheetModalParams: new ModalParams({
         component: this,
@@ -38,6 +39,51 @@ class SheetsSection extends Component {
 
   componentDidMount() {
     this.loadItems();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { createSheet, updateSheet, deleteSheet } = this.props;
+
+    if (createSheet && prevProps.createSheet !== createSheet) {
+      if (this.props.stash.id === createSheet.stash_id) {
+        const { items } = this.state.tableParams;
+        items.splice(0, 0, createSheet);
+
+        this.state.tableParams.items = items;
+        this.setState({
+          tableParams: this.state.tableParams,
+        });
+        setTimeout(() => {
+          this.setState({
+            tableParams: this.state.tableParams,
+          });
+        }, 500);
+      }
+    } else if (updateSheet && prevProps.updateSheet !== updateSheet) {
+      const { items } = this.state.tableParams;
+      const index = _.findIndex(items, (item) => {
+        return item.id === updateSheet.id;
+      });
+      if (index >= 0) {
+        items.splice(index, 1, updateSheet);
+      }
+      this.state.tableParams.items = items;
+      this.setState({
+        tableParams: this.state.tableParams,
+      });
+    } else if (deleteSheet && prevProps.deleteSheet !== deleteSheet) {
+      const { items } = this.state.tableParams;
+      const index = _.findIndex(items, (item) => {
+        return item.id === deleteSheet.id;
+      });
+      if (index >= 0) {
+        items.splice(index, 1);
+      }
+      this.state.tableParams.items = items;
+      this.setState({
+        tableParams: this.state.tableParams,
+      });
+    }
   }
 
   loadItems = () => {
@@ -53,7 +99,7 @@ class SheetsSection extends Component {
 
     let masonry = null;
 
-    if (stash.sheets_count === 0) {
+    if (tableParams.items.length === 0) {
       masonry = (
         <div className="help-text">
           <span>
@@ -93,13 +139,17 @@ class SheetsSection extends Component {
                   );
                 }
 
-                const description = (item.hasDescription()) ? (
+                const title = (item.hasTitle()) ? (
                   <div>
-                    {item.description}
+                    <TextTruncate
+                      line={2}
+                      truncateText="…"
+                      text={item.title}
+                    />
                   </div>
                 ) : (
                   <div className="help-text">
-                    No description found...
+                    No title found...
                   </div>
                 );
 
@@ -116,8 +166,8 @@ class SheetsSection extends Component {
                         </Link>
                         <div className={styles.SheetDetails}>
                           <Link to={`${this.props.urlPrefix}/sheets/${item.id}`}>
-                            <div className={styles.SheetDescription}>
-                              {description}
+                            <div className={styles.SheetTitle}>
+                              {title}
                             </div>
                           </Link>
                           <div className={styles.SheetMiscs}>
@@ -162,7 +212,9 @@ class SheetsSection extends Component {
           noTextCenter
           firstLoading={tableParams.isFirstLoading()}
           loading={tableParams.isLoading}
-          isError={tableParams.isError}
+          errors={{
+            errorStatus: tableParams.errorStatus,
+          }}
           onRetry={this.loadItems}
         >
           {this.renderItems()}
@@ -174,7 +226,11 @@ class SheetsSection extends Component {
 
 /* eslint-disable no-unused-vars */
 const connector: Connector<{}, Props> = connect(
-  (reducer) => ({}),
+  (reducer) => ({
+    updateSheet: reducer.SheetsReducer.updateSheet,
+    deleteSheet: reducer.SheetsReducer.deleteSheet,
+    createSheet: reducer.SheetsReducer.createSheet,
+  }),
 );
 /* eslint-enable no-unused-vars */
 

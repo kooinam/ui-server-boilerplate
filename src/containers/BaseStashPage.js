@@ -36,12 +36,22 @@ class BaseStashPage extends Component {
     };
   }
 
-  componentWillMount = () => {
+  componentWillMount() {
     this.loadItem();
   }
 
+  componentDidUpdate = (prevProps, prevStates) => {
+    if (prevProps.currentUser !== this.props.currentUser) {
+      this.loadItem();
+    } else if (prevProps.router.location.pathname !== this.props.router.location.pathname) {
+      this.loadItem();
+    }
+  }
+
   loadItem = () => {
-    this.state.itemLoader.loadItem();
+    if (!this.state.itemLoader.isLoading) {
+      this.state.itemLoader.loadItem();
+    }
   }
 
   render() {
@@ -53,7 +63,9 @@ class BaseStashPage extends Component {
         <LoaderContent
           firstLoading={itemLoader.isFirstLoading()}
           loading={itemLoader.isLoading}
-          isError={itemLoader.isError}
+          errors={{
+            errorStatus: itemLoader.errorStatus,
+          }}
           onRetry={this.loadItem}
         >
           <BaseRouteComponent {...this.props} matchedRoutes={this.props.matchedRoutes} loadItem={this.loadItem} stash={stash} urlPrefix={urlPrefix} baseStyles={styles} />
@@ -65,7 +77,9 @@ class BaseStashPage extends Component {
 
 /* eslint-disable no-unused-vars */
 const connector: Connector<{}, Props> = connect(
-  (reducer) => ({}),
+  (reducer) => ({
+    currentUser: reducer.AuthReducer.currentUser,
+  }),
 );
 /* eslint-enable no-unused-vars */
 

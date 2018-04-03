@@ -7,6 +7,7 @@ $secondary-color: #0084ff;
 $secondary-tint-color: #2eb6ff;
 $secondary-shade-color: #005bd1;
 $tertiary-bg-color: #f4f4f4;
+$tertiary-color: #b5b5b5;
 $info-color: #aaa;
 $success-color: #57a83b;
 
@@ -397,9 +398,25 @@ button:focus {
   }
 }
 
+:global(.link-success) {
+  color: $success-color;
+
+  &:hover {
+    color: $success-color;
+  }
+}
+
+:global(.link-danger) {
+  color: #dc3545;
+
+  &:hover {
+    color: #dc3545;
+  }
+}
+
 :global(.help-text) {
   color: $info-color;
-  font-size: 14px;
+  font-size: 13px;
   font-style: italic;
 
   a {

@@ -6,6 +6,7 @@ import { loadingBarReducer } from 'react-redux-loading-bar';
 import { BreadcrumbsReducer, LightboxReducer, SSRReducer, HelmetReducer } from 'awry-utilities';
 
 import AuthReducer from '../reducers/auth';
+import SheetsReducer from '../reducers/sheet';
 
 export default combineReducers({
   loadingBar: loadingBarReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   SSRReducer,
   router,
   HelmetReducer,
+  SheetsReducer,
 });

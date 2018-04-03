@@ -11,6 +11,7 @@ class Sheet extends BaseModel {
       attachments: [],
       user: {},
       stash: {},
+      role: null,
     }, attributes);
 
     super(newAttributes);
@@ -23,18 +24,20 @@ class Sheet extends BaseModel {
     this.stash = new Stash(this.stash);
   }
 
+  hasTitle = () => {
+    return this.title && this.title.length > 0;
+  }
+
   hasDescription = () => {
     return this.description && this.description.length > 0;
   }
 
   canEdit = () => {
-    return true;
-    return (this.role === 'admin' || this.role === 'owner');
+    return this.stash.canPost();
   }
 
   canDelete = () => {
-    return true;
-    return (this.role === 'admin' || this.role === 'owner');
+    return this.stash.canPost();
   }
 }
 
