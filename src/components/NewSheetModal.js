@@ -135,7 +135,7 @@ class SheetInputs extends React.Component {
                     { required: true, message: 'Title is required' },
                   ],
                 })(
-                  <Input type="textarea" placeholder="Title" rows={2} />,
+                  <Input type="textarea" placeholder="Title" rows={2} autosize />,
                 )}
               </Form.Item>
             </Col>
@@ -144,7 +144,7 @@ class SheetInputs extends React.Component {
                 {form.getFieldDecorator('description', {
                   initialValue: sheet.description,
                 })(
-                  <Input type="textarea" placeholder="Description" rows={5} />,
+                  <Input type="textarea" placeholder="Description" rows={5} autosize />,
                 )}
               </Form.Item>
             </Col>
