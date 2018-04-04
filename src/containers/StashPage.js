@@ -7,6 +7,7 @@ import { getAxios, ModalParams, renderActions, Actioner } from 'awry-utilities';
 import { Icon, Button, Popconfirm, Dropdown, Menu, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import pluralize from 'pluralize';
+import AutoLinkText from 'react-autolink-text2';
 
 import styles from './StashPage.scss';
 import Stash from '../models/Stash';
@@ -185,9 +186,7 @@ class StashPage extends Component {
   renderItem = (stash) => {
     const { baseStyles } = this.props;
     const description = (stash.hasDescription()) ? (
-      <div>
-        {stash.description}
-      </div>
+      <AutoLinkText text={stash.description} linkProps={{target: '_blank'}} />
     ) : (
       <div className="help-text">
         <span>

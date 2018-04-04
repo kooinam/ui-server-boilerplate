@@ -8,6 +8,7 @@ import { Modal, Row, Col, Carousel, Dropdown, Menu, Button, Icon, Popconfirm } f
 import { push } from 'react-router-redux';
 import { Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
+import AutoLinkText from 'react-autolink-text2';
 
 import styles from './SheetPage.scss';
 import SheetsSection from '../components/SheetsSection';
@@ -281,9 +282,7 @@ class SheetPage extends Component {
     );
 
     const description = (item.hasDescription()) ? (
-      <div>
-        {item.description}
-      </div>
+      <AutoLinkText text={item.description} linkProps={{target: '_blank'}} />
     ) : (
       <div className="help-text">
         No description found...
