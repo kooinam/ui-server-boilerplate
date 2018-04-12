@@ -13,6 +13,7 @@ import _ from 'lodash';
 import styles from './SheetsSection.scss';
 import Sheet from '../models/Sheet';
 import NewSheetModal from '../components/NewSheetModal';
+import LinkPreviewSection from './LinkPreviewSection';
 
 class SheetsSection extends Component {
   constructor(props) {
@@ -137,6 +138,18 @@ class SheetsSection extends Component {
                   sheetCover = (
                     <img src={item.cover_attachment.standard_url} />
                   );
+                } else if (item.cover_attachment.isLink()) {
+                  sheetCover = (
+                    <LinkPreviewSection
+                      link={item.cover_attachment.link}
+                      vertical
+                      reload={
+                        () => {
+                          this.setState({});
+                        }
+                      }
+                    />
+                  );
                 }
 
                 const title = (item.hasTitle()) ? (
@@ -172,7 +185,7 @@ class SheetsSection extends Component {
                           </Link>
                           <div className={styles.SheetMiscs}>
                             <span className={styles.SheetMisc}>
-                              <Icon type="file-text" />
+                              <Icon type="paper-clip" />
                               {item.attachments_count}
                             </span>
                           </div>

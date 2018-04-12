@@ -10,6 +10,10 @@ class Attachment extends BaseModel {
   isImage = () => {
     return this.type === 'ImageAttachment';
   }
+
+  isLink = () => {
+    return this.type === 'LinkAttachment';
+  }
 }
 
 export default Attachment;

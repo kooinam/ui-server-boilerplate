@@ -8,18 +8,21 @@ class Sheet extends BaseModel {
   constructor(attributes) {
     const newAttributes = Object.assign({
       cover_attachment: {},
-      attachments: [],
+      image_attachments: [],
+      link_attachment: {},
       user: {},
       stash: {},
       role: null,
+      attachment_type: 'image',
     }, attributes);
 
     super(newAttributes);
 
     this.cover_attachment = new Attachment(this.cover_attachment);
-    this.attachments = this.attachments.map((attachment) => {
+    this.image_attachments = this.image_attachments.map((attachment) => {
       return new Attachment(attachment);
     });
+    this.link_attachment = new Attachment(this.link_attachment);
     this.user = new User(this.user);
     this.stash = new Stash(this.stash);
   }
@@ -38,6 +41,14 @@ class Sheet extends BaseModel {
 
   canDelete = () => {
     return this.stash.canPost();
+  }
+
+  isImage = () => {
+    return this.attachment_type === 'image';
+  }
+
+  isLink = () => {
+    return this.attachment_type === 'link';
   }
 }
 

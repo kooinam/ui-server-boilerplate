@@ -97,7 +97,7 @@ class StashInputs extends React.Component {
               {form.getFieldDecorator('description', {
                 initialValue: stash.description,
               })(
-                <Input type="textarea" placeholder="Description" rows={4} />,
+                <Input type="textarea" placeholder="Description" autosize />,
               )}
             </Form.Item>
           </Col>

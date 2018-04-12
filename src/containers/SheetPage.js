@@ -15,6 +15,7 @@ import SheetsSection from '../components/SheetsSection';
 import EditSheetModal from '../components/EditSheetModal';
 import Sheet from '../models/Sheet';
 import { deleteSheet } from '../actions/sheet';
+import LinkPreviewSection from '../components/LinkPreviewSection';
 
 class SheetPage extends Component {
   constructor(props) {
@@ -137,58 +138,64 @@ class SheetPage extends Component {
   }
 
   renderAttachments = (sheet) => {
-    const { attachments } = sheet;
+    const { image_attachments, link_attachment } = sheet;
 
-    if (attachments.length === 0) {
-      return null;
-    }
+    if (sheet.isImage()) {
+      if (image_attachments.length === 0) {
+        return null;
+      }
 
-    return (
-      <div>
-        <Carousel
-          adaptiveHeight={true}
-          ref={c => this.slider = c }
-          className={styles.Slider}
-          dots={false}
-          slidesToShow={1}
-          slidesToScroll={1}
-          infinite={false}
-          arrows={attachments.length > 1}
-          afterChange={
-            (index) => {
-              this.setState({
-                attachmentIndex: index,
-              });
+      return (
+        <div>
+          <Carousel
+            adaptiveHeight={true}
+            ref={c => this.slider = c }
+            className={styles.Slider}
+            dots={false}
+            slidesToShow={1}
+            slidesToScroll={1}
+            infinite={false}
+            arrows={image_attachments.length > 1}
+            afterChange={
+              (index) => {
+                this.setState({
+                  attachmentIndex: index,
+                });
+              }
             }
-          }
-        >
-          {
-            attachments.map((attachment) => {
-              return this.renderAttachment(attachment);
-            })
-          }
-        </Carousel>
-        <div className={styles.Thumbs}>
-          {
-            attachments.map((attachment, index) => {
-              return (
-                <a
-                  className={`${styles.Thumb} ${((this.state.attachmentIndex) === index) ? styles.Active : ''}`}
-                  key={attachment.id}
-                  onClick={
-                    () => {
-                      this.goTo(index);
+          >
+            {
+              image_attachments.map((attachment) => {
+                return this.renderAttachment(attachment);
+              })
+            }
+          </Carousel>
+          <div className={styles.Thumbs}>
+            {
+              image_attachments.map((attachment, index) => {
+                return (
+                  <a
+                    className={`${styles.Thumb} ${((this.state.attachmentIndex) === index) ? styles.Active : ''}`}
+                    key={attachment.id}
+                    onClick={
+                      () => {
+                        this.goTo(index);
+                      }
                     }
-                  }
-                >
-                  <img src={attachment.thumb_url} />
-                </a>
-              );
-            })
-          }
+                  >
+                    <img src={attachment.thumb_url} />
+                  </a>
+                );
+              })
+            }
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else if (sheet.isLink()) {
+      return (
+        <LinkPreviewSection link={link_attachment.link} className={styles.LinkPreview} />
+      );
+    }
   }
 
   renderAuthor = (sheet) => {

@@ -80,8 +80,7 @@ class SignUpForm extends React.Component {
 
 const connector = connect(
   (state) => {
-    return {
-    };
+    return {};
   }
 );
 
