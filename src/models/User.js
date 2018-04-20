@@ -1,4 +1,4 @@
-import { BaseModel } from 'awry-utilities';
+import { BaseModel } from 'awry-utilities-2';
 
 import Attachment from './Attachment';
 
@@ -44,34 +44,6 @@ class User extends BaseModel {
 
   authenticate = () => {
     User.setToken(this.authentication_token);
-  }
-
-  isAdmin = () => {
-    return this.is_admin;
-  }
-
-  canMakeAdmin = () => {
-    return (this.role === 'member');
-  }
-
-  canMakeMember = () => {
-    return (this.role === 'admin');
-  }
-
-  canKickedByOwner = () => {
-    return (this.role === 'member' || this.role === 'admin');
-  }
-
-  canKickedByAdmin = () => {
-    return (this.role === 'member');
-  }
-
-  canAccept = () => {
-    return (this.role === 'requesting');
-  }
-
-  canReject = () => {
-    return (this.role === 'requesting');
   }
 }
 

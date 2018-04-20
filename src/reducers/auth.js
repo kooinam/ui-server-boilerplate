@@ -17,7 +17,9 @@ export default (state = {
         currentUser: action.payload.currentUser,
       });
     case 'UNAUTHENTICATED':
-      User.removeToken();
+      if (action.payload && action.payload.reason !== 'unknown') {
+        User.removeToken();
+      }
       return Object.assign({}, state, {
         state: 'UNAUTHENTICATED',
         currentUser: null,

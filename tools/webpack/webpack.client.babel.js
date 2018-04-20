@@ -184,6 +184,10 @@ module.exports = {
         test: /masonry|imagesloaded|fizzy\-ui\-utils|desandro\-|outlayer|get\-size|doc\-ready|eventie|eventemitter/,
         loader: 'imports?define=>false&this=>window',
       },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+      }
     ],
   },
   plugins: getPlugins(),
@@ -193,13 +197,10 @@ module.exports = {
     moduleExtensions: ['-loader'],
   },
   resolve: {
-    alias: {
-      antd: path.resolve('./node_modules/antd'),
-    },
     modules: ['src', 'node_modules'],
     descriptionFiles: ['package.json'],
     moduleExtensions: ['-loader'],
-    extensions: ['.js', '.jsx', '.json', '.css'],
+    extensions: ['.js', '.jsx', '.json', '.css', '.ts', '.tsx'],
   },
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

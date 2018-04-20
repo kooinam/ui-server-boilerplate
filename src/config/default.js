@@ -3,6 +3,6 @@ module.exports = {
   port: process.env.NODE_PORT,
   app: {
     htmlAttributes: { lang: 'en' },
-    titleTemplate: '%s - TORO',
+    titleTemplate: '%s - BOILERPLATE',
   },
 };

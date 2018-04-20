@@ -1,0 +1,21 @@
+{
+  "templates": {
+    "show.tsx": "src/containers/UserPage.tsx",
+    "show.scss": "src/containers/UserPage.scss",
+    "edit.tsx": "src/components/EditUserModal.tsx",
+    "edit.scss": "src/components/EditUserModal.scss",
+    "details.tsx": "src/components/UserSection.tsx",
+    "details.scss": "src/components/UserSection.scss"
+  },
+  "parameters": {
+    "name": "user",
+    "axiosName": "admin",
+    "sortField": "email",
+    "titleField": "email",
+    "apiField": "id",
+    "pathField": "id",
+    "pathPrefix": "",
+    "breadcrumbField": "userEmail",
+    "routeField": "userId"
+  }
+}

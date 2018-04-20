@@ -1,9 +1,12 @@
 @import 'shared';
 
+body {
+  font-family: 'Helvetica-Light', Helvetica, Arial, sans-serif;
+}
+
 .Component {
-  background-color: $primary-bg-color;
-  color: $primary-color;
-  border-bottom: 1px solid $primary-tint-color;
+  background-color: $navigator-bg-color;
+  color: $navigator-color;
   height: 60px;
 
   .Logo {
@@ -13,15 +16,12 @@
   }
 
   .Actions {
-    line-height: 32px;
-    padding: 12px 0;
-
     .ActionItem {
       display: inline-block;
 
       a {
         position: relative;
-        color: $primary-color;
+        color: $navigator-color;
         font-weight: bold;
         display: inline-block;
       }
@@ -32,7 +32,7 @@
           background-color: $secondary-color;
           position: absolute;
           height: 2px;
-          bottom: 3px;
+          bottom: 16px;
           left: 0;
           right: 0;
           transition: width 0.2s ease;
@@ -86,16 +86,17 @@
   .Popover {
     float: right;
 
-    i {
-      margin: 20px 0;
+    a {
+      color: $navigator-color;
       float: right;
       font-size: 24px;
-      cursor: pointer;
     }
   }
 }
 
 .PopoverMenu {
+  top: 60px !important;
+
   @media (min-width: 992px) {
     display: none;
   }

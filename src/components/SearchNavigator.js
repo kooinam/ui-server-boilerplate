@@ -2,10 +2,9 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import type { Connector } from 'react-redux';
 import { AutoComplete, Input, Button, Icon } from 'antd';
 import { push } from 'react-router-redux';
-import { ItemLoader, getAxios } from 'awry-utilities';
+import { ItemLoader, getAxios } from 'awry-utilities-2';
 
 import type { Reducer } from '../../types';
 import styles from './SearchNavigator.scss';
@@ -21,7 +20,7 @@ class SearchNavigator extends Component {
       itemLoader: new ItemLoader({
         component: this,
         key: 'itemLoader',
-        axiosGetter: () => getAxios('toro-client'),
+        axiosGetter: () => getAxios('auth'),
         itemName: 'groups',
         ItemKlass: Object,
       }),
@@ -117,7 +116,7 @@ class SearchNavigator extends Component {
 }
 
 /* eslint-disable no-unused-vars */
-const connector: Connector<{}, Props> = connect(
+const connector = connect(
   (reducer: Reducer) => ({}),
 );
 /* eslint-enable no-unused-vars */

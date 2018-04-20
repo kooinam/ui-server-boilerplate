@@ -3,8 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Form, Input, Button } from 'antd';
-import type { Connector } from 'react-redux';
-import { Actioner, getAxios, getFieldError } from 'awry-utilities';
+import { Actioner, getAxios, getFieldError } from 'awry-utilities-2';
 
 import styles from './SignUpForm.scss';
 import { authenticated } from '../actions/auth';
@@ -19,7 +18,7 @@ class SignUpForm extends React.Component {
       actioner: new Actioner({
         component: this,
         key: 'actioner',
-        axiosGetter: () => getAxios('toro-client'),
+        axiosGetter: () => getAxios('auth'),
         method: 'post',
         itemName: 'user',
         ItemKlass: User,

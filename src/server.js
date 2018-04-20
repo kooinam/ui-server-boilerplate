@@ -12,7 +12,7 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import chalk from 'chalk';
-import { expandRoutes, addAxiosPreferences } from 'awry-utilities';
+import { expandRoutes, addAxiosPreferences } from 'awry-utilities-2';
 import _ from 'lodash';
 import bodyParser from 'body-parser';
 import axios from 'axios';
@@ -189,7 +189,7 @@ app.get(/^\/[^.]*$/, (req, res) => {
 
       const apiServerURL = process.env.API_SERVER_URL;
 
-      addAxiosPreferences('toro-client', {
+      addAxiosPreferences('auth', {
         baseURL: `${apiServerURL}`,
         headersSetter: () => {
           return {

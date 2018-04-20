@@ -3,7 +3,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Modal, Button } from 'antd';
-import type { Connector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import type { Reducer } from '../../types';
@@ -60,8 +59,8 @@ class SignInModal extends React.Component {
 }
 
 /* eslint-disable no-unused-vars */
-const connector: Connector<{}, Props> = connect(
-  (reducer: Reducer) => ({ }),
+const connector = connect(
+  (reducer: Reducer) => ({}),
 );
 /* eslint-enable no-unused-vars */
 

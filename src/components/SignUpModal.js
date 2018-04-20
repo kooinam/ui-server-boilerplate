@@ -3,7 +3,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Modal, Button } from 'antd';
-import type { Connector } from 'react-redux';
 
 import SignUpForm from './SignUpForm'
 import styles from './SignUpModal.scss';
@@ -51,7 +50,7 @@ class SignUpModal extends React.Component {
 }
 
 /* eslint-disable no-unused-vars */
-const connector: Connector<{}, Props> = connect(
+const connector = connect(
   (reducer: Reducer) => ({ }),
 );
 /* eslint-enable no-unused-vars */

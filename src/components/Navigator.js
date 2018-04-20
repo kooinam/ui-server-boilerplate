@@ -1,14 +1,12 @@
 /* @flow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import type { Connector } from 'react-redux';
 import { Row, Col, Layout, Popover, Icon, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 
 import styles from './Navigator.scss';
 import AuthNavigator from './AuthNavigator';
 import SearchNavigator from './SearchNavigator';
-import NewSheetNavigator from './NewSheetNavigator';
 
 class Navigator extends Component {
   constructor(props) {
@@ -36,6 +34,7 @@ class Navigator extends Component {
         }
       >
         <AuthNavigator
+          hideAccount
           inline
           onSelect={
             () => {
@@ -45,53 +44,32 @@ class Navigator extends Component {
             }
           }
           className="link"
+          hideLogin
         />
-        {
-          currentUser && (
-            <Menu.Item>
-              <Link to="/me/stashes" className="link">
-                My Stashes
-              </Link>
-            </Menu.Item>
-          )
-        }
       </Menu>
     );
 
     return (
       <Layout.Header className={styles.Component}>
         <Row>
-          <Col sm={3} xs={6}>
+          <Col md={4} xs={4}>
             <a href="/">
               <img className={styles.Logo} src={require('../assets/logo.png')} alt="Logo" />
             </a>
           </Col>
-          <Col sm={10} xs={14}>
-            <SearchNavigator />
-          </Col>
-          <Col sm={3} xs={0}>
-            <NewSheetNavigator />
-          </Col>
-          <Col sm={8} xs={0} className="pull-right">
+          <Col md={20} xs={0} className="pull-right">
             <ul className={styles.Actions}>
-              {
-                currentUser && (
-                  <li className={`${styles.ActionItem}`}>
-                    <Link to="/me/stashes" className={`link ${styles.StashLink} underline-link`}>
-                      My Stashes
-                    </Link>
-                  </li>
-                )
-              }
               <li className={styles.ActionItem}>
                 <AuthNavigator
+                  hideAccount
                   className={styles.AuthItem}
                   underlineActionItemClass={styles.UnderlineActionItem}
+                  hideLogin
                 />
               </li>
             </ul>
           </Col>
-          <Col sm={0} xs={4} className={styles.Popover}>
+          <Col md={0} xs={4} className={styles.Popover}>
             <Popover
               placement="bottom"
               trigger="click"
@@ -106,9 +84,11 @@ class Navigator extends Component {
                 }
               }
             >
-              <Icon
-                type="bars"
-              />
+              <a>
+                <Icon
+                  type="bars"
+                />
+              </a>
             </Popover>
           </Col>
         </Row>
@@ -118,7 +98,7 @@ class Navigator extends Component {
 }
 
 /* eslint-disable no-unused-vars */
-const connector: Connector<{}, Props> = connect(
+const connector = connect(
   (reducer: Reducer) => ({
     currentUser: reducer.AuthReducer.currentUser,
   }),

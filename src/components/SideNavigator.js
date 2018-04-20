@@ -2,8 +2,6 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import type { Connector } from 'react-redux';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +11,7 @@ type Props = {
   matchedRoutes: []
 };
 
-class AdminSideNavigator extends Component {
+class SideNavigator extends Component {
   constructor(props) {
     super(props);
 
@@ -51,26 +49,19 @@ class AdminSideNavigator extends Component {
         <Menu.Item
           key="dashboard"
         >
-          <Link to="/admin">
+          <Link to="/">
             <Icon type="laptop" />
-            Dashboard
+            <span>
+              Dashboard
+            </span>
           </Link>
         </Menu.Item>
-        <Menu.SubMenu key="orders" title={<span><Icon type="shopping-cart" />Orders</span>}>
+        <Menu.SubMenu key="users" title={<span><Icon type="team" /><span>Users</span></span>}>
           <Menu.Item
-            key="orders"
+            key="users"
           >
-            <Link to="/orders">
-              Orders
-            </Link>
-          </Menu.Item>
-        </Menu.SubMenu>
-        <Menu.SubMenu key="logs" title={<span><Icon type="hdd" />Logs</span>}>
-          <Menu.Item
-            key="logs"
-          >
-            <Link to="/logs">
-              Logs
+            <Link to="/users">
+              Users
             </Link>
           </Menu.Item>
         </Menu.SubMenu>
@@ -80,9 +71,9 @@ class AdminSideNavigator extends Component {
 }
 
 /* eslint-disable no-unused-vars */
-const connector: Connector<{}, Props> = connect(
+const connector = connect(
   (reducer: Reducer) => ({ }),
 );
 /* eslint-enable no-unused-vars */
 
-export default connector(AdminSideNavigator);
+export default connector(SideNavigator);

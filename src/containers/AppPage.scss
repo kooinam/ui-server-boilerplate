@@ -16,14 +16,31 @@ body {
     position: fixed;
   }
 
+  .Sider {
+    background-color: white;
+  }
+
   .Breadcrumbs {
     margin-bottom: 16px;
   }
 
   .Content {
-    background-color: $primary-bg-color;
+    background-color: $content-bg-color;
     overflow: scroll;
     padding: 30px 50px;
+
+    .Trigger {
+      background: transparent;
+      margin-bottom: 8px;
+      border: 0;
+      box-shadow: none;
+
+      &:active,
+      &:focus {
+        border: 0;
+        box-shadow: none;
+      }
+    }
 
     .SignInForm {
       margin: 0 auto;

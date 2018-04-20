@@ -1,19 +1,11 @@
 /* @flow */
 
-import { BaseRouteComponent, TabContainer } from 'awry-utilities';
+import { BaseRouteComponent, TabContainer } from 'awry-utilities-2';
 
 import HomePage from './containers/HomePage';
-import StashesPage from './containers/StashesPage';
-import BaseStashPage from './containers/BaseStashPage';
-import StashPage from './containers/StashPage';
-import SheetsPage from './containers/SheetsPage';
-import SheetPage from './containers/SheetPage';
-import BaseStashUsersPage from './containers/BaseStashUsersPage';
-import StashUsersPage from './containers/StashUsersPage';
-import StashRequestingsPage from './containers/StashRequestingsPage';
-import SearchPage from './containers/SearchPage';
-import AccountPage from './containers/AccountPage';
 import NotFoundPage from './containers/NotFoundPage';
+import UsersPage from './containers/UsersPage';
+import UserPage from './containers/UserPage';
 
 const notFoundRoute = {
   path: '*',
@@ -23,110 +15,58 @@ const notFoundRoute = {
   },
 };
 
-const stashesRoutes = [{
-  path: '',
-  exact: true,
-  component: StashesPage, // Add your route here
-}, {
-  path: ':stashId',
+const usersPage = {
+  path: 'users',
+  component: BaseRouteComponent,
   routeProps: {
-    breadcrumbName: '%{stashName}',
+    breadcrumbName: 'Users',
+    siderKey: 'users',
+    openKey: 'users',
   },
-  component: BaseStashPage,
   routes: [{
     path: '',
     exact: true,
-    component: StashPage,
+    component: UsersPage,
   }, {
-    path: 'sheets',
+    path: ':userId',
+    component: UserPage,
     routeProps: {
-      breadcrumbName: 'Sheets',
+      breadcrumbName: '%{userEmail}',
     },
-    component: SheetsPage,
-    routes: [{
-      path: ':sheetId',
-      exact: true,
-      component: SheetPage,
-    }, notFoundRoute],
-  }, {
-    path: 'users',
-    routeProps: {
-      breadcrumbName: 'Members',
-    },
-    component: BaseStashUsersPage,
     routes: [{
       path: '',
       exact: true,
       routeProps: {
-        tabKey: 'members',
+        tabKey: '',
       },
-      component: StashUsersPage,
-    }, {
-      path: 'requesting',
-      exact: true,
-      routeProps: {
-        tabKey: 'requesting',
-      },
-      component: StashRequestingsPage,
+      component: TabContainer,
     }, notFoundRoute],
   }, notFoundRoute],
-}, notFoundRoute];
+};
+
+// const usersPage = {
+//   path: 'users',
+//   component: BaseRouteComponent,
+//   routeProps: {
+//     breadcrumbName: 'Users',
+//     siderKey: 'users',
+//     openKey: 'users',
+//   },
+// };
 
 export default [
   {
     path: '/',
     component: BaseRouteComponent,
-    routeProps: {
-      breadcrumbName: 'Home',
-    },
     routes: [{
       path: '',
       exact: true,
+      routeProps: {
+        breadcrumbName: 'Home',
+        siderKey: 'dashboard',
+      },
       component: HomePage, // Add your route here
-    }, {
-      path: 'stashes',
-      routeProps: {
-        urlPrefix: '',
-        scope: 'public',
-      },
-      component: BaseRouteComponent,
-      routes: stashesRoutes,
-    }, {
-      path: 'me',
-      routeProps: {
-        requireUser: true,
-      },
-      component: BaseRouteComponent,
-      routes: [{
-        path: '',
-        exact: true,
-        routeProps: {
-          breadcrumbName: 'Account',
-        },
-        component: AccountPage,
-      }, {
-        path: 'stashes',
-        exact: true,
-        routeProps: {
-          urlPrefix: '',
-          scope: 'mine',
-          breadcrumbName: 'My Stashes',
-          tabKey: 'my_stashes',
-        },
-        component: StashesPage,
-      }, notFoundRoute],
-    }, {
-      path: 'search/:term',
-      routeProps: {
-        breadcrumbName: 'Search %{term}',
-      },
-      component: BaseRouteComponent,
-      routes: [{
-        path: '',
-        exact: true,
-        component: SearchPage,
-      }, notFoundRoute],
-    }, notFoundRoute],
+    }, usersPage, notFoundRoute],
   },
 ];
 

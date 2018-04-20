@@ -10,6 +10,9 @@ $tertiary-bg-color: #f4f4f4;
 $tertiary-color: #b5b5b5;
 $info-color: #aaa;
 $success-color: #57a83b;
+$content-bg-color: #ececec;
+$navigator-bg-color: #404040;
+$navigator-color: white;
 
 :global(.ql-editor) {
   line-height: 24px;
@@ -24,7 +27,6 @@ $success-color: #57a83b;
 }
 
 :global(.btn-primary) {
-  height: 32px;
   border-radius: 1px;
   background-color: $secondary-color;
   color: $secondary-bg-color;
@@ -41,7 +43,6 @@ $success-color: #57a83b;
 }
 
 :global(.btn-secondary) {
-  height: 32px;
   border-radius: 1px;
   background-color: $secondary-bg-color;
   color: $secondary-color;
@@ -58,7 +59,6 @@ $success-color: #57a83b;
 }
 
 :global(.btn-tertiary) {
-  height: 32px;
   border-radius: 1px;
   background-color: $secondary-bg-color;
   color: $primary-color;
@@ -74,7 +74,6 @@ $success-color: #57a83b;
 }
 
 :global(.btn-quaternary) {
-  height: 32px;
   border-radius: 1px;
   background-color: $secondary-bg-color;
   color: $secondary-color;
@@ -89,20 +88,8 @@ $success-color: #57a83b;
   }
 }
 
-:global(.btn-sm) {
-  height: 28px;
-}
-
 :global(.btn-rounded) {
   border-radius: 3px;
-}
-
-:global(.btn-sm) {
-  &:hover, &:active, &:focus {
-    background-color: $secondary-bg-color;
-    color: $secondary-color;
-    border: 1px solid $secondary-color;
-  }
 }
 
 :global(.link-primary) {
@@ -137,9 +124,7 @@ $success-color: #57a83b;
 }
 
 :global(.btn-block) {
-  height: 35px;
   width: 100%;
-  padding: 10px 8px;
 }
 
 :global(.text-center) {
@@ -169,14 +154,6 @@ $success-color: #57a83b;
 
 :global(.ant-input), :global(.ant-btn-bordered), :global(.ant-select-selection), :global(.ant-select-dropdown), :global(.ant-dropdown-menu) {
   border-radius: 1px;
-}
-
-:global(.ant-tabs-nav) :global(.ant-tabs-tab-active), :global(.ant-tabs-tab:hover) {
-  color: $primary-tint-color !important;
-}
-
-:global(.ant-tabs-ink-bar) {
-  background-color: $primary-tint-color !important;
 }
 
 :global(.ant-clickable-table) td {
@@ -300,7 +277,6 @@ $success-color: #57a83b;
   font-size: 11px;
   border-radius: 2px;
   padding: 0 6px;
-  line-height: 18px;
   height: 18px;
 }
 
@@ -334,16 +310,6 @@ $success-color: #57a83b;
 
 button:focus {
   outline: 0;
-}
-
-:global(.ant-pagination-item-active), :global(.ant-pagination-item-active):hover {
-  background-color: $primary-tint-color;
-  border-color: $primary-tint-color;
-}
-
-:global(.ant-pagination-item):hover, :global(.ant-pagination-item-link):hover {
-  border-color: $primary-tint-color !important;
-  color: $primary-tint-color !important;
 }
 
 :global(.ant-spin-dot) i {
@@ -392,11 +358,11 @@ button:focus {
   margin-top: 16px;
 }
 
-:global(.ant-form-item-label) {
-  label {
-    font-weight: bold;
-  }
-}
+// :global(.ant-form-item-label) {
+//   label {
+//     font-weight: bold;
+//   }
+// }
 
 :global(.link-success) {
   color: $success-color;
@@ -424,3 +390,12 @@ button:focus {
   }
 }
 
+:global(.ant-popover-placement-bottom), :global(.ant-popover-placement-bottomLeft), :global(.ant-popover-placement-bottomRight) {
+  :global(.ant-popover-content) {
+    margin-top: -10px;
+
+    :global(.ant-popover-arrow) {
+      top: -4px;
+    }
+  }
+}

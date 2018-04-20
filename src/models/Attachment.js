@@ -1,4 +1,4 @@
-import { BaseModel } from 'awry-utilities';
+import { BaseModel } from 'awry-utilities-2';
 
 class Attachment extends BaseModel {
   constructor(attributes) {

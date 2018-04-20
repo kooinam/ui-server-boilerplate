@@ -17,6 +17,9 @@ export const authenticated = user =>
       // authenticate failed for unknown reason
       dispatch({
         type: 'UNAUTHENTICATED',
+        payload: {
+          reason: 'unknown',
+        },
       });
     } else {
       // unauthenticated
