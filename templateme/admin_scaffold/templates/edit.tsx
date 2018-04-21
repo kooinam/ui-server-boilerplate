@@ -54,7 +54,7 @@ class Edit<%= name.capitalize() %>Modal extends React.Component {
         <%= name %>: attributes,
       };
 
-      this.state.actioner.do(`/<%= name %>/${this.props.<%= name.camelcase() %>.<%= apiField %>}.json`, params);
+      this.state.actioner.do(`/<%= name.pluralize() %>/${this.props.<%= name.camelcase() %>.<%= apiField %>}.json`, params);
       return true;
     });
   }
@@ -66,7 +66,7 @@ class Edit<%= name.capitalize() %>Modal extends React.Component {
     return (
       <Modal maskClosable={false} title="Edit <%= name.capitalize().split() %>" visible={this.props.modalParams.visible} onCancel={this.handleCancel} onOk={this.handleOk} okText="Confirm" cancelText="Cancel" confirmLoading={this.state.actioner.isLoading} className={styles.Component}>
         <Form>
-          <<%= name.capitalize() %>Inputs {...{ <%= name.camelcase() %>, form, actioner }} />
+          <<%= name.capitalize() %>Inputs {...{ <%= name.camelcase() %>, form, actioner, edit: true }} />
         </Form>
       </Modal>
     );

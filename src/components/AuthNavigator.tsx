@@ -219,7 +219,6 @@ class AuthNavigator extends React.Component {
                 });
               }
             }
-            trigger="click"
           >
             <a className={`${this.props.className} ${styles.Component}`}>
               {currentUser.email}

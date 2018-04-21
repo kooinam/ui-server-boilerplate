@@ -18,7 +18,7 @@ class UserInputs extends React.Component {
   state: any;
 
   render() {
-    const { actioner, form, user } = this.props;
+    const { actioner, form, user, edit } = this.props;
 
     return (
       <div>
@@ -31,14 +31,14 @@ class UserInputs extends React.Component {
                 ],
                 initialValue: user.email,
               })(
-                <Input type="text" placeholder="Email" />,
+                <Input type="text" placeholder="Email" disabled={edit} />,
               )}
             </Form.Item>
           </Col>
           <Col md={24}>
             <Form.Item {...getFieldError(actioner.error, 'password')} label="Password" hasFeedback>
               {form.getFieldDecorator('password', {
-                rules: [
+                rules: (edit) ? [] : [
                   { required: true, message: 'Password is required' },
                 ],
                 initialValue: user.password,

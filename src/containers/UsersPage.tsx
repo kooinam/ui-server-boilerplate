@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 import User from '../models/User';
 import NewUserModal from '../components/NewUserModal';
+import CreatedAt from '../components/CreatedAt';
 
 const styles = require('./UsersPage.scss');
 
@@ -122,7 +123,17 @@ class UsersPage extends React.Component {
 
     const columns = [{
       className: '',
-      width: '90%',
+      width: '20%',
+      title: 'Created At',
+      key: 'created_at',
+      render: (value, record) => {
+        return (
+          <CreatedAt createdAt={record.created_at} />
+        );
+      },
+    }, {
+      className: '',
+      width: '70%',
       title: 'Email',
       key: 'email',
       render: (value, record) => {
@@ -188,6 +199,16 @@ class UsersPage extends React.Component {
     const filters = [{
       name: 'Email',
       field: 'email',
+    }, {
+      name: 'Created At From',
+      field: 'created_at_gteq',
+      exact: true,
+      type: 'date',
+    }, {
+      name: 'Created At To',
+      field: 'created_at_lteq',
+      exact: true,
+      type: 'date',
     }];
     const sorting = [{
       key: 'email ASC',
@@ -195,6 +216,12 @@ class UsersPage extends React.Component {
     }, {
       key: 'email DESC',
       label: 'Email (DESC)',
+    }, {
+      key: 'created_at ASC',
+      label: 'Created At (ASC)',
+    }, {
+      key: 'created_at DESC',
+      label: 'Created At (DESC)',
     }];
 
     return (

@@ -54,7 +54,7 @@ class EditUserModal extends React.Component {
         user: attributes,
       };
 
-      this.state.actioner.do(`/user/${this.props.user.id}.json`, params);
+      this.state.actioner.do(`/users/${this.props.user.id}.json`, params);
       return true;
     });
   }
@@ -66,7 +66,7 @@ class EditUserModal extends React.Component {
     return (
       <Modal maskClosable={false} title="Edit User" visible={this.props.modalParams.visible} onCancel={this.handleCancel} onOk={this.handleOk} okText="Confirm" cancelText="Cancel" confirmLoading={this.state.actioner.isLoading} className={styles.Component}>
         <Form>
-          <UserInputs {...{ user, form, actioner }} />
+          <UserInputs {...{ user, form, actioner, edit: true }} />
         </Form>
       </Modal>
     );

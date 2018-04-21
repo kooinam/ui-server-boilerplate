@@ -6,6 +6,7 @@ import { push } from 'react-router-redux';
 
 import User from '../models/User';
 import EditUserModal from '../components/EditUserModal';
+import CreatedAt from '../components/CreatedAt';
 
 const styles = require('./UserSection.scss');
 
@@ -48,6 +49,15 @@ class UserSection extends React.Component {
     const details = [{
       title: 'Email',
       value: user.email,
+    }, {
+      title: 'Token',
+      value: user.authentication_token,
+    }, {
+      title: 'Created At',
+      value: (
+        <CreatedAt createdAt={user.created_at} />
+      ),
+      size: 'lg',
     }];
 
     return (

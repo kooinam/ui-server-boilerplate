@@ -6,8 +6,6 @@ import HomePage from './containers/HomePage';
 import NotFoundPage from './containers/NotFoundPage';
 import UsersPage from './containers/UsersPage';
 import UserPage from './containers/UserPage';
-import TestTingsPage from './containers/TestTingsPage';
-import TestTingPage from './containers/TestTingPage';
 
 const notFoundRoute = {
   path: '*',
@@ -46,35 +44,6 @@ const usersRoute = {
   }, notFoundRoute],
 };
 
-const testTingsRoute = {
-  path: 'test_tings',
-  component: BaseRouteComponent,
-  routeProps: {
-    breadcrumbName: 'Test Tings',
-    siderKey: 'test_tings',
-    openKey: 'test_tings',
-  },
-  routes: [{
-    path: '',
-    exact: true,
-    component: TestTingsPage,
-  }, {
-    path: ':testTingId',
-    component: TestTingPage,
-    routeProps: {
-      breadcrumbName: '%{testTingName}',
-    },
-    routes: [{
-      path: '',
-      exact: true,
-      routeProps: {
-        tabKey: '',
-      },
-      component: TabContainer,
-    }, notFoundRoute],
-  }, notFoundRoute],
-};
-
 // const usersPage = {
 //   path: 'users',
 //   component: BaseRouteComponent,
@@ -97,7 +66,7 @@ export default [
         siderKey: 'dashboard',
       },
       component: HomePage, // Add your route here
-    }, usersRoute, testTingsRoute, notFoundRoute],
+    }, usersRoute, notFoundRoute],
   },
 ];
 
