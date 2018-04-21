@@ -1,15 +1,16 @@
 {
   "templates": {
     "index.tsx": "src/containers/TestTingsPage.tsx",
-    "index.scss": "src/containers/TestTingsPage.tsx",
+    "index.scss": "src/containers/TestTingsPage.scss",
     "show.tsx": "src/containers/TestTingPage.tsx",
     "show.scss": "src/containers/TestTingPage.scss",
     "edit.tsx": "src/components/EditTestTingModal.tsx",
     "edit.scss": "src/components/EditTestTingModal.scss",
-    "new.tsx": "test/NewTestTingModal.tsx",
-    "new.scss": "test/NewTestTingModal.scss",
+    "new.tsx": "src/components/NewTestTingModal.tsx",
+    "new.scss": "src/components/NewTestTingModal.scss",
     "details.tsx": "src/components/TestTingSection.tsx",
-    "details.scss": "src/components/TestTingSection.scss"
+    "details.scss": "src/components/TestTingSection.scss",
+    "model.tsx": "src/models/TestTing.tsx"
   },
   "parameters": {
     "name": "test_ting",

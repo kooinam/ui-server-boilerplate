@@ -64,7 +64,7 @@ class <%= name.capitalize().pluralize() %>Page extends React.Component {
           });
         },
         errorMessageGetter: (error, key) =>
-          `Failed to delete <%= name.capitalize() %> ${key.<%= titleField %>}`,
+          `Failed to delete <%= name.split().capitalize() %> ${key.<%= titleField %>}`,
         /* eslint-enable no-unused-vars */
       }),
     };
@@ -168,7 +168,7 @@ class <%= name.capitalize().pluralize() %>Page extends React.Component {
     }];
 
     const locale = {
-      emptyText: 'No <%= name.capitalize() %> found',
+      emptyText: 'No <%= name.split().capitalize() %> found',
     };
 
     return (
@@ -209,15 +209,15 @@ class <%= name.capitalize().pluralize() %>Page extends React.Component {
   render() {
     return (
       <div className={styles.Container}>
-        <Card className="ant-card-lg" title="<%= name.capitalize().pluralize() %>" id="listing">
+        <Card className="ant-card-lg" title="<%= name.split().capitalize().pluralize() %>" id="listing">
           <New<%= name.capitalize() %>Modal
             {...this.state.new<%= name.capitalize() %>ModalParams.churn()}
             onSuccess={
               (<%= name.camelcase() %>) => {
-                this.props.dispatch(push(`<%= pathPrefix %>/<%= name.pluralize() %>/${<%= name %>.<%= pathField %>}`));
+                this.props.dispatch(push(`<%= pathPrefix %>/<%= name.pluralize() %>/${<%= name.camelcase() %>.<%= pathField %>}`));
               }
             }
-            <%= name %>={new <%= name.capitalize() %>()}
+            <%= name.camelcase() %>={new <%= name.capitalize() %>()}
           />
           {this.renderFilters()}
           <Row className={'ant-card-content'}>
@@ -226,7 +226,7 @@ class <%= name.capitalize().pluralize() %>Page extends React.Component {
             </Col>
             <Col md={12} className="pull-right actions-listing">
               <Button onClick={this.state.new<%= name.capitalize() %>ModalParams.show} icon="plus" type="primary">
-                <%= name.capitalize() %>
+                <%= name.split().capitalize() %>
               </Button>
             </Col>
           </Row>

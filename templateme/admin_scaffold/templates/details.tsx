@@ -5,7 +5,7 @@ import { Row, Col, Button, Popconfirm } from 'antd';
 import { push } from 'react-router-redux';
 
 import <%= name.capitalize() %> from '../models/<%= name.capitalize() %>';
-import Edit<%= name.capitalize() %>Modal from '../components/Edit<%= name.capitalize() %>Modal';
+import Edit<%= name.capitalize() %>Modal from './Edit<%= name.capitalize() %>Modal';
 
 const styles = require('./<%= name.capitalize() %>Section.scss');
 
@@ -31,7 +31,7 @@ class <%= name.capitalize() %>Section extends React.Component {
           this.props.dispatch(push('<%= pathPrefix %>/<%= name.pluralize() %>'));
         },
         errorMessageGetter: error =>
-          `Failed to delete <%= name.capitalize() %> ${this.props.<%= name.camelcase() %>.<%= titleField %>}`,
+          `Failed to delete <%= name.split().capitalize() %> ${this.props.<%= name.camelcase() %>.<%= titleField %>}`,
       }),
     };
   }

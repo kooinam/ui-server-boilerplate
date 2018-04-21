@@ -29,7 +29,7 @@ class <%= name.capitalize() %>Inputs extends React.Component {
                 rules: [
                   { required: true, message: '<%= titleField.capitalize() %> is required' },
                 ],
-                initialValue: <%= name.camelcase %>.<%= titleField %>,
+                initialValue: <%= name.camelcase() %>.<%= titleField %>,
               })(
                 <Input type="text" placeholder="<%= titleField.capitalize() %>" />,
               )}
@@ -57,9 +57,8 @@ class New<%= name.capitalize() %>Modal extends React.Component {
         method: 'post',
         itemName: '<%= name %>',
         ItemKlass: <%= name.capitalize() %>,
-        /* eslint-disable no-unused-vars */
         successMessageGetter: <%= name.camelcase() %> =>
-          `New <%= name.capitalize() %> ${<%= name.camelcase() %>.<%= titleField %>} created successfully`,
+          `New <%= name.split().capitalize() %> ${<%= name.camelcase() %>.<%= titleField %>} created successfully`,
         successCallback: (<%= name.camelcase() %>) => {
           this.props.modalParams.dismiss();
           if (this.props.onSuccess) {
@@ -67,8 +66,7 @@ class New<%= name.capitalize() %>Modal extends React.Component {
           }
         },
         errorMessageGetter: error =>
-          'Failed to create <%= name.capitalize() %>',
-        /* eslint-enable no-unused-vars */
+          'Failed to create <%= name.split().capitalize() %>',
       }),
     };
   }
@@ -101,7 +99,7 @@ class New<%= name.capitalize() %>Modal extends React.Component {
     const { actioner } = this.state;
 
     return (
-      <Modal maskClosable={false} title="New <%= name.pluralize %>" visible={this.props.modalParams.visible} onCancel={this.handleCancel} onOk={this.handleOk} okText="Confirm" cancelText="Cancel" confirmLoading={this.state.actioner.isLoading} className={styles.Component}>
+      <Modal maskClosable={false} title="New <%= name.split().capitalize() %>" visible={this.props.modalParams.visible} onCancel={this.handleCancel} onOk={this.handleOk} okText="Confirm" cancelText="Cancel" confirmLoading={this.state.actioner.isLoading} className={styles.Component}>
         <Form>
           <<%= name.capitalize() %>Inputs {...{ <%= name.camelcase() %>, form, actioner }} />
         </Form>

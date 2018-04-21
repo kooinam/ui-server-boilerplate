@@ -21,7 +21,7 @@ class Edit<%= name.capitalize() %>Modal extends React.Component {
         itemName: '<%= name %>',
         ItemKlass: <%= name.capitalize() %>,
         successMessageGetter: (<%= name.camelcase() %>) => {
-          return `<%= name.capitalize() %> ${<%= name.camelcase() %>.<%= titleField %>} updated successfully`;
+          return `<%= name.split().capitalize() %> ${<%= name.camelcase() %>.<%= titleField %>} updated successfully`;
         },
         successCallback: (<%= name.camelcase() %>) => {
           this.props.modalParams.dismiss();
@@ -30,7 +30,7 @@ class Edit<%= name.capitalize() %>Modal extends React.Component {
           }
         },
         errorMessageGetter: (error) => {
-          return `Failed to update <%= name.capitalize() %> ${this.props.<%= name.camelcase() %>.<%= titleField %>}`;
+          return `Failed to update <%= name.split().capitalize() %> ${this.props.<%= name.camelcase() %>.<%= titleField %>}`;
         },
       }),
     };
@@ -66,7 +66,7 @@ class Edit<%= name.capitalize() %>Modal extends React.Component {
     return (
       <Modal maskClosable={false} title="Edit <%= name.capitalize().split() %>" visible={this.props.modalParams.visible} onCancel={this.handleCancel} onOk={this.handleOk} okText="Confirm" cancelText="Cancel" confirmLoading={this.state.actioner.isLoading} className={styles.Component}>
         <Form>
-          <<%= name.capitalize() %>Inputs {...{ <%= name.camerlcase() %>, form, actioner }} />
+          <<%= name.capitalize() %>Inputs {...{ <%= name.camelcase() %>, form, actioner }} />
         </Form>
       </Modal>
     );

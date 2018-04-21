@@ -79,7 +79,7 @@ class <%= name.capitalize() %>Page extends React.Component {
         onTabClick={this.handleClickTab}
         activeKey={this.state.activeTabKey}
       >
-        <Tabs.TabPane tab="<%= name.capitalize() %>" key="">
+        <Tabs.TabPane tab="<%= name.split().capitalize() %>" key="">
           <Spin spinning={this.state.itemLoader.isLoading}>
             <<%= name.capitalize() %>Section <%= name.camelcase() %>={this.state.itemLoader.item} loadItem={this.loadItem} />
           </Spin>
