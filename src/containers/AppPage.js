@@ -37,9 +37,7 @@ class AppPage extends Component {
   componentWillMount = () => {
     setupAxios(this);
 
-    /* eslint-disable no-undef */
     const apiServerURL = __API_SERVER_URL__;
-    /* eslint-enable no-undef */
 
     addAxiosPreferences('auth', {
       baseURL: `${apiServerURL}`,
@@ -54,6 +52,28 @@ class AppPage extends Component {
 
     addAxiosPreferences('admin', {
       baseURL: `${apiServerURL}/admin`,
+      headersSetter: () => {
+        const token = User.getToken();
+
+        return {
+          'X-Authentication-Token': token,
+        };
+      },
+    });
+
+    addAxiosPreferences('admin', {
+      baseURL: `${apiServerURL}/admin`,
+      headersSetter: () => {
+        const token = User.getToken();
+
+        return {
+          'X-Authentication-Token': token,
+        };
+      },
+    });
+
+    addAxiosPreferences('thronetec-admin', {
+      baseURL: `${apiServerURL}/admin/thronetec`,
       headersSetter: () => {
         const token = User.getToken();
 

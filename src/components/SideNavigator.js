@@ -65,6 +65,16 @@ class SideNavigator extends Component {
             </Link>
           </Menu.Item>
         </Menu.SubMenu>
+        <Menu.Item
+          key="round_transactions"
+        >
+          <Link to="/round_transactions">
+            <Icon type="play-circle" />
+            <span>
+              Round Transactions
+            </span>
+          </Link>
+        </Menu.Item>
       </Menu>
     );
   }

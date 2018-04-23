@@ -6,6 +6,8 @@ import HomePage from './containers/HomePage';
 import NotFoundPage from './containers/NotFoundPage';
 import UsersPage from './containers/UsersPage';
 import UserPage from './containers/UserPage';
+import RoundTransactionsPage from './containers/RoundTransactionsPage';
+import RoundTransactionPage from './containers/RoundTransactionPage';
 
 const notFoundRoute = {
   path: '*',
@@ -44,15 +46,38 @@ const usersRoute = {
   }, notFoundRoute],
 };
 
-// const usersPage = {
-//   path: 'users',
-//   component: BaseRouteComponent,
-//   routeProps: {
-//     breadcrumbName: 'Users',
-//     siderKey: 'users',
-//     openKey: 'users',
-//   },
-// };
+const roundTransactionsRoute = {
+  path: 'round_transactions',
+  component: RoundTransactionsPage,
+  routeProps: {
+    breadcrumbName: 'Round Transactions',
+    siderKey: 'round_transactions',
+  },
+  routes: [{
+    path: 'players/:playerId',
+    component: BaseRouteComponent,
+    routes: [{
+      path: '',
+      exact: true,
+      component: BaseRouteComponent,
+    }, {
+      path: 'games/:gameId',
+      component: BaseRouteComponent,
+      routes: [{
+        path: 'rounds/:roundId',
+        component: RoundTransactionPage,
+        routes: [{
+          path: '',
+          exact: true,
+          routeProps: {
+            tabKey: '',
+          },
+          component: TabContainer,
+        }, notFoundRoute],
+      }, notFoundRoute],
+    }, notFoundRoute],
+  }, notFoundRoute],
+};
 
 export default [
   {
@@ -66,7 +91,7 @@ export default [
         siderKey: 'dashboard',
       },
       component: HomePage, // Add your route here
-    }, usersRoute, notFoundRoute],
+    }, usersRoute, roundTransactionsRoute, notFoundRoute],
   },
 ];
 
