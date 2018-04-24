@@ -10,5 +10,5 @@ RUN chmod 700 /root/.ssh/id_rsa
 RUN yarn
 COPY . .
 RUN yarn build
-EXPOSE 8000
+EXPOSE 8002
 CMD [ "yarn",  "start:production" ]
