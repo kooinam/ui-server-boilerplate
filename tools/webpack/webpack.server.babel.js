@@ -56,6 +56,11 @@ module.exports = {
         loader: 'url',
         options: { limit: 10000 },
       },
+      {
+        test: /\.tsx?$/,
+        exclude: /templateme/,
+        loader: 'ts-loader',
+      },
     ],
   },
   plugins: [
@@ -76,7 +81,7 @@ module.exports = {
     modules: ['src', 'node_modules'],
     descriptionFiles: ['package.json'],
     moduleExtensions: ['-loader'],
-    extensions: ['.js', '.jsx', '.json', '.css'],
+    extensions: ['.js', '.jsx', '.json', '.css', '.ts', '.tsx'],
   },
   node: {
     console: false,

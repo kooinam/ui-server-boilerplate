@@ -186,8 +186,9 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
+        exclude: /templateme/,
         loader: 'ts-loader',
-      }
+      },
     ],
   },
   plugins: getPlugins(),
