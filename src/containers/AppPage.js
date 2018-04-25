@@ -61,17 +61,6 @@ class AppPage extends Component {
       },
     });
 
-    addAxiosPreferences('admin', {
-      baseURL: `${apiServerURL}/admin`,
-      headersSetter: () => {
-        const token = User.getToken();
-
-        return {
-          'X-Authentication-Token': token,
-        };
-      },
-    });
-
     addAxiosPreferences('thronetec-admin', {
       baseURL: `${apiServerURL}/admin/thronetec`,
       headersSetter: () => {

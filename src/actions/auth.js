@@ -25,6 +25,9 @@ export const authenticated = user =>
       // unauthenticated
       dispatch({
         type: 'UNAUTHENTICATED',
+        payload: {
+          reason: 'unauthenticated',
+        },
       });
     }
   };
