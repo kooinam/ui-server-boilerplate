@@ -131,7 +131,7 @@
   "dependencies": {
     "@types/react": "^16.3.10",
     "@types/react-dom": "^16.0.5",
-    "awry-utilities-2": "1.0.4",
+    "awry-utilities-2": "1.0.12",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
     "body-parser": "^1.18.2",
@@ -169,6 +169,7 @@
     "request": "^2.83.0",
     "serialize-javascript": "^1.4.0",
     "serve-favicon": "^2.4.3",
+    "socket.io": "^2.1.0",
     "source-map-loader": "^0.2.3",
     "valid-url": "^1.0.9",
     "webpack-isomorphic-tools": "^3.0.3"

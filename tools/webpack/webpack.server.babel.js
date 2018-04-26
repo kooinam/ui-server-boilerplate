@@ -42,7 +42,6 @@ module.exports = {
           {
             loader: 'css/locals',
             options: {
-              modules: CSSModules,
               // "context" and "localIdentName" need to be the same with client config,
               // or the style will flick when page first loaded
               context: path.join(process.cwd(), './src'),
@@ -75,9 +74,6 @@ module.exports = {
     moduleExtensions: ['-loader'],
   },
   resolve: {
-    alias: {
-      antd: path.resolve('./node_modules/antd'),
-    },
     modules: ['src', 'node_modules'],
     descriptionFiles: ['package.json'],
     moduleExtensions: ['-loader'],

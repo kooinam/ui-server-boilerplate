@@ -3,7 +3,6 @@
 import path from 'path';
 import morgan from 'morgan';
 import express from 'express';
-// import compression from 'compression';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import favicon from 'serve-favicon';
@@ -19,13 +18,14 @@ import axios from 'axios';
 import redis from 'redis';
 import { CronJob } from 'cron';
 import request from 'request';
-
 import createHistory from 'history/createMemoryHistory';
+
 import configureStore from './redux/store';
 import Html from './utils/Html';
 import AppPage from './containers/AppPage';
 import routes from './routes';
 import { port, host } from './config';
+import { openSocket } from './io/socket';
 
 const app = express();
 
@@ -204,7 +204,7 @@ app.get(/^\/[^.]*$/, (req, res) => {
 });
 
 if (port) {
-  app.listen(port, host, (err) => {
+  const server = app.listen(port, host, (err) => {
     const url = `http://${host}:${port}`;
 
     if (err) console.error(`==> 😭  OMG!!! ${err}`);
@@ -214,6 +214,8 @@ if (port) {
     // Open Chrome
     require('../tools/openBrowser')(url);
   });
+  openSocket(server);
 } else {
   console.error(chalk.red('==> 😭  OMG!!! No PORT environment variable has been specified'));
 }
+

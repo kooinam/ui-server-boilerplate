@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import styles from './Navigator.scss';
 import AuthNavigator from './AuthNavigator';
 import SearchNavigator from './SearchNavigator';
+import NotificationsNavigator from './NotificationsNavigator';
 
 class Navigator extends Component {
   constructor(props) {
@@ -33,6 +34,13 @@ class Navigator extends Component {
           }
         }
       >
+        {
+          currentUser && (
+            <NotificationsNavigator
+              inline
+            />
+          )
+        }
         <AuthNavigator
           hideAccount
           inline
@@ -59,6 +67,13 @@ class Navigator extends Component {
           </Col>
           <Col md={20} xs={0} className="pull-right">
             <ul className={styles.Actions}>
+              {
+                currentUser && (
+                  <li className={styles.ActionItem}>
+                    <NotificationsNavigator />
+                  </li>
+                )
+              }
               <li className={styles.ActionItem}>
                 <AuthNavigator
                   hideAccount
