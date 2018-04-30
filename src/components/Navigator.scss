@@ -24,6 +24,10 @@ body {
         color: $navigator-color;
         font-weight: bold;
         display: inline-block;
+
+        i {
+          color: $navigator-color;
+        }
       }
 
       :global(.underline-link) {

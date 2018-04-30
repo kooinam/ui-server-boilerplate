@@ -1,0 +1,21 @@
+{
+  "templates": {
+    "index.tsx": "src/containers/ActivitiesPage.tsx",
+    "index.scss": "src/containers/ActivitiesPage.scss",
+    "show.tsx": "src/containers/ActivityPage.tsx",
+    "show.scss": "src/containers/ActivityPage.scss",
+    "details.tsx": "src/components/ActivitySection.tsx",
+    "details.scss": "src/components/ActivitySection.scss"
+  },
+  "parameters": {
+    "name": "activity",
+    "axiosName": "admin",
+    "sortField": "created_at",
+    "titleField": "id",
+    "apiField": "id",
+    "pathField": "id",
+    "pathPrefix": "",
+    "breadcrumbField": "activityId",
+    "routeField": "activityId"
+  }
+}

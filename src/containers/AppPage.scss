@@ -27,7 +27,7 @@ body {
   .Content {
     background-color: $content-bg-color;
     overflow: scroll;
-    overflow-x: scroll;
+    overflow-x: scroll !important;
     padding: 30px 50px;
 
     .Trigger {

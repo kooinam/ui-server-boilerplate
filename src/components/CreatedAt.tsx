@@ -15,7 +15,21 @@ class CreatedAt extends React.Component {
   state: any;
 
   render() {
-    const { createdAt } = this.props;
+    const { createdAt, inline } = this.props;
+
+    if (inline) {
+      return (
+        <div>
+          <small>
+            {formatDate(createdAt)}
+          </small>
+          &nbsp;
+          <small>
+            {formatTime(createdAt)}
+          </small>
+        </div>
+      );
+    }
 
     return (
       <div>

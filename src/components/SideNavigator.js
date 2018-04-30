@@ -75,6 +75,22 @@ class SideNavigator extends Component {
             </span>
           </Link>
         </Menu.Item>
+        <Menu.SubMenu key="insights" title={<span><Icon type="hdd" /><span>Insights</span></span>}>
+          <Menu.Item
+            key="sessions"
+          >
+            <Link to="/sessions">
+              Sessions
+            </Link>
+          </Menu.Item>
+          <Menu.Item
+            key="activities"
+          >
+            <Link to="/activities">
+              Activities
+            </Link>
+          </Menu.Item>
+        </Menu.SubMenu>
       </Menu>
     );
   }

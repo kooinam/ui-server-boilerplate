@@ -55,7 +55,10 @@ class UserSection extends React.Component {
     }, {
       title: 'Created At',
       value: (
-        <CreatedAt createdAt={user.created_at} />
+        <CreatedAt
+          createdAt={user.created_at}
+          inline
+        />
       ),
       size: 'lg',
     }];

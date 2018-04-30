@@ -29,12 +29,6 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel',
-        options: {
-          babelrc: false,
-          presets: [['es2015', { modules: false }], 'react', 'stage-0'],
-          plugins: [['import', { libraryName: 'antd', style: 'css' }]],
-        },
       },
       {
         test: /\.(css|scss|sass)$/,
@@ -58,7 +52,11 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /templateme/,
-        loader: 'ts-loader',
+        use: [{
+          loader: 'babel-loader',
+        }, {
+          loader: 'ts-loader',
+        }],
       },
     ],
   },

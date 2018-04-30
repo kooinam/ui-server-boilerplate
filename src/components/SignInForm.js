@@ -80,7 +80,6 @@ class SignInForm extends React.Component {
         method: 'post',
         itemName: 'user',
         ItemKlass: User,
-        /* eslint-disable no-unused-vars */
         successMessageGetter: user =>
           'Welcome back!',
         successCallback: (user) => {
@@ -91,7 +90,7 @@ class SignInForm extends React.Component {
         },
         errorMessageGetter: (error) => {
           return 'Log in failed';
-        }
+        },
       }),
     };
   }

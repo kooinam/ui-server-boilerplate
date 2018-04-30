@@ -127,12 +127,6 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/,
         loader: 'babel',
-        options: {
-          cacheDirectory: isDev,
-          babelrc: false,
-          presets: [['es2015', { modules: false }], 'react', 'stage-0'],
-          plugins: [['import', { libraryName: 'antd', style: 'css' }]],
-        },
       },
       {
         test: /\.css$/,
@@ -187,7 +181,11 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /templateme/,
-        loader: 'ts-loader',
+        use: [{
+          loader: 'babel-loader',
+        }, {
+          loader: 'ts-loader',
+        }],
       },
     ],
   },

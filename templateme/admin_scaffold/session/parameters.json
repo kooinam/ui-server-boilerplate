@@ -1,0 +1,22 @@
+{
+  "templates": {
+    "index.tsx": "src/containers/SessionsPage.tsx",
+    "index.scss": "src/containers/SessionPage.scss",
+    "show.tsx": "src/containers/SessionPage.tsx",
+    "show.scss": "src/containers/SessionPage.scss",
+    "details.tsx": "src/components/SessionSection.tsx",
+    "details.scss": "src/components/SessionSection.scss",
+    "model.tsx": "src/models/Session.tsx"
+  },
+  "parameters": {
+    "name": "session",
+    "axiosName": "admin",
+    "sortField": "created_at",
+    "titleField": "ip",
+    "apiField": "id",
+    "pathField": "id",
+    "pathPrefix": "",
+    "breadcrumbField": "sessionId",
+    "routeField": "sessionId"
+  }
+}

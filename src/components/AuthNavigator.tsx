@@ -56,7 +56,7 @@ class AuthNavigator extends React.Component {
           this.props.dispatch(authenticated(user));
         },
         errorCallback: (error) => {
-          if (error && error.response) {
+          if (error && error.response && error.response.status !== 500) {
             this.props.dispatch(authenticated(null));
           } else {
             this.props.dispatch(authenticated(undefined));

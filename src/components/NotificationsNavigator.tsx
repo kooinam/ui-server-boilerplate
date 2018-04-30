@@ -24,7 +24,7 @@ class NotificationsNavigator extends React.Component {
   state: any;
 
   subscribe = () => {
-    const socket = io('http://localhost:9009');
+    const socket = io.default('http://localhost:9009');
 
     socket.on('timer', (timestamp) => {
       console.log(timestamp);
@@ -38,9 +38,9 @@ class NotificationsNavigator extends React.Component {
     const menu = (
       <Menu selectedKeys={[]} className={styles.Menu}>
         <Menu.Item>
-          <a role="button">
-            Log Out
-          </a>
+          <i>
+            No notification. :(
+          </i>
         </Menu.Item>
       </Menu>
     );
@@ -49,7 +49,6 @@ class NotificationsNavigator extends React.Component {
       <Popover
         overlayClassName={styles.Popover}
         content={menu}
-        placement="bottomRight"
         visible={this.state.popoverVisible}
         onVisibleChange={
           (popoverVisible) => {

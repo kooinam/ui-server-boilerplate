@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Badge, Icon } from 'antd';
+import { Row, Col, Card } from 'antd';
+
+import ActivitiesSection from '../components/ActivitiesSection';
 
 const styles = require('./HomePage.scss');
 
@@ -10,12 +12,15 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <div className={styles.Container}>
-        Home
-        <Badge count={5}>
-          <a href="#" className="head-example" />
-        </Badge>
-      </div>
+      <Row>
+        <Col md={12}>
+          <Card className="ant-card-lg" title="Activities" id="listing">
+            <ActivitiesSection
+              hideActions
+            />
+           </Card>
+        </Col>
+      </Row>
     );
   }
 }

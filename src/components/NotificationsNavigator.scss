@@ -1,3 +1,36 @@
 .Component {
-  display: inline-block;
+  display: block;
+
+  i {
+    font-size: 20px;
+  }
+
+  sup {
+    height: 12px;
+    min-width: 12px;
+    line-height: 12px;
+    padding: 0 2px;
+    font-size: 10px;
+    top: -5px;
+  }
+}
+
+.Popover {
+  :global(.ant-popover-inner-content) {
+    min-width: 200px;
+    padding: 0;
+
+    .Menu {
+      border-right: 0;
+
+      :global(.ant-menu-item) {
+        padding: 0 8px;
+        height: 36px;
+
+        a {
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }

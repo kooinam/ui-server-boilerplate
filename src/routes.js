@@ -8,6 +8,10 @@ import UsersPage from './containers/UsersPage';
 import UserPage from './containers/UserPage';
 import RoundTransactionsPage from './containers/RoundTransactionsPage';
 import RoundTransactionPage from './containers/RoundTransactionPage';
+import SessionsPage from './containers/SessionsPage';
+import SessionPage from './containers/SessionPage';
+import ActivitiesPage from './containers/ActivitiesPage';
+import ActivityPage from './containers/ActivityPage';
 
 const notFoundRoute = {
   path: '*',
@@ -79,6 +83,71 @@ const roundTransactionsRoute = {
   }, notFoundRoute],
 };
 
+const sessionsRoute = {
+  path: 'sessions',
+  component: BaseRouteComponent,
+  routeProps: {
+    breadcrumbName: 'Sessions',
+    siderKey: 'sessions',
+    openKey: 'insights',
+  },
+  routes: [{
+    path: '',
+    exact: true,
+    component: SessionsPage,
+  }, {
+    path: ':sessionId',
+    component: SessionPage,
+    routeProps: {
+      breadcrumbName: '%{sessionId}',
+    },
+    routes: [{
+      path: '',
+      exact: true,
+      routeProps: {
+        tabKey: '',
+      },
+      component: TabContainer,
+    }, {
+      path: 'activities',
+      exact: true,
+      routeProps: {
+        tabKey: 'activities',
+      },
+      component: TabContainer,
+    }, notFoundRoute],
+  }, notFoundRoute],
+};
+
+const activitiesRoutes = {
+  path: 'activities',
+  component: BaseRouteComponent,
+  routeProps: {
+    breadcrumbName: 'Activities',
+    siderKey: 'activities',
+    openKey: 'insights',
+  },
+  routes: [{
+    path: '',
+    exact: true,
+    component: ActivitiesPage,
+  }, {
+    path: ':activityId',
+    component: ActivityPage,
+    routeProps: {
+      breadcrumbName: '%{activityId}',
+    },
+    routes: [{
+      path: '',
+      exact: true,
+      routeProps: {
+        tabKey: '',
+      },
+      component: TabContainer,
+    }, notFoundRoute],
+  }, notFoundRoute],
+};
+
 export default [
   {
     path: '/',
@@ -90,8 +159,8 @@ export default [
         breadcrumbName: 'Home',
         siderKey: 'dashboard',
       },
-      component: HomePage, // Add your route here
-    }, usersRoute, roundTransactionsRoute, notFoundRoute],
+      component: HomePage,
+    }, usersRoute, roundTransactionsRoute, sessionsRoute, activitiesRoutes, notFoundRoute],
   },
 ];
 
