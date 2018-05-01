@@ -125,7 +125,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/,
+        exclude: /node_modules/,
         loader: 'babel',
       },
       {

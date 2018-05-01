@@ -1,3 +1,7 @@
+require('babel-register')({
+  extensions: ['.js', '.jsx', '.ts', '.tsx'],
+});
+
 const config = require('dotenv').config;
 
 const result = config({
@@ -23,7 +27,6 @@ global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('./tools/webp
     if (__DEV__) {
       require('./src/server');
     } else {
-      console.log(require('./build/server'));
       require('./build/server');
     }
   });
