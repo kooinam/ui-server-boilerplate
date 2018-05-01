@@ -186,15 +186,15 @@ class <%= name.capitalize().pluralize() %>Page extends React.Component {
 
   renderFilters = () => {
     const filters = [{
-      name: '<%= titleField.capitalize() %>',
+      name: '<%= titleField.split().capitalize() %>',
       field: '<%= titleField %>',
     }];
     const sorting = [{
       key: '<%= sortField %> ASC',
-      label: '<%= sortField.capitalize() %> (ASC)',
+      label: '<%= sortField.split().capitalize() %> (ASC)',
     }, {
       key: '<%= sortField %> DESC',
-      label: '<%= sortField.capitalize() %> (DESC)',
+      label: '<%= sortField.split().capitalize() %> (DESC)',
     }];
 
     return (

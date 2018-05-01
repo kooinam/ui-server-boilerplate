@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { ModalParams, TableParams, getAxios, CustomPagination, ErrorContainer } from 'awry-utilities-2';
+import { ModalParams, TableParams, getAxios, CustomPagination, ErrorContainer, FiltersContainer } from 'awry-utilities-2';
 import { Row, Col, Button, Table, Tag } from 'antd';
+import { debounce } from 'lodash';
 import { Link } from 'react-router-dom';
 
 import Activity from '../models/Activity';
@@ -41,6 +42,7 @@ class ActivitiesSection extends React.Component {
     };
 
     this.loadItems = this.state.tableParams.loadItems;
+    this.loadSearchItems = debounce(this.loadItems, 500);
   }
 
   componentDidMount() {
@@ -50,9 +52,23 @@ class ActivitiesSection extends React.Component {
   props: any;
   state: any;
   loadItems: any;
+  loadSearchItems: any;
+
+  handleSearch = (key, value) => {
+    const tableParams = this.state.tableParams;
+    if (key) {
+      tableParams.filter[key] = value;
+    }
+    tableParams.pagination.current = 1;
+    this.setState({
+      tableParams,
+    }, () => {
+      this.loadSearchItems();
+    });
+  }
 
   renderItems = () => {
-    const { targetNotBlank } = this.props;
+    const { targetNotBlank, hideActions, showKey } = this.props;
 
     if (this.state.tableParams.isError) {
       return (
@@ -62,6 +78,14 @@ class ActivitiesSection extends React.Component {
           onRetry={this.loadItems}
         />
       );
+    }
+
+    let descriptionWidth = 80;
+    if (!hideActions) {
+      descriptionWidth = descriptionWidth - 10;
+    }
+    if (showKey) {
+      descriptionWidth = descriptionWidth - 10;
     }
 
     const columns = [{
@@ -86,7 +110,7 @@ class ActivitiesSection extends React.Component {
       },
     }, {
       className: '',
-      width: (!this.props.hideActions) ? '70%' : '80%',
+      width: `${descriptionWidth}%`,
       title: 'Description',
       key: 'description',
       render: (value, record) => {
@@ -102,6 +126,20 @@ class ActivitiesSection extends React.Component {
         );
       },
     }];
+
+    const key = {
+      className: '',
+      width: '10%',
+      title: 'Key',
+      key: 'key',
+      render: (value, record) => {
+        return (
+          <div>
+            {record.key}
+          </div>
+        );
+      },
+    }
 
     const action = {
       className: '',
@@ -160,7 +198,10 @@ class ActivitiesSection extends React.Component {
       },
     };
 
-    if (!this.props.hideActions) {
+    if (showKey) {
+      columns.push(key);
+    }
+    if (!hideActions) {
       columns.push(action);
     }
 
@@ -181,7 +222,37 @@ class ActivitiesSection extends React.Component {
     );
   }
 
+  renderFilters = () => {
+    const filters = [{
+      name: 'Key',
+      field: 'key',
+      exact: true,
+    }, {
+      name: 'Actor Type',
+      field: 'actor.actor_type',
+      exact: true,
+    }];
+    const sorting = [{
+      key: 'created_at ASC',
+      label: 'Created At (ASC)',
+    }, {
+      key: 'created_at DESC',
+      label: 'Created At (DESC)',
+    }];
+
+    return (
+      <FiltersContainer
+        filters={filters}
+        sorting={sorting}
+        onSearch={this.handleSearch}
+        selectedSort={sorting[1]}
+      />
+    );
+  }
+
   render() {
+    const { renderFilters } = this.props;
+
     return (
       <div className={styles.Component}>
         <ActivityExtrasModal
@@ -193,6 +264,7 @@ class ActivitiesSection extends React.Component {
           activity={this.state.actorChangesActivity}
         />
         <Tag style={{ display: 'none' }} />
+        {renderFilters && this.renderFilters()}
         <Row className={'ant-card-content'}>
           <Col md={12} className="actions-listing">
             <Button shape="circle" icon="reload" onClick={this.loadItems} />

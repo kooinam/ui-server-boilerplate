@@ -23,6 +23,8 @@ class ActivitiesPage extends React.Component {
         <Card className="ant-card-lg" title="Activities" id="listing">
           <ActivitiesSection
             targetNotBlank
+            renderFilters
+            showKey
           />
         </Card>
       </div>

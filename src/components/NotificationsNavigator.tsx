@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import * as io from 'socket.io-client';
 import { Badge, Icon, Popover, Menu } from 'antd';
 
+import { __NOTIFICATION_SERVER_URL__ } from '../containers/AppPage';
+
 const styles = require('./NotificationsNavigator.scss');
 
 class NotificationsNavigator extends React.Component {
@@ -24,7 +26,7 @@ class NotificationsNavigator extends React.Component {
   state: any;
 
   subscribe = () => {
-    const socket = io.default('http://localhost:9009');
+    const socket = io.default(__NOTIFICATION_SERVER_URL__);
 
     socket.on('timer', (timestamp) => {
       console.log(timestamp);

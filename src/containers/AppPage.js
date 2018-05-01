@@ -309,3 +309,6 @@ const connector = connect(
 /* eslint-enable no-unused-vars */
 
 export default connector(AppPage);
+export {
+  __NOTIFICATION_SERVER_URL__,
+}

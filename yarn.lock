@@ -482,9 +482,9 @@ autoprefixer@^7.1.2:
     postcss "^6.0.17"
     postcss-value-parser "^3.2.3"
 
-awry-utilities-2@1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/awry-utilities-2/-/awry-utilities-2-1.0.18.tgz#5abb5402d61e798a878e1f952d0bc30599b47345"
+awry-utilities-2@1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/awry-utilities-2/-/awry-utilities-2-1.0.19.tgz#7b0dbbf247131417b453d10994424e090c19fbca"
   dependencies:
     antd "3.4.2"
     axios "^0.16.2"

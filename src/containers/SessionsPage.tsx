@@ -24,7 +24,7 @@ class SessionsPage extends React.Component {
         ItemKlass: Session,
         url: '/sessions.json',
         filter: {
-          s: ['created_at ASC'],
+          s: ['created_at DESC'],
         },
       }),
     };
@@ -194,13 +194,18 @@ class SessionsPage extends React.Component {
     const filters = [{
       name: 'Description',
       field: 'description',
+      exact: true,
+    }, {
+      name: 'Ip',
+      field: 'ip',
+      exact: true,
     }];
     const sorting = [{
       key: 'created_at ASC',
-      label: 'CreatedAt (ASC)',
+      label: 'Created At (ASC)',
     }, {
       key: 'created_at DESC',
-      label: 'CreatedAt (DESC)',
+      label: 'Created At (DESC)',
     }];
 
     return (
@@ -208,6 +213,7 @@ class SessionsPage extends React.Component {
         filters={filters}
         sorting={sorting}
         onSearch={this.handleSearch}
+        selectedSort={sorting[1]}
       />
     );
   }

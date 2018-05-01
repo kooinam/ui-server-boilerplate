@@ -52,6 +52,7 @@ const getPlugins = () => {
       __SERVER__: false,
       __DEV__: isDev,
       __API_SERVER_URL__: `'${process.env.API_SERVER_URL}'`,
+      __NOTIFICATION_SERVER_URL__: `'${process.env.NOTIFICATION_SERVER_URL}'`,
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     webpackIsomorphicToolsPlugin,

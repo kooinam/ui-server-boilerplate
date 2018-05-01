@@ -40,6 +40,14 @@ class ActivitySection extends React.Component {
         />
       ),
     }, {
+      title: 'Last Tracked At',
+      value: (
+        <CreatedAt
+          createdAt={activity.last_tracked_at}
+          inline
+        />
+      ),
+    }, {
       title: 'Description',
       value: (
         <div
