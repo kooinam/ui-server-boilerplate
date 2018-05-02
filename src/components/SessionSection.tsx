@@ -65,6 +65,12 @@ class SessionSection extends React.Component {
       title: 'User Agent',
       value: session.ua,
       size: 'lg',
+    }, {
+      title: 'Activities',
+      value: session.activities_count,
+    }, {
+      title: 'Duration(minutes)',
+      value: session.duration,
     }];
 
     return (
