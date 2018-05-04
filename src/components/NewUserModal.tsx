@@ -47,6 +47,22 @@ class UserInputs extends React.Component {
               )}
             </Form.Item>
           </Col>
+            {
+              edit && (
+                <Col md={24}>
+                  <Form.Item {...getFieldError(actioner.error, 'authentication_token')} label="Token" hasFeedback>
+                    {form.getFieldDecorator('authentication_token', {
+                      rules: (edit) ? [] : [
+                        { required: true, message: 'Token is required' },
+                      ],
+                      initialValue: user.authentication_token,
+                    })(
+                      <Input placeholder="Token" />,
+                    )}
+                  </Form.Item>
+                </Col>
+              )
+            }
         </Row>
       </div>
     );

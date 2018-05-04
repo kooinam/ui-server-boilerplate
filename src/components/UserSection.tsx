@@ -50,9 +50,6 @@ class UserSection extends React.Component {
       title: 'Email',
       value: user.email,
     }, {
-      title: 'Token',
-      value: user.authentication_token,
-    }, {
       title: 'Created At',
       value: (
         <CreatedAt
@@ -60,6 +57,9 @@ class UserSection extends React.Component {
           inline
         />
       ),
+    }, {
+      title: 'Token',
+      value: user.authentication_token,
       size: 'lg',
     }];
 

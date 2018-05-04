@@ -141,7 +141,7 @@ class SessionsPage extends React.Component {
     }, {
       className: '',
       width: '10%',
-      title: 'Activities Count / Duration (minutes)',
+      title: 'Activities / Duration (minutes)',
       key: 'activities_count_duration',
       render: (value, record) => {
         return (
