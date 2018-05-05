@@ -6,8 +6,6 @@ import HomePage from './containers/HomePage';
 import NotFoundPage from './containers/NotFoundPage';
 import UsersPage from './containers/UsersPage';
 import UserPage from './containers/UserPage';
-import RoundTransactionsPage from './containers/RoundTransactionsPage';
-import RoundTransactionPage from './containers/RoundTransactionPage';
 import SessionsPage from './containers/SessionsPage';
 import SessionPage from './containers/SessionPage';
 import ActivitiesPage from './containers/ActivitiesPage';
@@ -46,39 +44,6 @@ const usersRoute = {
         tabKey: '',
       },
       component: TabContainer,
-    }, notFoundRoute],
-  }, notFoundRoute],
-};
-
-const roundTransactionsRoute = {
-  path: 'round_transactions',
-  component: RoundTransactionsPage,
-  routeProps: {
-    breadcrumbName: 'Round Transactions',
-    siderKey: 'round_transactions',
-  },
-  routes: [{
-    path: 'players/:playerId',
-    component: BaseRouteComponent,
-    routes: [{
-      path: '',
-      exact: true,
-      component: BaseRouteComponent,
-    }, {
-      path: 'games/:gameId',
-      component: BaseRouteComponent,
-      routes: [{
-        path: 'rounds/:roundId',
-        component: RoundTransactionPage,
-        routes: [{
-          path: '',
-          exact: true,
-          routeProps: {
-            tabKey: '',
-          },
-          component: TabContainer,
-        }, notFoundRoute],
-      }, notFoundRoute],
     }, notFoundRoute],
   }, notFoundRoute],
 };
@@ -160,7 +125,7 @@ export default [
         siderKey: 'dashboard',
       },
       component: HomePage,
-    }, usersRoute, roundTransactionsRoute, sessionsRoute, activitiesRoutes, notFoundRoute],
+    }, usersRoute, sessionsRoute, activitiesRoutes, notFoundRoute],
   },
 ];
 

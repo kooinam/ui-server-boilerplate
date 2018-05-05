@@ -213,7 +213,7 @@ class AppPage extends Component {
     }
 
     if (!appConfig.title || appConfig.title.length <= 1) {
-      appConfig.titleTemplate = 'AUTUMN';
+      appConfig.titleTemplate = 'XCHANGE';
     }
 
     const requireUser = matchRouteProperty(matchedRoutes, 'requireUser');
