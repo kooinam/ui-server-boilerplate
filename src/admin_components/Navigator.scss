@@ -1,0 +1,125 @@
+@import 'shared';
+
+body {
+  font-family: 'Helvetica-Light', Helvetica, Arial, sans-serif;
+}
+
+.Component {
+  background-color: $navigator-bg-color;
+  color: $navigator-color;
+  height: 60px;
+
+  .Logo {
+    height: 45px;
+    margin: 8px 0;
+    float: left;
+  }
+
+  .Actions {
+    .ActionItem {
+      display: inline-block;
+
+      a {
+        position: relative;
+        color: $navigator-color;
+        font-weight: bold;
+        display: inline-block;
+
+        i {
+          color: $navigator-color;
+        }
+      }
+
+      :global(.underline-link) {
+        &::after {
+          content: '';
+          background-color: $secondary-color;
+          position: absolute;
+          height: 2px;
+          bottom: 16px;
+          left: 0;
+          right: 0;
+          transition: width 0.2s ease;
+          margin: 0 auto;
+          width: 0;
+        }
+
+        &:hover {
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+
+      .AuthItem {
+        margin: 0 0 0 20px;
+      }
+    }
+
+    .SearchActionItem {
+      width: calc(100% - 60px);
+
+      .SearchInlineItem {
+        display: block;
+        margin: 0;
+
+        :global(.ant-select-selection) {
+          height: 32px;
+        }
+      }
+    }
+  }
+
+  .SearchItem {
+    width: 300px;
+
+    @media (max-width: 500px) {
+      width: 200px;
+    }
+
+    :global(.ant-select-selection) {
+      height: 32px;
+    }
+  }
+
+  .Popover {
+    float: right;
+
+    .PopoverToggle {
+      padding: 6px 6px 2px;
+      border: 1px solid $navigator-color;
+      border-radius: 4px;
+      color: $navigator-color;
+      font-size: 24px;
+    }
+  }
+}
+
+.PopoverMenu {
+  top: 60px !important;
+
+  @media (min-width: 992px) {
+    display: none;
+  }
+
+  width: 100%;
+
+  :global(.ant-popover-arrow) {
+    display: none;
+  }
+
+  :global(.ant-popover-inner) {
+    background-color: $primary-bg-color;
+    border-radius: 0;
+
+    :global(.ant-menu-inline) {
+      background-color: $primary-bg-color;
+      border-right: 0;
+    }
+
+    .Menu {
+      max-height: 200px;
+      overflow: scroll;
+    }
+  }
+}

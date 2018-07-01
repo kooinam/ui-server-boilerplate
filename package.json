@@ -156,6 +156,7 @@
     "react": "16.3.0",
     "react-autolink-text": "^2.0.0",
     "react-autolink-text2": "^3.2.0",
+    "react-avatar": "^2.5.1",
     "react-dom": "16.3.0",
     "react-draft-wysiwyg": "^1.12.11",
     "react-helmet": "^5.1.3",

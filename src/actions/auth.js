@@ -53,3 +53,25 @@ export const hideSignInModal = (onAuthenticated) => {
     });
   };
 };
+
+export const showSignUpModal = (onAuthenticated) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'SHOW_SIGN_UP_MODAL',
+      payload: {
+        onAuthenticated,
+      },
+    });
+  };
+};
+
+export const hideSignUpModal = (onAuthenticated) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'HIDE_SIGN_UP_MODAL',
+      payload: {
+        onAuthenticated,
+      },
+    });
+  };
+};

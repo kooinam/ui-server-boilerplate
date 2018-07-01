@@ -1,39 +1,17 @@
-export const getOrganizationId = () => {
-  let host = '';
-  if (typeof (window) !== 'undefined') {
-    host = window.location.hostname;
+export const tagColor = (state) => {
+  if (state === 'type') {
+    return '#2db7f5';
+  } else if (state === 'warning' || state === 'unverified' || state === 'inactive') {
+    return '#f0ad4e';
+  } else if (state === 'success' || state === 'verified') {
+    return '#5cb85c';
+  } else if (state === 'ready' || state === 'active') {
+    return '#87d068';
+  } else if (state === 'danger') {
+    return '#d9534f';
+  } else if (state === 'Lazada') {
+    return '#12384A';
+  } else if (state === 'Shopee') {
+    return '#ED6136';
   }
-  let subdomain = 'sg';
-  if (host.match(/^[^.]*/g).length > 0) {
-    subdomain = host.match(/^[^.]*/g)[0];
-  }
-
-  if (subdomain === 'sg') {
-    /* eslint-disable no-undef */
-    return __SG_ORGANIZATION_ID__;
-    /* eslint-enable no-undef */
-  } else if (subdomain === 'my') {
-    /* eslint-disable no-undef */
-    return __MY_ORGANIZATION_ID__;
-    /* eslint-enable no-undef */
-  } else if (subdomain === 'ph') {
-    /* eslint-disable no-undef */
-    return __PH_ORGANIZATION_ID__;
-    /* eslint-enable no-undef */
-  }
-
-  return null;
-};
-
-export const getSubdomain = () => {
-  let host = '';
-  if (typeof (window) !== 'undefined') {
-    host = window.location.hostname;
-  }
-  let subdomain = 'sg';
-  if (host.match(/^[^.]*/g).length > 0) {
-    subdomain = host.match(/^[^.]*/g)[0];
-  }
-
-  return subdomain;
-};
+}

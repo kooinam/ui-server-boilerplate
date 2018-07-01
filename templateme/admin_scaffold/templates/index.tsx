@@ -7,7 +7,7 @@ import { push } from 'react-router-redux';
 import { Link } from 'react-router-dom';
 
 import <%= name.capitalize() %> from '../models/<%= name.capitalize() %>';
-import New<%= name.capitalize() %>Modal from '../components/New<%= name.capitalize() %>Modal';
+import New<%= name.capitalize() %>Modal from '../admin_components/New<%= name.capitalize() %>Modal';
 
 const styles = require('./<%= name.capitalize().pluralize() %>Page.scss');
 
@@ -41,7 +41,7 @@ class <%= name.capitalize().pluralize() %>Page extends React.Component {
         ItemKlass: <%= name.capitalize() %>,
         /* eslint-disable no-unused-vars */
         successMessageGetter: (<%= name.camelcase() %>, key) =>
-          `<%= name.capitalize() %> ${key.<%= titleField %>} deleted successfully`,
+          `<%= name.capitalize().split() %> ${key.<%= titleField %>} deleted successfully`,
         successCallback: (<%= name.camelcase() %>, key) => {
           const deleting = this.state.deleting;
           deleting.splice(deleting.indexOf(key.id), 1);
@@ -123,7 +123,7 @@ class <%= name.capitalize().pluralize() %>Page extends React.Component {
     const columns = [{
       className: '',
       width: '90%',
-      title: '<%= titleField.capitalize() %>',
+      title: '<%= titleField.split().capitalize() %>',
       key: '<%= titleField %>',
       render: (value, record) => {
         return (
@@ -180,6 +180,9 @@ class <%= name.capitalize().pluralize() %>Page extends React.Component {
         pagination={false}
         rowKey="id"
         loading={this.state.tableParams.isLoading}
+        scroll={{
+          x: columns.length * 100,
+        }}
       />
     );
   }

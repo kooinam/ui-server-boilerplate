@@ -8,6 +8,7 @@ import { Actioner, getAxios, getFieldError } from 'awry-utilities-2';
 import styles from './SignInForm.scss';
 import { authenticated } from '../actions/auth';
 import User from '../models/User';
+import { track } from '../actions/track';
 
 const authMethodsInput = (form, actioner) => {
   let input = (
@@ -33,17 +34,7 @@ const authMethodsInput = (form, actioner) => {
 const signUpInput = (form, actioner) => {
   let input = (
     <Row>
-      <Col md={24}>
-        <Form.Item {...getFieldError(actioner.error, 'username')} label="Username" hasFeedback>
-          {form.getFieldDecorator('username', {
-            rules: [
-              { required: true, message: 'Username is required' },
-            ],
-          })(
-            <Input type="text" placeholder="Username" />,
-          )}
-        </Form.Item>
-      </Col>
+      <Col md={24} />
     </Row>
   )
 
@@ -87,6 +78,9 @@ class SignInForm extends React.Component {
           if (this.props.onAuthenticated) {
             this.props.onAuthenticated(user);
           }
+          setTimeout(() => {
+            this.trackPage();
+          }, 500);
         },
         errorMessageGetter: (error) => {
           return 'Log in failed';
@@ -113,6 +107,14 @@ class SignInForm extends React.Component {
     });
   }
 
+  trackPage = () => {
+    const params = {
+      page: this.props.router.location.pathname,
+    };
+
+    this.props.dispatch(track(params));
+  }
+
   render() {
     const { form } = this.props;
     const { actioner } = this.state;
@@ -135,7 +137,9 @@ class SignInForm extends React.Component {
 
 const connector = connect(
   (state) => {
-    return {};
+    return {
+      router: state.router,
+    };
   }
 );
 

@@ -18,7 +18,9 @@ class User extends BaseModel {
   }
 
   static getTokenName = () => {
-    return (User.tokenPrefix && User.tokenPrefix.length > 0) ? `${User.tokenPrefix}-token` : 'token';
+    const tokenPrefix = User.tokenPrefix || 'quest';
+
+    return (tokenPrefix && tokenPrefix.length > 0) ? `${tokenPrefix}-token` : 'token';
   }
 
   static getToken = () => {
@@ -44,6 +46,10 @@ class User extends BaseModel {
 
   authenticate = () => {
     User.setToken(this.authentication_token);
+  }
+
+  isAdmin = () => {
+    return this.role === 'admin';
   }
 }
 

@@ -1,0 +1,52 @@
+@import 'shared';
+
+body {
+  font-family: 'Helvetica-Light', Helvetica, Arial, sans-serif;
+}
+
+.Container {
+  min-height: 100vh;
+  background-color: $primary-bg-color;
+  color: $primary-color;
+
+  .LoadingBar {
+    z-index: 9999;
+    background-color: $secondary-color;
+    height: 2px;
+    position: fixed;
+  }
+
+  .Breadcrumbs {
+    margin-bottom: 16px;
+  }
+
+  .Content {
+    background-color: $content-bg-color;
+    overflow: scroll;
+    overflow-x: scroll !important;
+    padding: 15px 20px;
+
+    .SignInForm {
+      margin: 0 auto;
+      width: 300px;
+
+      .SignUpLink {
+        margin: 12px 0 0 0;
+        font-weight: bold;
+        text-align: center;
+        padding: 0 26px 8px 26px;
+
+        :global(.btn-secondary) {
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+
+  .Footer {
+    background-color: $primary-bg-color;
+    color: $primary-color;
+    box-shadow: 0 -1px 2px 0 #000;
+    margin-top: 2px;
+  }
+}

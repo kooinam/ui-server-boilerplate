@@ -9,6 +9,7 @@ import styles from './SignUpForm.scss';
 import { authenticated } from '../actions/auth';
 import { authMethodsInput, passwordInput, signUpInput } from './SignInForm';
 import User from '../models/User';
+import { track } from '../actions/track';
 
 class SignUpForm extends React.Component {
   constructor(props) {
@@ -30,6 +31,9 @@ class SignUpForm extends React.Component {
           if (this.props.onAuthenticated) {
             this.props.onAuthenticated(user);
           }
+          setTimeout(() => {
+            this.trackPage();
+          }, 500);
         },
         errorMessageGetter: error =>
           'Register failed',
@@ -56,6 +60,14 @@ class SignUpForm extends React.Component {
     });
   }
 
+  trackPage = () => {
+    const params = {
+      page: this.props.router.location.pathname,
+    };
+
+    this.props.dispatch(track(params));
+  }
+
   render() {
     const { form } = this.props;
     const { actioner } = this.state;
@@ -79,7 +91,9 @@ class SignUpForm extends React.Component {
 
 const connector = connect(
   (state) => {
-    return {};
+    return {
+      router: state.router,
+    };
   }
 );
 

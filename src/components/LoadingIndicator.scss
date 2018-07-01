@@ -1,0 +1,13 @@
+.Component {
+  display: block;
+
+  :global(.ant-modal-content) {
+    box-shadow: none;
+    background: none;
+    text-align: center;
+
+    :global(.ant-modal-close-x) {
+      display: none;
+    }
+  }
+}

@@ -17,6 +17,7 @@ class SignInModal extends React.Component {
   }
 
   render() {
+    const { forgetPassword } = this.props;
     return (
       <Modal
         className={styles.Component}
@@ -38,13 +39,17 @@ class SignInModal extends React.Component {
               }
             }
           />
-          <Link
-            to="/forget_password"
-            target="_blank"
-            className={`link ${styles.ForgetPassword}`}
-          >
-            Forget Password?
-          </Link>
+          {
+            forgetPassword && (
+              <Link
+                to="/forget_password"
+                target="_blank"
+                className={`link ${styles.ForgetPassword}`}
+              >
+                Forget Password?
+              </Link>
+            )
+          }
         </div>
         <hr className="hr-lg" />
         <div className={styles.SignUpLink}>

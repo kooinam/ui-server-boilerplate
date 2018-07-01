@@ -35,7 +35,7 @@ const Html = ({ store, htmlContent }: Props) => {
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-        <link rel="shortcut icon" href="/favicon.ico?v=3" />
+        <link rel="shortcut icon" href="/favicon.ico?v=4" />
         {head.title.toComponent()}
         {head.base.toComponent()}
         {head.meta.toComponent()}
@@ -69,7 +69,7 @@ const Html = ({ store, htmlContent }: Props) => {
             ))
         }
       </head>
-      <body>
+      <body className="body">
         <div
           id="react-view"
           // Rendering the route, which passed from server-side

@@ -4,7 +4,7 @@ import { Modal, Form } from 'antd';
 import { Actioner, getAxios } from 'awry-utilities-2';
 
 import <%= name.capitalize() %> from '../models/<%= name.capitalize() %>';
-import { <%= name.capitalize() %>Inputs } from './New<%= name.capitalize() %>Modal';
+import { <%= name.capitalize() %>Inputs, massageParams } from './New<%= name.capitalize() %>Modal';
 
 const styles = require('./Edit<%= name.capitalize() %>Modal.scss');
 
@@ -50,9 +50,11 @@ class Edit<%= name.capitalize() %>Modal extends React.Component {
       }
 
       const attributes = (this.props.form.getFieldsValue());
-      const params = {
+      let params = {
         <%= name %>: attributes,
       };
+
+      params = massageParams(params);
 
       this.state.actioner.do(`/<%= name.pluralize() %>/${this.props.<%= name.camelcase() %>.<%= apiField %>}.json`, params);
       return true;

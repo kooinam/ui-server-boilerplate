@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 import SignInModal from './SignInModal';
 import SignUpModal from './SignUpModal';
-import { authenticated, showSignInModal, hideSignInModal } from '../actions/auth';
+import { authenticated, showSignInModal, hideSignInModal, showSignUpModal, hideSignUpModal } from '../actions/auth';
 import User from '../models/User';
 
 const styles = require('./AuthNavigator.scss');
@@ -36,8 +36,8 @@ class AuthNavigator extends React.Component {
         successMessageGetter: user =>
           'Goodbye',
         successCallback: (user) => {
-          // this.props.dispatch(loggedOut())
           this.props.dispatch(authenticated(null));
+          this.hidePopover();
         },
         errorMessageGetter: error =>
           'Failed to Log Out',
@@ -67,9 +67,6 @@ class AuthNavigator extends React.Component {
     };
   }
 
-  props: any;
-  state: any;
-
   componentDidMount() {
     const token = User.getToken();
     if (token && token.length > 0) {
@@ -83,33 +80,39 @@ class AuthNavigator extends React.Component {
     if (props.signInModalVisible && this.state.signInModalParams.visible === false) {
       this.state.signInModalParams.show();
     }
-
     if (props.signInModalVisible === false && this.state.signInModalParams.visible) {
       this.state.signInModalParams.dismiss();
     }
+
+    if (props.signUpModalVisible && this.state.signUpModalParams.visible === false) {
+      this.state.signUpModalParams.show();
+    }
+    if (props.signUpModalVisible === false && this.state.signUpModalParams.visible) {
+      this.state.signUpModalParams.dismiss();
+    }
   }
+
+  props: any;
+  state: any;
 
   handleClickSignUp = () => {
     this.hideSignInModal(this.props.onAuthenticated);
 
     setTimeout(() => {
-      this.state.signUpModalParams.show();
+      this.showSignUpModal();
     }, 300);
   }
 
   handleClickSignIn = () => {
-    this.state.signUpModalParams.dismiss();
+    this.hideSignUpModal(this.props.onAuthenticated);
 
     setTimeout(() => {
       this.showSignInModal();
-      // this.state.signInModalParams.show();
     }, 300);
   }
 
   handleClickLogOut = () => {
-    this.props.dispatch(authenticated(null));
-    message.success('See you soon!', getMessageDuration());
-    this.hidePopover();
+    this.state.logOutActioner.do('sessions.json');
   }
 
   hidePopover = () => {
@@ -126,8 +129,16 @@ class AuthNavigator extends React.Component {
     this.props.dispatch(hideSignInModal(onAuthenticated));
   }
 
+  showSignUpModal = () => {
+    this.props.dispatch(showSignUpModal());
+  }
+
+  hideSignUpModal = (onAuthenticated) => {
+    this.props.dispatch(hideSignUpModal(onAuthenticated));
+  }
+
   render() {
-    const { authState, currentUser, hideAccount, hideLogin } = this.props;
+    const { authState, currentUser, hideAccount, hideLogin, forgetPassword } = this.props;
 
     if (!authState || authState === 'authenticating') {
       return null;
@@ -171,14 +182,6 @@ class AuthNavigator extends React.Component {
           >
             <Menu.Item>
               <a className={`${styles.InlineComponent} ${this.props.className}`} onClick={this.state.signInModalParams.show} role="button" tabIndex={0}>
-                <SignInModal
-                  {...this.state.signInModalParams.churn()}
-                  onClickSignUp={this.handleClickSignUp}
-                />
-                <SignUpModal
-                  {...this.state.signUpModalParams.churn()}
-                  onClickSignIn={this.handleClickSignIn}
-                />
                 LOGIN
               </a>
             </Menu.Item>
@@ -230,17 +233,6 @@ class AuthNavigator extends React.Component {
       } else if (!hideLogin) {
         content = (
           <React.Fragment>
-            <SignInModal
-              {...this.state.signInModalParams.churn()}
-              onClickSignUp={this.handleClickSignUp}
-              hideModal={this.hideSignInModal}
-              onAuthenticated={this.props.onAuthenticated}
-            />
-            <SignUpModal
-              {...this.state.signUpModalParams.churn()}
-              onClickSignIn={this.handleClickSignIn}
-              onAuthenticated={this.props.onAuthenticated}
-            />
             <a
               key={1}
               className={`underline-link ${styles.Component} ${this.props.className}`}
@@ -250,10 +242,12 @@ class AuthNavigator extends React.Component {
               >
               LOG IN
             </a>
-            {
-              this
-            }
-            <a key={2} className={`underline-link ${styles.Component} ${this.props.className}`} onClick={this.state.signUpModalParams.show} role="button" tabIndex={0}>
+            <a
+              key={2}
+              className={`underline-link ${styles.Component} ${this.props.className}`}
+              onClick={this.showSignUpModal}
+              role="button"
+              tabIndex={0}>
               CREATE ACCOUNT
             </a>
           </React.Fragment>
@@ -263,6 +257,18 @@ class AuthNavigator extends React.Component {
 
     return (
       <React.Fragment>
+        <SignInModal
+          {...this.state.signInModalParams.churn()}
+          onClickSignUp={this.handleClickSignUp}
+          hideModal={this.hideSignInModal}
+          onAuthenticated={this.props.onAuthenticated}
+        />
+        <SignUpModal
+          {...this.state.signUpModalParams.churn()}
+          onClickSignIn={this.handleClickSignIn}
+          hideModal={this.hideSignUpModal}
+          onAuthenticated={this.props.onAuthenticated}
+        />
         {content}
       </React.Fragment>
     );
@@ -275,6 +281,7 @@ const connector = connect(
       currentUser: state.AuthReducer.currentUser,
       authState: state.AuthReducer.state,
       signInModalVisible: state.AuthReducer.signInModalVisible,
+      signUpModalVisible: state.AuthReducer.signUpModalVisible,
       onAuthenticated: state.AuthReducer.onAuthenticated,
     };
   },

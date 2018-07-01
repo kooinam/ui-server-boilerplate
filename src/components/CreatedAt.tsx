@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { formatDate, formatTime } from 'awry-utilities-2';
 
-const styles = require('./CreatedAt.scss');
+const styles = require('../components/CreatedAt.scss');
 
 class CreatedAt extends React.Component {
   constructor(props) {

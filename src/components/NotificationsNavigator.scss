@@ -2,7 +2,7 @@
   display: block;
 
   i {
-    font-size: 20px;
+    font-size: 24px;
   }
 
   sup {
@@ -32,5 +32,44 @@
         }
       }
     }
+  }
+}
+
+.Menu {
+  overflow: scroll;
+  width: 300px;
+  max-height: 300px;
+  padding: 0;
+
+  :global(.activity-action) {
+
+  }
+
+  :global(.object-type) {
+    font-weight: bold;
+  }
+
+  :global(.object-value) {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #1890ff;
+  }
+
+  .Activity {
+    padding: 12px 16px 0;
+
+    &.NewActivity {
+      background-color: #edf2fa;
+    }
+
+    hr {
+      margin: 12px 0 0 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+  .NoNotifcation {
+    padding: 12px 16px;
+    font-style: italic;
   }
 }

@@ -3,9 +3,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import * as io from 'socket.io-client';
-import { Badge, Icon, Popover, Menu } from 'antd';
+import { Badge, Icon, Popover, Menu, Spin } from 'antd';
+import { ItemLoader, getAxios, TableParams } from 'awry-utilities-2';
 
-import { __NOTIFICATION_SERVER_URL__ } from '../containers/AppPage';
+import { __NOTIFICATION_SERVER_URL__ } from '../admin_containers/AppPage';
+import Activity from '../models/Activity';
+import CreatedAt from './CreatedAt';
 
 const styles = require('./NotificationsNavigator.scss');
 
@@ -15,39 +18,89 @@ class NotificationsNavigator extends React.Component {
 
     this.state = {
       popoverVisible: false,
+      itemLoader: new ItemLoader({
+        component: this,
+        key: 'itemLoader',
+        axiosGetter: () => getAxios('track'),
+        itemName: 'counter',
+        ItemKlass: Object,
+        url: '/activities/counter.json',
+      }),
+      tableParams: new TableParams({
+        component: this,
+        key: 'tableParams',
+        axiosGetter: () => getAxios('track'),
+        itemsName: 'activities',
+        ItemKlass: Activity,
+        url: `/activities/notifications.json`,
+        filter: {
+          s: ['notified_at DESC'],
+        },
+      }),
     };
+
+    this.loadItem = this.state.itemLoader.loadItem;
+    this.loadItems = this.state.tableParams.loadItems;
   }
 
   componentDidMount() {
     this.subscribe();
+    this.loadItem();
   }
 
   props: any;
   state: any;
+  loadItem: any;
+  loadItems: any;
 
   subscribe = () => {
     const socket = io.default(__NOTIFICATION_SERVER_URL__);
 
-    socket.on('timer', (timestamp) => {
-      console.log(timestamp);
+    socket.on('notificationReceived', (data) => {
+      console.log(data);
+      this.loadItem();
     });
-    socket.emit('subscribeToTimer', 1000);
+    socket.emit('subscribeToNotification', {
+      subscriberId: this.props.currentUser.id,
+    });
   }
 
   render() {
-    const count = 0;
+    const { inline } = this.props;
+
+    const count = this.state.itemLoader.item.count;
+    const activities = this.state.tableParams.items;
 
     const menu = (
-      <Menu selectedKeys={[]} className={styles.Menu}>
-        <Menu.Item>
-          <i>
-            No notification. :(
-          </i>
-        </Menu.Item>
-      </Menu>
+      <div className={styles.Menu}>
+        <Spin spinning={this.state.tableParams.isLoading}>
+          {
+            activities.length === 0  && (
+              <div className={styles.NoNotifcation}>
+                No notification. :(
+              </div>
+            )
+          }
+          {
+            activities.length > 0  && activities.map((activity) => {
+              return (
+                <div key={activity.id} className={`${styles.Activity} ${(activity.is_new) ? styles.NewActivity : ''}`}>
+                  <CreatedAt createdAt={activity.created_at} inline />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: activity.description
+                    }}
+                  />
+                  <hr className="hr" />
+                </div>
+              );
+            })
+          }
+        </Spin>
+      </div>
     );
 
-    return (
+    const content = (
       <Popover
         overlayClassName={styles.Popover}
         content={menu}
@@ -57,6 +110,10 @@ class NotificationsNavigator extends React.Component {
             this.setState({
               popoverVisible,
             });
+
+            if (popoverVisible) {
+              this.loadItems();
+            }
           }
         }
       >
@@ -67,12 +124,26 @@ class NotificationsNavigator extends React.Component {
         </a>
       </Popover>
     );
+
+    if (inline) {
+      return (
+        <Menu>
+          <Menu.Item>
+            {content}
+          </Menu.Item>
+        </Menu>
+      );
+    }
+
+    return content;
   }
 }
 
 const connector = connect(
   (state) => {
-    return {};
+    return {
+      currentUser: state.AuthReducer.currentUser,
+    };
   },
 );
 

@@ -152,7 +152,12 @@ $navigator-color: white;
   margin-bottom: 0;
 }
 
-:global(.ant-input), :global(.ant-btn-bordered), :global(.ant-select-selection), :global(.ant-select-dropdown), :global(.ant-dropdown-menu) {
+:global(.ant-input),
+:global(.ant-btn-bordered),
+:global(.ant-select-selection),
+:global(.ant-select-dropdown),
+:global(.ant-dropdown-menu),
+:global(.ant-input-number) {
   border-radius: 1px;
 }
 
@@ -161,10 +166,9 @@ $navigator-color: white;
 }
 
 :global(.ant-card-lg) {
-  min-width: 800px;
 }
 
-:global(.ant-card) :global(.ant-card-content) {
+:global(.ant-card-content) {
   margin: 16px 0;
 }
 
@@ -261,11 +265,12 @@ $navigator-color: white;
 }
 
 :global(.ant-loader-card), :global(.ant-loader-card):focus, :global(.ant-loader-card):hover {
+  background: transparent !important;
   border: 0;
   box-shadow: none !important;
 }
 
-:global(.ant-loader-card) > :global(.ant-card-body) {
+:global(.ant-loader-card > .ant-card-body) {
   padding: 0;
 }
 
@@ -316,6 +321,10 @@ button:focus {
 
 :global(.ant-table) tr:hover td {
   background-color: transparent;
+}
+
+:global(.ant-table) td {
+  min-width: 100px;
 }
 
 :global(a.link) {
@@ -385,4 +394,24 @@ button:focus {
       top: -4px;
     }
   }
+}
+
+:global(.subtitle) {
+  font-size: 20px;
+  margin: 30px 0 0 0;
+}
+
+:global(.hidden) {
+  display: none;
+}
+
+:global(.price) {
+  font-weight: bold;
+  color: $secondary-color;
+}
+
+:global(.pagination-helper) {
+  font-style: italic;
+  margin: 4px 6px 0 0;
+  font-size: 13px;
 }

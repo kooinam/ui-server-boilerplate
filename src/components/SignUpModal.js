@@ -23,13 +23,13 @@ class SignUpModal extends React.Component {
         title="SIGN UP"
         visible={this.props.modalParams.visible}
         footer={null}
-        onCancel={this.props.modalParams.dismiss}
+        onCancel={this.props.hideModal}
       >
         <div className={styles.SignUpForm}>
           <SignUpForm
             onAuthenticated={
               () => {
-                this.props.modalParams.dismiss();
+                this.props.hideModal();
                 if (this.props.onAuthenticated) {
                   this.props.onAuthenticated();
                 }

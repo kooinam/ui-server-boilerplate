@@ -1,0 +1,17 @@
+.Component {
+  display: block;
+
+  :global(.activity-action) {
+
+  }
+
+  :global(.object-type) {
+    font-weight: bold;
+  }
+
+  :global(.object-value) {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #1890ff;
+  }
+}

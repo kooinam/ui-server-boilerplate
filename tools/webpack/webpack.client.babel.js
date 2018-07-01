@@ -1,4 +1,3 @@
-
 'use strict'; // eslint-disable-line
 
 import { config } from 'dotenv';
@@ -51,6 +50,7 @@ const getPlugins = () => {
       __CLIENT__: true,
       __SERVER__: false,
       __DEV__: isDev,
+      __ROOT_SERVER_URL__: `'${process.env.ROOT_SERVER_URL}'`,
       __API_SERVER_URL__: `'${process.env.API_SERVER_URL}'`,
       __NOTIFICATION_SERVER_URL__: `'${process.env.NOTIFICATION_SERVER_URL}'`,
     }),
@@ -83,20 +83,30 @@ const getPlugins = () => {
 const getEntry = () => {
   // For development
   let entry = {
-    main: [
+    admin: [
       'babel-polyfill', // Support promise for IE browser (for dev)
       'react-hot-loader/patch',
       'webpack-hot-middleware/client?reload=true',
-      './src/client.js',
+      './src/adminClient.js',
+    ],
+    client: [
+      'babel-polyfill', // Support promise for IE browser (for dev)
+      'react-hot-loader/patch',
+      'webpack-hot-middleware/client?reload=true',
+      './src/clientClient.js',
     ],
   };
 
   // For prodcution
   if (!isDev) {
     entry = {
-      main: [
+      admin: [
         'babel-polyfill',
-        './src/client.js',
+        './src/adminClient.js',
+      ],
+      client: [
+        'babel-polyfill',
+        './src/clientClient.js',
       ],
       // Register vendors here
       vendor,

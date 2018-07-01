@@ -24,14 +24,14 @@ class <%= name.capitalize() %>Inputs extends React.Component {
       <div>
         <Row>
           <Col md={12}>
-            <Form.Item {...getFieldError(actioner.error, '<%= titleField %>')} label="<%= titleField.capitalize() %>" hasFeedback>
+            <Form.Item {...getFieldError(actioner.error, '<%= titleField %>')} label="<%= titleField.split().capitalize() %>" hasFeedback>
               {form.getFieldDecorator('<%= titleField %>', {
                 rules: [
-                  { required: true, message: '<%= titleField.capitalize() %> is required' },
+                  { required: true, message: '<%= titleField.split().capitalize() %> is required' },
                 ],
                 initialValue: <%= name.camelcase() %>.<%= titleField %>,
               })(
-                <Input type="text" placeholder="<%= titleField.capitalize() %>" />,
+                <Input type="text" placeholder="<%= titleField.split().capitalize() %>" />,
               )}
             </Form.Item>
           </Col>
@@ -41,8 +41,12 @@ class <%= name.capitalize() %>Inputs extends React.Component {
   }
 }
 
+const massageParams = (params) => {
+  return params;
+}
+
 export {
-  <%= name.capitalize() %>Inputs,
+  <%= name.capitalize() %>Inputs, massageParams,
 };
 
 class New<%= name.capitalize() %>Modal extends React.Component {
@@ -85,9 +89,11 @@ class New<%= name.capitalize() %>Modal extends React.Component {
       }
 
       const attributes = (this.props.form.getFieldsValue());
-      const params = {
+      let params = {
         <%= name %>: attributes,
       };
+
+      params = massageParams(params);
 
       this.state.actioner.do('/<%= name.pluralize() %>.json', params);
       return true;
