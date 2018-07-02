@@ -56,7 +56,7 @@ class NotificationsNavigator extends React.Component {
   checkSocket = () => {
     console.log(this.socket);
 
-    setTimeout(this.checkSocket, 5000);
+    setTimeout(this.checkSocket, 30000);
   }
 
   subscribe = () => {
@@ -69,9 +69,11 @@ class NotificationsNavigator extends React.Component {
       subscriberId: this.props.currentUser.id,
     });
     this.socket.on('reconnect_attempt', (attemptNumber) => {
-      console.log('reconnecting...');
+      console.log(`reconnecting ${attemptNumber}...`);
     });
-
+    this.socket.on('reconnect_error', (error) => {
+      console.log(`reconnect error ${error}`);
+    });
     this.checkSocket();
 
     // socket.on('disconnect', () => {
