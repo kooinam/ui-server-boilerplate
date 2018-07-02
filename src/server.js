@@ -246,7 +246,7 @@ if (port) {
     console.info(chalk.green(`==> 🌎  Listening at ${url}`));
 
     // Open Chrome
-    require('../tools/openBrowser')(url);
+    // require('../tools/openBrowser')(url);
   });
   openSocket(server);
 } else {

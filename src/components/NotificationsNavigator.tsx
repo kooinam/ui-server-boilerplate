@@ -65,17 +65,12 @@ class NotificationsNavigator extends React.Component {
     this.socket.on('notificationReceived', (data) => {
       this.loadItem();
     });
-    this.socket.emit('subscribeToNotification', {
-      subscriberId: this.props.currentUser.id,
+    this.socket.on('connect', () => {
+      console.log('connected');
+      this.socket.emit('subscribeToNotification', {
+        subscriberId: this.props.currentUser.id,
+      });
     });
-    this.socket.on('reconnect_attempt', (attemptNumber) => {
-      console.log(`reconnecting ${attemptNumber}...`);
-    });
-    this.socket.on('reconnect_error', (error) => {
-      console.log(`reconnect error ${error}`);
-    });
-    this.checkSocket();
-
     // socket.on('disconnect', () => {
     //   console.log('socket disconnected...');
     //   socket.open();
