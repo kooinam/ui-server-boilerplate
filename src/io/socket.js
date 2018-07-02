@@ -18,6 +18,7 @@ const openSocket = (server) => {
 
   io.on('connection', (client) => {
     client.on('subscribeToNotification', (data) => {
+      console.log(`connected to ${data.subscriberId}`);
       client.emit('notificationReceived', {
         subscriberId: data.subscriberId,
       });
