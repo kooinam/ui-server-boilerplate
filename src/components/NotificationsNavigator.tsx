@@ -45,7 +45,6 @@ class NotificationsNavigator extends React.Component {
 
   componentDidMount() {
     this.subscribe();
-    this.loadItem();
   }
 
   props: any;
@@ -54,14 +53,20 @@ class NotificationsNavigator extends React.Component {
   loadItems: any;
 
   subscribe = () => {
-    const socket = io.default(__NOTIFICATION_SERVER_URL__);
+    const socket = io(__NOTIFICATION_SERVER_URL__);
 
     socket.on('notificationReceived', (data) => {
-      console.log(data);
       this.loadItem();
     });
     socket.emit('subscribeToNotification', {
       subscriberId: this.props.currentUser.id,
+    });
+    socket.on('disconnect', () => {
+      console.log('socket disconnected...');
+      socket.open();
+    });
+    socket.on('reconnect_error', (error) => {
+      console.log(error);
     });
   }
 
