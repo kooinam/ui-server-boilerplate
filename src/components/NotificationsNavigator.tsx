@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as io from 'socket.io-client';
+import io from 'socket.io-client';
 import { Badge, Icon, Popover, Menu, Spin } from 'antd';
 import { ItemLoader, getAxios, TableParams } from 'awry-utilities-2';
 
@@ -51,23 +51,39 @@ class NotificationsNavigator extends React.Component {
   state: any;
   loadItem: any;
   loadItems: any;
+  socket: any;
+
+  checkSocket = () => {
+    console.log(this.socket);
+
+    setTimeout(this.checkSocket, 5000);
+  }
 
   subscribe = () => {
-    const socket = io(__NOTIFICATION_SERVER_URL__);
+    this.socket = io(__NOTIFICATION_SERVER_URL__);
 
-    socket.on('notificationReceived', (data) => {
+    this.socket.on('notificationReceived', (data) => {
       this.loadItem();
     });
-    socket.emit('subscribeToNotification', {
+    this.socket.emit('subscribeToNotification', {
       subscriberId: this.props.currentUser.id,
     });
-    socket.on('disconnect', () => {
-      console.log('socket disconnected...');
-      socket.open();
+    this.socket.on('reconnect_attempt', (attemptNumber) => {
+      console.log('reconnecting...');
     });
-    socket.on('reconnect_error', (error) => {
-      console.log(error);
-    });
+
+    this.checkSocket();
+
+    // socket.on('disconnect', () => {
+    //   console.log('socket disconnected...');
+    //   socket.open();
+    // });
+    // socket.on('reconnect', (quantity) => {
+    //   console.log(quantity);
+    // });
+    // socket.on('connect', () => {
+    //   console.log('connected');
+    // });
   }
 
   render() {
