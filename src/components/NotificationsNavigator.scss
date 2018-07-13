@@ -41,25 +41,17 @@
   max-height: 300px;
   padding: 0;
 
-  :global(.activity-action) {
-
-  }
-
-  :global(.object-type) {
-    font-weight: bold;
-  }
-
-  :global(.object-value) {
-    font-weight: bold;
-    text-decoration: underline;
-    color: #1890ff;
-  }
-
   .Activity {
     padding: 12px 16px 0;
 
     &.NewActivity {
       background-color: #edf2fa;
+    }
+
+    .Content {
+      span {
+        word-wrap: break-word;
+      }
     }
 
     hr {

@@ -4,7 +4,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import { Badge, Icon, Popover, Menu, Spin } from 'antd';
-import { ItemLoader, getAxios, TableParams } from 'awry-utilities-2';
+import { ItemLoader, getAxios, TableParams, Actioner } from 'awry-utilities-2';
+import { debounce } from 'lodash';
 
 import { __NOTIFICATION_SERVER_URL__ } from '../admin_containers/AppPage';
 import Activity from '../models/Activity';
@@ -37,10 +38,18 @@ class NotificationsNavigator extends React.Component {
           s: ['notified_at DESC'],
         },
       }),
+      actioner: new Actioner({
+        component: this,
+        key: 'actioner',
+        axiosGetter: () => getAxios('track'),
+        method: 'post',
+        itemName: 'counter',
+        ItemKlass: Object,
+      }),
+      count: null,
     };
 
-    this.loadItem = this.state.itemLoader.loadItem;
-    this.loadItems = this.state.tableParams.loadItems;
+    this.ref = React.createRef();
   }
 
   componentDidMount() {
@@ -49,14 +58,28 @@ class NotificationsNavigator extends React.Component {
 
   props: any;
   state: any;
-  loadItem: any;
-  loadItems: any;
   socket: any;
+  ref: any;
 
-  checkSocket = () => {
-    console.log(this.socket);
+  loadItem = () => {
+    this.state.itemLoader.loadItem().then(() => {
+      const counter = this.state.itemLoader.item;
+      if (this.state.count === null || counter.count !== 0) {
+        this.setState({
+          count: counter.count,
+        }, () => {
+          this.loadItems();
+        })
+      }
+    });
+  }
 
-    setTimeout(this.checkSocket, 30000);
+  loadItems = () => {
+    this.state.tableParams.loadItems().then(() => {
+      if (this.state.popoverVisible) {
+        this.state.actioner.do('/activities/read.json');
+      }
+    });
   }
 
   subscribe = () => {
@@ -90,7 +113,10 @@ class NotificationsNavigator extends React.Component {
     const activities = this.state.tableParams.items;
 
     const menu = (
-      <div className={styles.Menu}>
+      <div
+        className={styles.Menu}
+        ref={this.ref}
+      >
         <Spin spinning={this.state.tableParams.isLoading}>
           {
             activities.length === 0  && (
@@ -102,13 +128,11 @@ class NotificationsNavigator extends React.Component {
           {
             activities.length > 0  && activities.map((activity) => {
               return (
-                <div key={activity.id} className={`${styles.Activity} ${(activity.is_new) ? styles.NewActivity : ''}`}>
+                <div key={activity.uuid} className={`${styles.Activity} ${(activity.is_new) ? styles.NewActivity : ''}`}>
                   <CreatedAt createdAt={activity.created_at} inline />
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: activity.description
-                    }}
-                  />
+                  <div className={styles.Content}>
+                    {activity.getDescription(this.props.namespace)}
+                  </div>
                   <hr className="hr" />
                 </div>
               );
@@ -127,11 +151,16 @@ class NotificationsNavigator extends React.Component {
           (popoverVisible) => {
             this.setState({
               popoverVisible,
+            }, () => {
+              if (this.state.popoverVisible) {
+                if (this.state.itemLoader.item.count && this.state.itemLoader.item.count > 0) {
+                  this.state.actioner.do('/activities/read.json');
+                  setTimeout(() => {
+                    this.ref.current.scrollTop = 0;
+                  }, 100);
+                }
+              }
             });
-
-            if (popoverVisible) {
-              this.loadItems();
-            }
           }
         }
       >

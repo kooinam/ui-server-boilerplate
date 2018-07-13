@@ -1,15 +1,76 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { DetailsContainer, Actioner } from 'awry-utilities-2';
-import { Row, Col, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { DetailsContainer } from 'awry-utilities-2';
+import { Row, Col, Button, Tag } from 'antd';
 
 import Activity from '../models/Activity';
 import CreatedAt from '../components/CreatedAt';
-import { ExtrasSection } from './ActivityExtrasModal';
-import { ActorChangesSection } from './ActivityActorChangesModal';
 
 const styles = require('./ActivitySection.scss');
+
+class ExtrasSection extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  props: any;
+  state: any;
+
+  render() {
+    const { activity } = this.props;
+
+    return (
+      <React.Fragment>
+        {activity.extras.map((extra) => {
+          return (
+            <div key={extra.id}>
+              <Tag color="blue">
+                {extra.key}
+              </Tag>
+              <small>
+                {extra.getValue()}
+              </small>
+            </div>
+          );
+        })}
+      </React.Fragment>
+    )
+  }
+}
+
+class ActorChangesSection extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  props: any;
+  state: any;
+
+  render() {
+    const { activity } = this.props;
+
+    return (
+      <React.Fragment>
+        {activity.actor_changes.map((actorChange) => {
+          return (
+            <div key={actorChange.id}>
+              <Tag color="#108ee9">
+                {actorChange.key}
+              </Tag>
+              <small>
+                {actorChange.getValue()}
+              </small>
+            </div>
+          );
+        })}
+      </React.Fragment>
+    )
+  }
+}
 
 class ActivitySection extends React.Component {
   constructor(props) {
@@ -27,9 +88,11 @@ class ActivitySection extends React.Component {
 
   render() {
     const { activity } = this.props;
+
     const details = [{
       title: 'Id',
       value: activity.id,
+      size: 'lg',
     }, {
       title: 'Created At',
       value: (
@@ -38,38 +101,18 @@ class ActivitySection extends React.Component {
           inline
         />
       ),
+      size: 'lg',
     }, {
-      title: 'Last Tracked At',
+      title: 'Key',
       value: (
-        <CreatedAt
-          createdAt={activity.last_tracked_at}
-          inline
-        />
-      ),
-    }, {
-      title: 'Description',
-      value: (
-        <div
-          className={styles.Description}
-          dangerouslySetInnerHTML={{
-            __html: activity.description
-          }}
-        />
+        <Tag color="108ee9">
+          {activity.key}
+        </Tag>
       ),
       size: 'lg',
     }, {
-      title: 'Session',
-      value: (
-        <div>
-          {
-            activity.session && (
-              <Link to={`/admin/sessions/${activity.session.id}`} target="_blank">
-                {activity.session.id}
-              </Link>
-            )
-          }
-        </div>
-      ),
+      title: 'Description',
+      value: activity.getDescription('admin'),
       size: 'lg',
     }, {
       title: 'Extras',
@@ -89,7 +132,11 @@ class ActivitySection extends React.Component {
       <div className={styles.Component}>
         <Row>
           <Col md={12} className="actions-listing">
-            <Button shape="circle" icon="reload" onClick={this.props.loadItem} />
+            {
+              this.props.loadItem && (
+                <Button shape="circle" icon="reload" onClick={this.props.loadItem} />
+              )
+            }
           </Col>
           <Col md={12} className="pull-right actions-listing" />
         </Row>

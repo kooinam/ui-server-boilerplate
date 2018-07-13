@@ -25,8 +25,8 @@ class ActivitiesPage extends React.Component {
             link
             renderFilters
             showKey
-            apiPrefix={''}
-            routePrefix={''}
+            apiPrefix=""
+            routePrefix=""
           />
         </Card>
       </div>

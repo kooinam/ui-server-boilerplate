@@ -415,3 +415,20 @@ button:focus {
   margin: 4px 6px 0 0;
   font-size: 13px;
 }
+
+:global(.activity-action) {
+
+}
+
+:global(.object-type) {
+  font-weight: bold;
+}
+
+:global(.object-value) {
+  font-weight: bold;
+  color: #1890ff;
+}
+
+:global(.object-key) {
+  color: #1890ff;
+}

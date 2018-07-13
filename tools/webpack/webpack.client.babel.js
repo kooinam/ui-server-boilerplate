@@ -6,6 +6,8 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 // const BabiliPlugin = require('babili-webpack-plugin');
 
 const { CSSModules, eslint, stylelint, vendor } = require('./config');
@@ -63,6 +65,9 @@ const getPlugins = () => {
 
   if (isDev) { // For development
     plugins.push(
+      new BundleAnalyzerPlugin({
+        analyzerPort: 8886,
+      }),
       new webpack.HotModuleReplacementPlugin(),
       // Prints more readable module names in the browser console on HMR updates
       new webpack.NamedModulesPlugin(),

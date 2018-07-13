@@ -136,11 +136,7 @@ class ActivitiesSection extends React.Component {
         return (
           <div>
             <CreatedAt createdAt={record.created_at} inline />
-            <div
-              dangerouslySetInnerHTML={{
-                __html: record.description
-              }}
-            />
+            {record.getDescription('admin')}
             {
               this.state.details && record.extras.map((extra) => {
                 if (extra.category === 0) {
@@ -150,7 +146,7 @@ class ActivitiesSection extends React.Component {
                         {extra.key}
                       </Tag>
                       <small>
-                        {extra.value}
+                        {extra.getValue()}
                       </small>
                     </div>
                   );
@@ -165,7 +161,7 @@ class ActivitiesSection extends React.Component {
                       {actorChange.key}
                     </Tag>
                     <small>
-                      {actorChange.value}
+                      {actorChange.getValue()}
                     </small>
                   </div>
                 );
@@ -282,6 +278,14 @@ class ActivitiesSection extends React.Component {
     }, {
       name: 'Actor Type',
       field: 'actor.actor_type',
+      exact: true,
+    }, {
+      name: 'Actor ID',
+      field: 'actor.actor_id',
+      exact: true,
+    }, {
+      name: 'Extras',
+      field: 'extras_field',
       exact: true,
     }];
     const sorting = [{
