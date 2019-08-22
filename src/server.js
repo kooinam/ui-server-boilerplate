@@ -15,20 +15,15 @@ import { expandRoutes, addAxiosPreferences } from 'awry-utilities-2';
 import _ from 'lodash';
 import bodyParser from 'body-parser';
 import axios from 'axios';
-import redis from 'redis';
 import { CronJob } from 'cron';
 import request from 'request';
 import createHistory from 'history/createMemoryHistory';
 
 import configureStore from './redux/store';
-import ClientHtml from './utils/ClientHtml';
+import ClientHtml from './ClientHtml';
 import ClientAppPage from './client_containers/AppPage';
 import clientRoutes from './clientRoutes';
-import AdminHtml from './utils/AdminHtml';
-import AdminAppPage from './admin_containers/AppPage';
-import adminRoutes from './adminRoutes';
 import { port, host } from './config';
-import { openSocket } from './io/socket';
 
 const app = express();
 
@@ -184,46 +179,6 @@ const parseReq = (req, res, routes, Html, Container) => {
   });
 };
 
-app.post('/subscribers.json', (req, res) => {
-  let options = {
-    prefix: process.env.API_SERVER_URL,
-  };
-  if (__DEV__) {
-
-  } else {
-    options = _.assign(options, {
-      host: process.env.REDIS_URL,
-      port: '6379',
-      password: process.env.REDIS_PASSWORD,
-    });
-  }
-  const redisClient = redis.createClient(options);
-
-  // publish to subscribers channel with subscriber_ids
-  _.each(req.body.subscriber_ids, (subscriber_id) => {
-    redisClient.publish('subscribers', subscriber_id);
-  });
-  redisClient.quit();
-
-  res.send('result=OK');
-});
-
-app.get('/admin', (req, res) => {
-  res.format({
-    'text/html': () => {
-      parseReq(req, res, adminRoutes, AdminHtml, AdminAppPage);
-    },
-  });
-});
-
-app.get(/^\/admin\/[^.]*$/, (req, res) => {
-  res.format({
-    'text/html': () => {
-      parseReq(req, res, adminRoutes, AdminHtml, AdminAppPage);
-    },
-  });
-});
-
 app.get(/^\/[^.]*$/, (req, res) => {
   res.format({
     'text/html': () => {
@@ -248,7 +203,6 @@ if (port) {
     // Open Chrome
     // require('../tools/openBrowser')(url);
   });
-  openSocket(server);
 } else {
   console.error(chalk.red('==> 😭  OMG!!! No PORT environment variable has been specified'));
 }

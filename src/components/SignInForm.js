@@ -8,7 +8,6 @@ import { Actioner, getAxios, getFieldError } from 'awry-utilities-2';
 import styles from './SignInForm.scss';
 import { authenticated } from '../actions/auth';
 import User from '../models/User';
-import { track } from '../actions/track';
 
 const authMethodsInput = (form, actioner) => {
   let input = (
@@ -78,9 +77,6 @@ class SignInForm extends React.Component {
           if (this.props.onAuthenticated) {
             this.props.onAuthenticated(user);
           }
-          setTimeout(() => {
-            this.trackPage();
-          }, 500);
         },
         errorMessageGetter: (error) => {
           return 'Log in failed';
@@ -105,14 +101,6 @@ class SignInForm extends React.Component {
       this.state.actioner.do('/sessions.json', params);
       return true;
     });
-  }
-
-  trackPage = () => {
-    const params = {
-      page: this.props.router.location.pathname,
-    };
-
-    this.props.dispatch(track(params));
   }
 
   render() {

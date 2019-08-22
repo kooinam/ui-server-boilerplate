@@ -5,7 +5,6 @@ import { Row, Col, Layout, Popover, Icon, Menu } from 'antd';
 
 import styles from './Navigator.scss';
 import AuthNavigator from '../components/AuthNavigator';
-import NotificationsNavigator from '../components/NotificationsNavigator';
 
 class Navigator extends Component {
   constructor(props) {
@@ -44,13 +43,6 @@ class Navigator extends Component {
           }
           className="link"
         />
-        {
-          currentUser && (
-            <NotificationsNavigator
-              inline
-            />
-          )
-        }
       </Menu>
     );
 
@@ -64,13 +56,6 @@ class Navigator extends Component {
           </Col>
           <Col md={20} xs={0} className="pull-right">
             <ul className={styles.Actions}>
-              {
-                currentUser && (
-                  <li className={styles.ActionItem}>
-                    <NotificationsNavigator />
-                  </li>
-                )
-              }
               <li className={styles.ActionItem}>
                 <AuthNavigator
                   hideAccount

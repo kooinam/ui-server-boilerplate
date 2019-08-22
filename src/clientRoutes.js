@@ -19,14 +19,22 @@ export default [
     component: BaseRouteComponent,
     routeProps: {
       hideBreadcrumbs: true,
-      requireUser: true,
+      requireUser: false,
     },
     routes: [{
       path: '',
       exact: true,
       routeProps: {
-        breadcrumbName: 'Stores',
-        disableRedirect: true,
+        breadcrumbName: 'Home',
+        requireUser: false,
+      },
+      component: HomePage,
+    }, {
+      path: '/account',
+      exact: true,
+      routeProps: {
+        breadcrumbName: 'Account',
+        requireUser: true,
       },
       component: HomePage,
     }, notFoundRoute],

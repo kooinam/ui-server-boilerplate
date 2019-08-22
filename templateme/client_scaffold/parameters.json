@@ -1,8 +1,0 @@
-{
-  "templates": [
-    "index.tsx", "index.scss", "show.tsx", "show.scss", "edit.tsx", "edit.scss", "new.tsx", "new.scss", "details.tsx", "details.scss", "model.tsx"
-  ],
-  "parameters": [
-    "name", "axiosName", "sortField", "titleField", "apiField", "pathField", "pathPrefix", "breadcrumbField", "routeField"
-  ]
-}

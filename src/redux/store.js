@@ -6,7 +6,6 @@ import thunk from 'redux-thunk';
 import axios from 'axios';
 import chalk from 'chalk';
 
-import type { Store } from '../types';
 import rootReducer from './reducers';
 
 export default (history: Object, initialState: Object = {}): Store => {
@@ -21,7 +20,7 @@ export default (history: Object, initialState: Object = {}): Store => {
       window.devToolsExtension() : f => f,
   ];
 
-  const store: Store = createStore(rootReducer, initialState, compose(...enhancers));
+  const store = createStore(rootReducer, initialState, compose(...enhancers));
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

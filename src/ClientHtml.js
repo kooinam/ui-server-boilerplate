@@ -5,11 +5,7 @@ import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
 import _ from 'lodash';
 
-import type { Store } from '../types';
-
-type Props = { store: Store, htmlContent?: string };
-
-const Html = ({ store, htmlContent }: Props) => {
+const Html = ({ store, htmlContent }) => {
   // Should be declared after "renderToStaticMarkup()" of "../server.js" or it won't work
   const head = Helmet.renderStatic();
   const attrs = head.htmlAttributes.toComponent();
@@ -53,7 +49,7 @@ const Html = ({ store, htmlContent }: Props) => {
                   dangerouslySetInnerHTML={{ __html:
                     // $FlowFixMe: It's not an issue
                     // eslint-disable-next-line import/no-dynamic-require
-                    require(`../../${asset}`)._style,
+                    require(`../${asset}`)._style,
                   }}
                 />
               ),

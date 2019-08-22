@@ -65,9 +65,9 @@ const getPlugins = () => {
 
   if (isDev) { // For development
     plugins.push(
-      new BundleAnalyzerPlugin({
-        analyzerPort: 8886,
-      }),
+      // new BundleAnalyzerPlugin({
+      //   analyzerPort: 8886,
+      // }),
       new webpack.HotModuleReplacementPlugin(),
       // Prints more readable module names in the browser console on HMR updates
       new webpack.NamedModulesPlugin(),
@@ -88,12 +88,6 @@ const getPlugins = () => {
 const getEntry = () => {
   // For development
   let entry = {
-    admin: [
-      'babel-polyfill', // Support promise for IE browser (for dev)
-      'react-hot-loader/patch',
-      'webpack-hot-middleware/client?reload=true',
-      './src/adminClient.js',
-    ],
     client: [
       'babel-polyfill', // Support promise for IE browser (for dev)
       'react-hot-loader/patch',
@@ -105,10 +99,6 @@ const getEntry = () => {
   // For prodcution
   if (!isDev) {
     entry = {
-      admin: [
-        'babel-polyfill',
-        './src/adminClient.js',
-      ],
       client: [
         'babel-polyfill',
         './src/clientClient.js',

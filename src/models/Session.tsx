@@ -14,7 +14,7 @@ class Session extends BaseModel {
     this.user = new User(this.user);
   }
 
-  user: any;
+  user: User;
 }
 
 export default Session;

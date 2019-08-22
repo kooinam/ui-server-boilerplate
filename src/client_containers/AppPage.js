@@ -22,7 +22,6 @@ import { authenticated } from '../actions/auth';
 import Navigator from '../client_components/Navigator';
 import User from '../models/User';
 import SignInForm from '../components/SignInForm';
-import { track } from '../actions/track';
 import { showSignUpModal } from '../actions/auth';
 
 class AppPage extends Component {
@@ -39,44 +38,6 @@ class AppPage extends Component {
     const apiServerURL = __API_SERVER_URL__;
 
     addAxiosPreferences('auth', {
-      baseURL: `${apiServerURL}`,
-      headersSetter: () => {
-        const token = User.getToken();
-
-        return {
-          'X-Authentication-Token': token,
-        };
-      },
-      requestInterceptors: (instance) => {
-        instance.paramsSerializer = (params) => {
-          return qs.stringify(params, {
-            arrayFormat: 'brackets',
-            plainObjects: true,
-          });
-        };
-      },
-    });
-
-    addAxiosPreferences('resources', {
-      baseURL: `${rootServerUrl}`,
-      headersSetter: () => {
-        const token = User.getToken();
-
-        return {
-          'X-Authentication-Token': token,
-        };
-      },
-      requestInterceptors: (instance) => {
-        instance.paramsSerializer = (params) => {
-          return qs.stringify(params, {
-            arrayFormat: 'brackets',
-            plainObjects: true,
-          });
-        };
-      },
-    });
-
-    addAxiosPreferences('resources-api', {
       baseURL: `${apiServerURL}`,
       headersSetter: () => {
         const token = User.getToken();
@@ -114,25 +75,6 @@ class AppPage extends Component {
       },
     });
 
-    addAxiosPreferences('track', {
-      baseURL: `${apiServerURL}`,
-      headersSetter: () => {
-        const token = User.getToken();
-
-        return {
-          'X-Authentication-Token': token,
-        };
-      },
-      requestInterceptors: (instance) => {
-        instance.paramsSerializer = (params) => {
-          return qs.stringify(params, {
-            arrayFormat: 'brackets',
-            plainObjects: true,
-          });
-        };
-      },
-    });
-
     message.config({
       top: 48,
     });
@@ -143,11 +85,7 @@ class AppPage extends Component {
 
     history.listen((location, action) => {
       window.scrollTo(0, 0);
-      this.trackPage(action, location)
     });
-
-    const { location } = this.props.router;
-    this.trackPage('push');
   }
 
   componentDidUpdate(prevProps) {
@@ -169,14 +107,6 @@ class AppPage extends Component {
     };
 
     return params;
-  }
-
-  trackPage = (action, location) => {
-    const params = {
-      page: (location) ? location.pathname : this.props.router.location.pathname,
-    };
-
-    this.props.dispatch(track(params));
   }
 
   showLoading = () => {
@@ -293,6 +223,7 @@ class AppPage extends Component {
     }
 
     const requireUser = matchRouteProperty(matchedRoutes, 'requireUser');
+
     const disableRedirect = matchRouteProperty(matchedRoutes, 'disableRedirect');
     if (typeof (window) !== 'undefined') {
       // Redirect if page requires user login
@@ -311,7 +242,7 @@ class AppPage extends Component {
 
     let content = null;
     if (authState) {
-      if (currentUser) {
+      if (currentUser || (!requireUser && !currentUser)) {
         // unauthenticated
         content = this.renderAuthenticatedContent(matchedRoutes, matchedBreadcrumbs);
       } else {
@@ -346,6 +277,3 @@ const connector = connect(
 /* eslint-enable no-unused-vars */
 
 export default connector(AppPage);
-export {
-  __NOTIFICATION_SERVER_URL__,
-}

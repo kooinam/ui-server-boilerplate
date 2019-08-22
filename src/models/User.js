@@ -1,16 +1,10 @@
 import { BaseModel } from 'awry-utilities-2';
 
-import Attachment from './Attachment';
-
 class User extends BaseModel {
   constructor(attributes) {
-    const newAttributes = Object.assign({
-      avatar_image_attachment: {},
-    }, attributes);
+    const newAttributes = Object.assign({}, attributes);
 
     super(newAttributes);
-
-    this.avatar_image_attachment = new Attachment(this.avatar_image_attachment);
   }
 
   static setTokenPrefix = (tokenPrefix) => {
@@ -18,7 +12,7 @@ class User extends BaseModel {
   }
 
   static getTokenName = () => {
-    const tokenPrefix = User.tokenPrefix || 'quest';
+    const tokenPrefix = User.tokenPrefix || 'boilerplate';
 
     return (tokenPrefix && tokenPrefix.length > 0) ? `${tokenPrefix}-token` : 'token';
   }
@@ -46,10 +40,6 @@ class User extends BaseModel {
 
   authenticate = () => {
     User.setToken(this.authentication_token);
-  }
-
-  isAdmin = () => {
-    return this.role === 'admin';
   }
 }
 
