@@ -210,7 +210,7 @@
     "imports-loader": "^0.8.0",
     "jest": "^20.0.4",
     "nock": "^9.0.14",
-    "node-sass": "^4.5.3",
+    "node-sass": "^7.0.0",
     "nodemon": "^1.11.0",
     "postcss": "^6.0.9",
     "postcss-loader": "^2.0.6",
